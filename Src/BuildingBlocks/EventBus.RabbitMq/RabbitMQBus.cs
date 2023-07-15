@@ -29,7 +29,7 @@ namespace EventBus.RabbitMq
 
         public void Publish<TEvent>(TEvent @event) where TEvent : Event
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
+            var factory = new ConnectionFactory { HostName = "localhost", DispatchConsumersAsync = true };
             using var connection = factory.CreateConnection();
             using var model = connection.CreateModel();
 
@@ -75,7 +75,7 @@ namespace EventBus.RabbitMq
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
+            var factory = new ConnectionFactory { HostName = "localhost", DispatchConsumersAsync = true };
             using var connection = factory.CreateConnection();
             using var model = connection.CreateModel();
 
