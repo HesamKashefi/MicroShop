@@ -1,4 +1,5 @@
 ﻿using EventBus.Core;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -12,6 +13,7 @@ namespace EventBus.RabbitMq
         #region Fields
         private readonly Dictionary<string, List<Type>> _handlers = new();
         private readonly List<Type> _events = new();
+        private readonly IServiceProvider _serviceProvider;
         #endregion
 
         #region Dependencies
@@ -19,8 +21,11 @@ namespace EventBus.RabbitMq
         #endregion
 
         #region Ctor
-        public RabbitMQBus(ILogger<RabbitMQBus> logger)
+        public RabbitMQBus(
+            IServiceProvider serviceProvider,
+            ILogger<RabbitMQBus> logger)
         {
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         #endregion
@@ -106,11 +111,13 @@ namespace EventBus.RabbitMq
 
                 var handlers = _handlers[eventName];
 
+                using var scope = _serviceProvider.CreateScope();
+
                 foreach (var handlerType in handlers)
                 {
                     try
                     {
-                        var handler = Activator.CreateInstance(handlerType);
+                        var handler = scope.ServiceProvider.GetService(handlerType);
                         if (handler is null) continue;
 
                         await Task.Yield();
