@@ -16,6 +16,7 @@ builder.Services.AddMediatR(c =>
 {
     c.RegisterServicesFromAssemblyContaining(typeof(GetProductsQuery));
 });
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -23,6 +24,13 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+}
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 app.UseStaticFiles();
 
