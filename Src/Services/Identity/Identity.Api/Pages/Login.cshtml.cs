@@ -6,53 +6,52 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Identity.Api.Pages
+namespace Identity.Api.Pages;
+
+public record LoginViewModel(string Username, string Password);
+public class LoginModel : PageModel
 {
-    public record LoginViewModel(string Username, string Password);
-    public class LoginModel : PageModel
+    private readonly IdentityContext _identityContext;
+
+    [BindProperty]
+    public LoginViewModel LoginViewModel { get; set; }
+
+
+    public LoginModel(IdentityContext identityContext)
     {
-        private readonly IdentityContext _identityContext;
+        _identityContext = identityContext;
+    }
 
-        [BindProperty]
-        public LoginViewModel LoginViewModel { get; set; }
+    public void OnGet([FromQuery] string? returnUrl = null)
+    {
+        ViewData["returnUrl"] = returnUrl;
+    }
 
+    public async Task<IActionResult> OnPostAsync([FromQuery] string? returnUrl = null)
+    {
+        var user = await _identityContext.Users.FirstOrDefaultAsync(x => x.Username == LoginViewModel.Username);
 
-        public LoginModel(IdentityContext identityContext)
+        if (user == null)
         {
-            _identityContext = identityContext;
+            ModelState.AddModelError(string.Empty, "Invalid Credentials");
+            return Page();
         }
 
-        public void OnGet([FromQuery] string? returnUrl = null)
+        if (!user.CheckPassword(LoginViewModel.Password))
         {
-            ViewData["returnUrl"] = returnUrl;
+            ModelState.AddModelError(string.Empty, "Invalid Credentials");
+            return Page();
         }
-
-        public async Task<IActionResult> OnPostAsync([FromQuery] string? returnUrl = null)
+        var claims = new List<Claim>()
         {
-            var user = await _identityContext.Users.FirstOrDefaultAsync(x => x.Username == LoginViewModel.Username);
+            new("sub", user.Id.ToString()),
+            new("name", user.Username)
+        };
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
+        var principal = new ClaimsPrincipal(identity);
 
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Invalid Credentials");
-                return Page();
-            }
+        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            if (!user.CheckPassword(LoginViewModel.Password))
-            {
-                ModelState.AddModelError(string.Empty, "Invalid Credentials");
-                return Page();
-            }
-            var claims = new List<Claim>()
-            {
-                new("sub", user.Id.ToString()),
-                new("name", user.Username)
-            };
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
-            var principal = new ClaimsPrincipal(identity);
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            return Redirect(returnUrl ?? "/");
-        }
+        return Redirect(returnUrl ?? "/");
     }
 }
