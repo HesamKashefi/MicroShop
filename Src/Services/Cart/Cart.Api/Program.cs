@@ -1,8 +1,19 @@
+using StackExchange.Redis;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IConnectionMultiplexer>(x =>
+{
+    return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Default")!);
+});
+builder.Services.AddScoped(x =>
+{
+    var cm = x.GetRequiredService<IConnectionMultiplexer>();
+    return cm.GetDatabase();
+});
 
 var app = builder.Build();
 
