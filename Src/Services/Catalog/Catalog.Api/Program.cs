@@ -1,7 +1,21 @@
+using Catalog.Api.Extensions;
+using Catalog.Application.Queries;
+using MongoDB.Driver;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddScoped<IMongoDatabase>(c =>
+{
+    var cs = builder.Configuration.GetConnectionString("Default");
+    var client = new MongoClient(cs);
+    return client.GetDatabase("ProductsDb");
+});
+builder.Services.AddMediatR(c =>
+{
+    c.RegisterServicesFromAssemblyContaining(typeof(GetProductsQuery));
+});
 
 var app = builder.Build();
 
@@ -17,5 +31,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
+
+await app.SeedDatabaseAsync();
 
 app.Run();
