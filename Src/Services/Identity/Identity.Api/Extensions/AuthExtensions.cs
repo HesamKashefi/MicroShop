@@ -36,8 +36,10 @@ namespace Identity.Api.Extensions
                     c.AllowAuthorizationCodeFlow()
                     .AllowRefreshTokenFlow();
 
-                    c.AddEphemeralEncryptionKey()
-                    .AddEphemeralSigningKey();
+                    c.AddDevelopmentEncryptionCertificate()
+                    .AddDevelopmentSigningCertificate();
+
+                    c.SetIssuer("http://localhost:7002/");
 
                     c.DisableAccessTokenEncryption();
                 });

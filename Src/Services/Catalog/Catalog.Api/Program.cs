@@ -1,11 +1,13 @@
 using Catalog.Api.Extensions;
 using Catalog.Application.Queries;
+using Common;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddDefaultAuthentication(builder.Configuration);
 builder.Services.AddScoped<IMongoDatabase>(c =>
 {
     var cs = builder.Configuration.GetConnectionString("Default");
@@ -36,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,8 +1,11 @@
+using Common;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDefaultAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -23,6 +26,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

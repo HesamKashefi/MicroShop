@@ -1,3 +1,4 @@
+using Common;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDefaultAuthentication(builder.Configuration);
+
 builder.Services.AddScoped<IConnectionMultiplexer>(x =>
 {
     return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Default")!);
@@ -33,6 +37,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using System.Text.Json;
 
@@ -6,6 +7,7 @@ namespace Cart.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly JsonSerializerOptions _options = new()
@@ -14,7 +16,6 @@ namespace Cart.Api.Controllers
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
         private readonly IDatabase _database;
-        private readonly string _username = "hesam";
 
         public CartController(IDatabase database)
         {
@@ -32,20 +33,20 @@ namespace Cart.Api.Controllers
         public async Task<Models.Cart> UpdateCart([FromBody] Models.Cart cart)
         {
             var cartJson = JsonSerializer.Serialize(cart, _options);
-            await _database.StringSetAsync(_username, cartJson);
+            await _database.StringSetAsync(User.Identity!.Name, cartJson);
             return cart;
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCart()
         {
-            await _database.KeyDeleteAsync(_username);
+            await _database.KeyDeleteAsync(User.Identity!.Name);
             return NoContent();
         }
 
         private async Task<Models.Cart> GetCart()
         {
-            var cartJson = await _database.StringGetAsync(_username);
+            var cartJson = await _database.StringGetAsync(User.Identity!.Name);
             if (cartJson.HasValue)
             {
                 return JsonSerializer.Deserialize<Cart.Api.Models.Cart>(cartJson!, _options)!;
