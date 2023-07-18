@@ -27,25 +27,7 @@ builder.Services.AddScoped(x =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-}
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
+app.UseDefaultPipeline();
 
 app.ConfigureEventBus(new UseEventBusOptions()
     .Subscribe<ProductPriceUpdated, ProductPriceUpdatedHandler>()

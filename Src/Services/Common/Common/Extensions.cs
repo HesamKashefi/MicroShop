@@ -4,6 +4,7 @@ using EventBus.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OpenIddict.Validation.AspNetCore;
 using RabbitMQ.Client;
 using System.Reflection;
@@ -72,6 +73,30 @@ namespace Common
                     genericMethod.Invoke(bus, Array.Empty<object>());
                 }
             }
+        }
+
+
+        public static void UseDefaultPipeline(this WebApplication app)
+        {
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Error");
+            }
+
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllers();
         }
     }
 }
