@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Cart.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StackExchange.Redis;
-using System.Text.Json;
 
 namespace Cart.Api.Controllers
 {
@@ -10,49 +9,32 @@ namespace Cart.Api.Controllers
     [Authorize]
     public class CartController : ControllerBase
     {
-        private readonly JsonSerializerOptions _options = new()
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        };
-        private readonly IDatabase _database;
+        private readonly ICartService _cartService;
 
-        public CartController(IDatabase database)
+        public CartController(ICartService cartService)
         {
-            _database = database;
+            _cartService = cartService;
         }
 
         [HttpGet]
         public async Task<Models.Cart> Get()
         {
-            var cart = await GetCart();
+            var cart = await _cartService.GetCartAsync(User.Identity!.Name!);
             return cart;
         }
 
         [HttpPut]
-        public async Task<Models.Cart> UpdateCart([FromBody] Models.Cart cart)
+        public async Task<IActionResult> UpdateCart([FromBody] Models.Cart cart)
         {
-            var cartJson = JsonSerializer.Serialize(cart, _options);
-            await _database.StringSetAsync(User.Identity!.Name, cartJson);
-            return cart;
+            await _cartService.UpdateCartAsync(User.Identity!.Name!, cart);
+            return NoContent();
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCart()
         {
-            await _database.KeyDeleteAsync(User.Identity!.Name);
+            await _cartService.DeleteCartAsync(User.Identity!.Name!);
             return NoContent();
-        }
-
-        private async Task<Models.Cart> GetCart()
-        {
-            var cartJson = await _database.StringGetAsync(User.Identity!.Name);
-            if (cartJson.HasValue)
-            {
-                return JsonSerializer.Deserialize<Cart.Api.Models.Cart>(cartJson!, _options)!;
-            }
-
-            return new Models.Cart { CartItems = new() };
         }
     }
 }

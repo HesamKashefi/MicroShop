@@ -1,3 +1,5 @@
+using Cart.Api.Events;
+using Cart.Api.Services;
 using Common;
 using StackExchange.Redis;
 
@@ -7,7 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDefaultAuthentication(builder.Configuration);
+builder.AddDefaultAuthentication();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.AddEventBus(c =>
+{
+    c.AddScoped<ProductPriceUpdatedHandler>();
+});
 
 builder.Services.AddScoped<IConnectionMultiplexer>(x =>
 {
@@ -41,5 +48,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.ConfigureEventBus((bus) =>
+{
+    bus.Subscribe<ProductPriceUpdated, ProductPriceUpdatedHandler>();
+});
 
 app.Run();

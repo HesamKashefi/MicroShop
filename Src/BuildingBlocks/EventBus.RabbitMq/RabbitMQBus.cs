@@ -13,6 +13,7 @@ namespace EventBus.RabbitMq
         #region Fields
         private readonly Dictionary<string, List<Type>> _handlers = new();
         private readonly List<Type> _events = new();
+        private readonly IRabbitMQPersistentConnection _rabbitMQPersistentConnection;
         private readonly IServiceProvider _serviceProvider;
         #endregion
 
@@ -22,9 +23,11 @@ namespace EventBus.RabbitMq
 
         #region Ctor
         public RabbitMQBus(
+            IRabbitMQPersistentConnection rabbitMQPersistentConnection,
             IServiceProvider serviceProvider,
             ILogger<RabbitMQBus> logger)
         {
+            _rabbitMQPersistentConnection = rabbitMQPersistentConnection ?? throw new ArgumentNullException(nameof(rabbitMQPersistentConnection));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -34,9 +37,11 @@ namespace EventBus.RabbitMq
 
         public void Publish<TEvent>(TEvent @event) where TEvent : Event
         {
-            var factory = new ConnectionFactory { HostName = "localhost", DispatchConsumersAsync = true };
-            using var connection = factory.CreateConnection();
-            using var model = connection.CreateModel();
+            if (!_rabbitMQPersistentConnection.IsConnected && !_rabbitMQPersistentConnection.TryConnect())
+            {
+                throw new Exception("RabbitMQ Connection Failed");
+            }
+            var model = _rabbitMQPersistentConnection.CreateModel();
 
             var eventName = @event.GetType().Name;
 
@@ -68,6 +73,7 @@ namespace EventBus.RabbitMq
             }
 
             _handlers[eventType.Name].Add(typeof(TEventHandler));
+            _logger.LogTrace("Registered Handler : {Handler} For Event: {Event}", typeof(TEventHandler).Name, eventType.Name);
 
             BasicConsume<TEvent, TEventHandler>();
         }
@@ -80,9 +86,11 @@ namespace EventBus.RabbitMq
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {
-            var factory = new ConnectionFactory { HostName = "localhost", DispatchConsumersAsync = true };
-            using var connection = factory.CreateConnection();
-            using var model = connection.CreateModel();
+            if (!_rabbitMQPersistentConnection.IsConnected && !_rabbitMQPersistentConnection.TryConnect())
+            {
+                throw new Exception("RabbitMQ Connection Failed");
+            }
+            var model = _rabbitMQPersistentConnection.CreateModel();
 
             var eventName = typeof(TEvent).Name;
 
@@ -104,6 +112,7 @@ namespace EventBus.RabbitMq
 
         private async Task ProcessEventAsync(string eventName, string message)
         {
+            _logger.LogTrace("Processing Event {Event} With Message : {Message}", eventName, message);
             if (_handlers.ContainsKey(eventName))
             {
                 var eventType = _events.Single(x => x.Name.Equals(eventName));
@@ -120,6 +129,7 @@ namespace EventBus.RabbitMq
                         var handler = scope.ServiceProvider.GetService(handlerType);
                         if (handler is null) continue;
 
+                        _logger.LogTrace("Processing Event {Event} Using Handler: {EventHandler} With Message : {Message}", eventName, handlerType.Name, message);
                         await Task.Yield();
 
                         var concreteType = typeof(IEventHandler<>).MakeGenericType(eventType);

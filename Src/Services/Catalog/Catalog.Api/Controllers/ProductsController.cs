@@ -1,4 +1,5 @@
-﻿using Catalog.Application.Models;
+﻿using Catalog.Application.Commands;
+using Catalog.Application.Models;
 using Catalog.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,13 @@ namespace Catalog.Api.Controllers
         public ProductsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateProductPriceCommand command)
+        {
+            await _mediator.Send(command, HttpContext.RequestAborted);
+            return NoContent();
         }
 
         [HttpGet]

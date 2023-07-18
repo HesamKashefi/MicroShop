@@ -7,7 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddDefaultAuthentication(builder.Configuration);
+builder.AddDefaultAuthentication();
+builder.AddEventBus(c =>
+{
+
+});
 builder.Services.AddScoped<IMongoDatabase>(c =>
 {
     var cs = builder.Configuration.GetConnectionString("Default");
@@ -44,5 +48,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 await app.SeedDatabaseAsync();
+
+app.ConfigureEventBus((bus) =>
+{
+
+});
 
 app.Run();
