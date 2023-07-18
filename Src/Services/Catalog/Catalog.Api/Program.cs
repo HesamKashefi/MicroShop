@@ -1,6 +1,7 @@
 using Catalog.Api.Extensions;
 using Catalog.Application.Queries;
 using Common;
+using Common.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,10 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.AddDefaultAuthentication();
-builder.AddEventBus(c =>
-{
-
-});
+builder.AddEventBus();
 builder.Services.AddScoped<IMongoDatabase>(c =>
 {
     var cs = builder.Configuration.GetConnectionString("Default");
@@ -49,9 +47,6 @@ app.MapControllers();
 
 await app.SeedDatabaseAsync();
 
-app.ConfigureEventBus((bus) =>
-{
-
-});
+app.ConfigureEventBus(new UseEventBusOptions());
 
 app.Run();

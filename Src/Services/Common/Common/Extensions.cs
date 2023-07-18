@@ -1,10 +1,12 @@
-﻿using EventBus.Core;
+﻿using Common.Options;
+using EventBus.Core;
 using EventBus.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenIddict.Validation.AspNetCore;
 using RabbitMQ.Client;
+using System.Reflection;
 
 namespace Common
 {
@@ -32,7 +34,7 @@ namespace Common
             builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
         }
 
-        public static void AddEventBus(this WebApplicationBuilder builder, Action<IServiceCollection> configureBus)
+        public static void AddEventBus(this WebApplicationBuilder builder, params Assembly[] assemblies)
         {
             builder.Services.AddSingleton<IConnectionFactory>(x =>
             {
@@ -44,14 +46,32 @@ namespace Common
             });
             builder.Services.AddSingleton<IRabbitMQPersistentConnection, RabbitMQConnection>();
             builder.Services.AddSingleton<IEventBus, RabbitMQBus>();
-            configureBus?.Invoke(builder.Services);
+            builder.Services.Scan(s =>
+            {
+                s.FromAssemblies(assemblies)
+                .AddClasses(c => c.AssignableTo(typeof(IEventHandler<>)))
+                .AsImplementedInterfaces()
+                .AsSelf()
+                .WithTransientLifetime();
+            });
         }
 
-        public static void ConfigureEventBus(this IApplicationBuilder builder, Action<IEventBus> configureBus)
+        public static void ConfigureEventBus(this IApplicationBuilder builder, UseEventBusOptions options)
         {
+            var o = options ?? throw new ArgumentNullException(nameof(options));
+
             var scope = builder.ApplicationServices.CreateScope();
             var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
-            configureBus?.Invoke(bus);
+
+            var method = typeof(IEventBus).GetMethod(nameof(IEventBus.Subscribe))!;
+            foreach (var pair in o.Handlers)
+            {
+                foreach (var handler in pair.Value)
+                {
+                    var genericMethod = method.MakeGenericMethod(pair.Key, handler);
+                    genericMethod.Invoke(bus, Array.Empty<object>());
+                }
+            }
         }
     }
 }
