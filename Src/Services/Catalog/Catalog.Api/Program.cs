@@ -12,7 +12,7 @@ builder.AddDefaultAuthentication();
 builder.AddEventBus();
 builder.Services.AddScoped<IMongoDatabase>(c =>
 {
-    var cs = builder.Configuration.GetConnectionString("Default");
+    var cs = builder.Configuration.GetConnectionString("Mongo");
     var client = new MongoClient(cs);
     return client.GetDatabase("ProductsDb");
 });

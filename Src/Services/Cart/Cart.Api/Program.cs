@@ -16,7 +16,7 @@ builder.AddEventBus(typeof(ProductPriceUpdatedHandler).Assembly);
 
 builder.Services.AddScoped<IConnectionMultiplexer>(x =>
 {
-    return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Default")!);
+    return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("Redis")!);
 });
 builder.Services.AddScoped(x =>
 {
