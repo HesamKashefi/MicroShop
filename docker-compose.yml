@@ -1,0 +1,53 @@
+version: '3.4'
+
+services:
+  seq:
+    image: datalust/seq:latest
+
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+
+  catalog-db:
+    image: mongo
+
+  cart-db:
+    image: redis:alpine
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  microshop-view:
+    image: ${DOCKER_REGISTRY-}microshopview
+    build:
+      context: .
+      dockerfile: Src/View/MicroShop.View/Dockerfile
+
+  orders-api:
+    image: ${DOCKER_REGISTRY-}ordersapi
+    build:
+      context: .
+      dockerfile: Src/Services/Orders/Orders.Api/Dockerfile
+      
+  identity-api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Src/Services/Identity/Identity.Api/Dockerfile
+
+  cart-api:
+    image: ${DOCKER_REGISTRY-}cartapi
+    build:
+      context: .
+      dockerfile: Src/Services/Cart/Cart.Api/Dockerfile
+
+  catalog-api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Src/Services/Catalog/Catalog.Api/Dockerfile
+      
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: Src/ApiGateways/ApiGateway/Dockerfile

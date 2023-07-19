@@ -25,7 +25,7 @@ builder.Services.AddDbContext<IdentityContext>(c =>
     c.UseOpenIddict();
 });
 
-builder.Services.AddOpenIddictConfig();
+builder.Services.AddOpenIddictConfig(builder.Configuration);
 
 var app = builder.Build();
 

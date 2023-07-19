@@ -1,0 +1,126 @@
+version: '3.4'
+  
+services:
+  seq:
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5340:80"
+
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    environment:
+      - SA_PASSWORD=Pass@word
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - microshop-identity-sqldata:/var/opt/mssql
+
+  catalog-db:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - microshop-catalog-mongodata:/data/db
+
+  cart-db:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+
+  microshop-view:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8000;http://+:7000
+    ports:
+      - 7000:7000
+      - 8000:8000
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - apigateway
+
+  apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8001;http://+:7001
+    ports:
+      - 7001:7001
+      - 8001:8001
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - identity-api
+      - catalog-api
+      - orders-api
+      - cart-api
+
+  identity-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8002;http://+:7002
+    ports:
+      - 7002:7002
+      - 8002:8002
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - identity-db
+      - rabbitmq
+
+  catalog-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8003;http://+:7003
+    ports:
+      - 7003:7003
+      - 8003:8003
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - catalog-db
+      - rabbitmq
+
+  cart-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8004;http://+:7004
+    ports:
+      - 7004:7004
+      - 8004:8004
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - cart-db
+      - rabbitmq
+
+  orders-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8005;http://+:7005
+    ports:
+      - 7005:7005
+      - 8005:8005
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+volumes:
+  microshop-identity-sqldata:
+    external: false
+  microshop-catalog-mongodata:
+    external: false

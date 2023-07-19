@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "microshop.view": "StartDebugging",
+        "orders.api": "StartDebugging",
+        "identity.api": "StartDebugging",
+        "cart.api": "StartDebugging",
+        "apigateway": "StartDebugging",
+        "catalog.api": "StartDebugging"
+      }
+    }
+  }
+}

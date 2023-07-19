@@ -5,7 +5,7 @@ namespace Identity.Api.Extensions
 {
     public static class AuthExtensions
     {
-        public static IServiceCollection AddOpenIddictConfig(this IServiceCollection services)
+        public static IServiceCollection AddOpenIddictConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddOpenIddict(o =>
             {
@@ -39,7 +39,7 @@ namespace Identity.Api.Extensions
                     c.AddDevelopmentEncryptionCertificate()
                     .AddDevelopmentSigningCertificate();
 
-                    c.SetIssuer("http://localhost:7002/");
+                    c.SetIssuer(configuration.GetValue<string>("Urls:Identity")!);
 
                     c.DisableAccessTokenEncryption();
                 });

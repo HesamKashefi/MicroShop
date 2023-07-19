@@ -25,7 +25,18 @@ namespace Common
                     options.SetIssuer(issuer);
 
                     // Register the System.Net.Http integration.
-                    options.UseSystemNetHttp();
+                    options.UseSystemNetHttp(c =>
+                    {
+                        c.ConfigureHttpClient(options =>
+                        {
+                            options.BaseAddress = new Uri(issuer);
+                        });
+
+                        c.ConfigureHttpClientHandler(options =>
+                        {
+                            options.ServerCertificateCustomValidationCallback = (message, cert, chain, err) => true;
+                        });
+                    });
 
                     // Register the ASP.NET Core host.
                     options.UseAspNetCore();
