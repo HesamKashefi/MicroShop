@@ -21,11 +21,13 @@
 
                 <div class="form-group">
                     <label asp-for="LoginViewModel.Password"></label>
-                    <input asp-for="LoginViewModel.Password" class="form-control" />
+                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" />
                     <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
                 </div>
 
-                <input type="submit" class="btn btn-outline-primary form-control" value="Login" />
+                <div class="form-group">
+                    <input type="submit" class="btn btn-outline-primary form-control" value="Login" />
+                </div>
 
             </form>
 
