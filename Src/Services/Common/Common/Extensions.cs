@@ -15,9 +15,12 @@ namespace Common
 {
     public static class Extensions
     {
-        public static async Task RunInLoggerAsync(Func<Task> action)
+        public static async Task RunInLoggerAsync(Func<Task> action, string loggerName)
         {
-            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetLogger(Assembly.GetCallingAssembly().FullName);
+            LogManager.Setup().LoadConfigurationFromAppSettings();
+            LogManager.Configuration.Variables["AppName"] = loggerName;
+            var logger = LogManager.GetLogger(loggerName);
+
             logger.Debug("Init Main");
 
             try

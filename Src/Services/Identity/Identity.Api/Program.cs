@@ -33,4 +33,4 @@ await Extensions.RunInLoggerAsync(async () =>
     await app.SeedDataAsync();
 
     await app.RunAsync();
-});
+}, "Identity.Api");

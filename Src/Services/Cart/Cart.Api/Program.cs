@@ -32,4 +32,4 @@ await Extensions.RunInLoggerAsync(async () =>
     );
 
     await app.RunAsync();
-});
+}, "Cart.Api");

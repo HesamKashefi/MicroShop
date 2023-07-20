@@ -13,4 +13,4 @@ await Extensions.RunInLoggerAsync(async () =>
     app.MapRazorPages();
 
     await app.RunAsync();
-});
+}, "ApiGateway");

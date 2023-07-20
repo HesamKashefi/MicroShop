@@ -16,4 +16,4 @@ await Extensions.RunInLoggerAsync(async () =>
     app.ConfigureEventBus(new UseEventBusOptions());
 
     await app.RunAsync();
-});
+}, "Orders.Api");

@@ -32,4 +32,4 @@ await Extensions.RunInLoggerAsync(async () =>
     await app.SeedDatabaseAsync();
 
     await app.RunAsync();
-});
+}, "Catalog.Api");

@@ -2,14 +2,13 @@ version: '3.4'
   
 services:
   seq:
-    image: datalust/seq:latest
     environment:
       - ACCEPT_EULA=Y
     ports:
       - "5340:80"
+      - "5341:5341"
 
   identity-db:
-    image: mcr.microsoft.com/mssql/server:2019-latest 
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
@@ -19,19 +18,16 @@ services:
       - microshop-identity-sqldata:/var/opt/mssql
 
   catalog-db:
-    image: mongo
     ports:
       - 27017:27017
     volumes:
       - microshop-catalog-mongodata:/data/db
 
   cart-db:
-    image: redis:alpine
     ports:
       - 6379:6379
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
     ports:
       - 5672:5672
       - 15672:15672
@@ -79,6 +75,7 @@ services:
     depends_on:
       - identity-db
       - rabbitmq
+      - seq
 
   catalog-api:
     environment:
@@ -93,6 +90,7 @@ services:
     depends_on:
       - catalog-db
       - rabbitmq
+      - seq
 
   cart-api:
     environment:
@@ -107,6 +105,7 @@ services:
     depends_on:
       - cart-db
       - rabbitmq
+      - seq
 
   orders-api:
     environment:
@@ -118,6 +117,9 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - rabbitmq
+      - seq
 
 volumes:
   microshop-identity-sqldata:
