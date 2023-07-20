@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
+using NLog.Web;
 using OpenIddict.Validation.AspNetCore;
 using RabbitMQ.Client;
 using System.Reflection;
@@ -13,13 +15,48 @@ namespace Common
 {
     public static class Extensions
     {
+        public static async Task RunInLoggerAsync(Func<Task> action)
+        {
+            var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetLogger(Assembly.GetCallingAssembly().FullName);
+            logger.Debug("Init Main");
+
+            try
+            {
+                await action.Invoke();
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                LogManager.Shutdown();
+            }
+        }
+
+        public static void AddServiceDefaults(this WebApplicationBuilder builder)
+        {
+            builder.Host.UseNLog();
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers();
+
+            builder.AddDefaultAuthentication();
+            builder.AddEventBus();
+        }
+
         public static void AddDefaultAuthentication(this WebApplicationBuilder builder)
         {
+            var issuer = builder.Configuration.GetValue<string>("Urls:Identity");
+
+            if (string.IsNullOrEmpty(issuer)) return;
+
             // Register the OpenIddict validation components.
             builder.Services.AddOpenIddict()
                 .AddValidation(options =>
                 {
-                    var issuer = builder.Configuration.GetValue<string>("Urls:Identity")!;
                     // Note: the validation handler uses OpenID Connect discovery
                     // to retrieve the address of the introspection endpoint.
                     options.SetIssuer(issuer);
@@ -46,7 +83,7 @@ namespace Common
             builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
         }
 
-        public static void AddEventBus(this WebApplicationBuilder builder, params Assembly[] assemblies)
+        public static void AddEventBus(this WebApplicationBuilder builder)
         {
             builder.Services.AddSingleton<IConnectionFactory>(x =>
             {
@@ -58,6 +95,10 @@ namespace Common
             });
             builder.Services.AddSingleton<IRabbitMQPersistentConnection, RabbitMQConnection>();
             builder.Services.AddSingleton<IEventBus, RabbitMQBus>();
+        }
+
+        public static void AddEventHandlers(this WebApplicationBuilder builder, params Assembly[] assemblies)
+        {
             builder.Services.Scan(s =>
             {
                 s.FromAssemblies(assemblies)

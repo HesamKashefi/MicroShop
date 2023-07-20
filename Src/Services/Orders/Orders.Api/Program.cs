@@ -1,15 +1,19 @@
 using Common;
+using Common.Options;
 
-var builder = WebApplication.CreateBuilder(args);
+await Extensions.RunInLoggerAsync(async () =>
+{
+    var builder = WebApplication.CreateBuilder(args);
+    builder.AddServiceDefaults();
 
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
-builder.AddDefaultAuthentication();
+    builder.AddEventHandlers(typeof(Program).Assembly);
 
-var app = builder.Build();
+    var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseDefaultPipeline();
+    // Configure the HTTP request pipeline.
+    app.UseDefaultPipeline();
 
-app.Run();
+    app.ConfigureEventBus(new UseEventBusOptions());
+
+    await app.RunAsync();
+});
