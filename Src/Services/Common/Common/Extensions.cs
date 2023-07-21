@@ -1,7 +1,10 @@
 ﻿using Common.Options;
 using EventBus.Core;
 using EventBus.RabbitMq;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -149,12 +152,20 @@ namespace Common
 
             app.UseRouting();
 
-            app.UseHealthChecks("/healthz");
-
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.MapDefaultHealthChecks();
+        }
+        public static void MapDefaultHealthChecks(this IEndpointRouteBuilder routes)
+        {
+            routes.MapHealthChecks("/hc", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
         }
     }
 }

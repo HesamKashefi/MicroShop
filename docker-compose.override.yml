@@ -120,9 +120,27 @@ services:
     depends_on:
       - rabbitmq
       - seq
+      
+  microshop-healthchecksui:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:8010;http://+:7010
+    ports:
+      - 7010:7010
+      - 8010:8010
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - apigateway
+      - identity-api
+      - catalog-api
+      - orders-api
+      - cart-api
 
 volumes:
   microshop-identity-sqldata:
     external: false
   microshop-catalog-mongodata:
     external: false
+

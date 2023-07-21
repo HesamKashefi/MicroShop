@@ -10,7 +10,7 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.AddServiceDefaults();
     builder.Services.AddRazorPages();
     builder.Services.AddHealthChecks()
-    .AddSqlServer(builder.Configuration.GetConnectionString("Default")!, "sqlserver", tags: new[] { "sqlserver" });
+    .AddSqlServer(builder.Configuration.GetConnectionString("Default")!, name: "sqlserver", tags: new[] { "sqlserver" });
 
     builder.Services.AddAuthentication()
         .AddCookie(c =>

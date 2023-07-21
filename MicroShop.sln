@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Src\Services\Comm
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{52A5F06F-5749-49EB-AA11-DF502A07B832}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.HealthChecksUI", "Src\View\MicroShop.HealthChecksUI\MicroShop.HealthChecksUI.csproj", "{A742CD5D-B71D-42C3-B36B-A435D19E665E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{52A5F06F-5749-49EB-AA11-DF502A07B832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A5F06F-5749-49EB-AA11-DF502A07B832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A5F06F-5749-49EB-AA11-DF502A07B832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{9A69B1D3-C152-47B0-8D40-909FBE9E6FE6} = {84777E81-48C2-40E6-9DE4-52337ED4275B}
 		{30F928E1-ABE8-44A5-AB16-8B2DFDFE6D88} = {555CE2EF-E7FC-48A0-9040-63F74E4ABB71}
 		{550FA7D7-CBA5-43F4-B83D-BEAC3CCC9410} = {30F928E1-ABE8-44A5-AB16-8B2DFDFE6D88}
+		{A742CD5D-B71D-42C3-B36B-A435D19E665E} = {9E1AA586-CF04-40DC-9625-A2FB66B53B40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {997B5CC7-FA43-41A9-BF18-3EB443462F19}

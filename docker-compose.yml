@@ -51,3 +51,10 @@ services:
     build:
       context: .
       dockerfile: Src/ApiGateways/ApiGateway/Dockerfile
+
+  microshop-healthchecksui:
+    image: ${DOCKER_REGISTRY-}microshophealthchecksui
+    build:
+      context: .
+      dockerfile: Src/View/MicroShop.HealthChecksUI/Dockerfile
+
