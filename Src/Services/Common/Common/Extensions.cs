@@ -42,6 +42,7 @@ namespace Common
         {
             builder.Host.UseNLog();
 
+            builder.Services.AddHealthChecks();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
@@ -147,6 +148,8 @@ namespace Common
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseHealthChecks("/healthz");
 
             app.UseAuthentication();
             app.UseAuthorization();

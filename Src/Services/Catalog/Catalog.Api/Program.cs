@@ -8,6 +8,8 @@ await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.AddServiceDefaults();
+    builder.Services.AddHealthChecks()
+    .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" });
 
     builder.AddEventHandlers(typeof(Program).Assembly);
 

@@ -8,6 +8,8 @@ await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.AddServiceDefaults();
+    builder.Services.AddHealthChecks()
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!, "redis", tags: new[] { "redis" });
 
     builder.Services.AddScoped<ICartService, CartService>();
     builder.AddEventHandlers(typeof(ProductPriceUpdatedHandler).Assembly);
