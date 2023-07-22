@@ -3,14 +3,9 @@ using Common;
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-
-    builder.AddServiceDefaults();
-    builder.Services.AddRazorPages();
-
+    builder.Services.AddReverseProxy()
+        .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
     var app = builder.Build();
-
-    app.UseDefaultPipeline();
-    app.MapRazorPages();
-
+    app.MapReverseProxy();
     await app.RunAsync();
 }, "ApiGateway");
