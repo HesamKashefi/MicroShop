@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Src\Services\Comm
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{52A5F06F-5749-49EB-AA11-DF502A07B832}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.HealthChecksUI", "Src\View\MicroShop.HealthChecksUI\MicroShop.HealthChecksUI.csproj", "{A742CD5D-B71D-42C3-B36B-A435D19E665E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroShop.HealthChecksUI", "Src\View\MicroShop.HealthChecksUI\MicroShop.HealthChecksUI.csproj", "{A742CD5D-B71D-42C3-B36B-A435D19E665E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

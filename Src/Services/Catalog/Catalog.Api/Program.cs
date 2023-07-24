@@ -1,4 +1,5 @@
 using Catalog.Api.Extensions;
+using Catalog.Api.Protos;
 using Catalog.Application.Queries;
 using Common;
 using Common.Options;
@@ -11,6 +12,7 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.Services.AddHealthChecks()
     .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" });
 
+    builder.Services.AddGrpc();
     builder.AddEventHandlers(typeof(Program).Assembly);
 
     builder.Services.AddScoped<IMongoDatabase>(c =>
@@ -29,6 +31,7 @@ await Extensions.RunInLoggerAsync(async () =>
     // Configure the HTTP request pipeline.
     app.UseDefaultPipeline();
 
+    app.MapGrpcService<MyCatalogService>();
     app.ConfigureEventBus(new UseEventBusOptions());
 
     await app.SeedDatabaseAsync();

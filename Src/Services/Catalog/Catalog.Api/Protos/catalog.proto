@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "Catalog.Api.Protos";
+
+package catalog;
+
+message GetProduct {
+	string id = 1;
+}
+
+message ProductDto {
+	string id = 1;
+	string name = 2;
+	int32  price = 3;
+	string imageUrl = 4;
+}
+
+service CatalogService {
+	rpc GetProductById(GetProduct) returns (ProductDto);
+}
