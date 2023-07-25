@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Src/Services/Identity/Identity.Api/Identity.Api.csproj", "Src/Services/Identity/Identity.Api/"]
+COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
+COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
 RUN dotnet restore "Src/Services/Identity/Identity.Api/Identity.Api.csproj"
 COPY . .
 WORKDIR "/src/Src/Services/Identity/Identity.Api"

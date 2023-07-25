@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Src/View/MicroShop.HealthChecksUI/MicroShop.HealthChecksUI.csproj", "Src/View/MicroShop.HealthChecksUI/"]
+COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
+COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
 RUN dotnet restore "Src/View/MicroShop.HealthChecksUI/MicroShop.HealthChecksUI.csproj"
 COPY . .
 WORKDIR "/src/Src/View/MicroShop.HealthChecksUI"

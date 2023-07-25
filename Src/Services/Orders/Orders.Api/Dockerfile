@@ -6,10 +6,13 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Services/Orders/Orders.Api/Orders.Api.csproj", "Services/Orders/Orders.Api/"]
-RUN dotnet restore "Services/Orders/Orders.Api/Orders.Api.csproj"
+COPY ["Src/Services/Orders/Orders.Api/Orders.Api.csproj", "Src/Services/Orders/Orders.Api/"]
+COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
+COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
+RUN dotnet restore "Src/Services/Orders/Orders.Api/Orders.Api.csproj"
 COPY . .
-WORKDIR "/src/Services/Orders/Orders.Api"
+WORKDIR "/src/Src/Services/Orders/Orders.Api"
 RUN dotnet build "Orders.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

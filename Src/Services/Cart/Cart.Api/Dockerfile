@@ -6,10 +6,13 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Services/Cart/Cart.Api/Cart.Api.csproj", "Services/Cart/Cart.Api/"]
-RUN dotnet restore "Services/Cart/Cart.Api/Cart.Api.csproj"
+COPY ["Src/Services/Cart/Cart.Api/Cart.Api.csproj", "Src/Services/Cart/Cart.Api/"]
+COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
+COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
+RUN dotnet restore "Src/Services/Cart/Cart.Api/Cart.Api.csproj"
 COPY . .
-WORKDIR "/src/Services/Cart/Cart.Api"
+WORKDIR "/src/Src/Services/Cart/Cart.Api"
 RUN dotnet build "Cart.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

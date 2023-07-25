@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["Src/ApiGateways/ApiGateway/ApiGateway.csproj", "Src/ApiGateways/ApiGateway/"]
+COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
+COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
 RUN dotnet restore "Src/ApiGateways/ApiGateway/ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/Src/ApiGateways/ApiGateway"
