@@ -1,18 +1,17 @@
+using ApiGateway.Extensions;
 using Common;
-using System.Net;
-
-ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.Services.AddReverseProxy()
-        .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
-        .ConfigureHttpClient((context, handler) =>
-        {
-            handler.SslOptions.RemoteCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-        });
+    builder.AddServiceDefaults();
+    builder.AddReverseProxy();
+    builder.AddGrpcServices();
+
     var app = builder.Build();
+
+    app.UseDefaultPipeline();
+
     app.MapReverseProxy();
     await app.RunAsync();
 }, "ApiGateway");

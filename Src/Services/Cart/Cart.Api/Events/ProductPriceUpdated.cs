@@ -7,7 +7,7 @@ namespace Cart.Api.Events
     public class ProductPriceUpdated : Event
     {
         public required string ProductId { get; init; }
-        public required decimal NewPrice { get; init; }
+        public required double NewPrice { get; init; }
     }
 
     public class ProductPriceUpdatedHandler : IEventHandler<ProductPriceUpdated>

@@ -1,5 +1,5 @@
 using Catalog.Api.Extensions;
-using Catalog.Api.Protos;
+using Catalog.Api.Grpc;
 using Catalog.Application.Queries;
 using Common;
 using Common.Options;

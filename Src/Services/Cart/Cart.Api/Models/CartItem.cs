@@ -2,7 +2,7 @@
 
 namespace Cart.Api.Models
 {
-    public record CartItem(string ProductId, string ProductName, string ImageUrl, decimal ProductPrice, int Quantity) : IValidatableObject
+    public record CartItem(string ProductId, string ProductName, string ImageUrl, double ProductPrice, int Quantity) : IValidatableObject
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

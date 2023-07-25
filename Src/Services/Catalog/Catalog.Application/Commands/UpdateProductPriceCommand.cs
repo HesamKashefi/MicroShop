@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Application.Commands
 {
-    public record UpdateProductPriceCommand(string ProductId, decimal NewPrice) : IRequest;
+    public record UpdateProductPriceCommand(string ProductId, double NewPrice) : IRequest;
 
     public class UpdateProductPriceCommandHandler : IRequestHandler<UpdateProductPriceCommand>
     {
