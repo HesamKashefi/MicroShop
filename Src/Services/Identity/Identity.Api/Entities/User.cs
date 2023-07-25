@@ -6,8 +6,8 @@
 
         public int Id { get; set; }
         public required string Username { get; set; }
-        public byte[] PasswordHash { get; private set; }
-        public byte[] PasswordSalt { get; private set; }
+        public required byte[] PasswordHash { get; init; }
+        public required byte[] PasswordSalt { get; init; }
 
 
         public static User Create(string username, string password)

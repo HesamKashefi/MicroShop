@@ -14,12 +14,12 @@ public class LoginModel : PageModel
     private readonly IdentityContext _identityContext;
 
     [BindProperty]
-    public LoginViewModel LoginViewModel { get; set; }
+    public LoginViewModel LoginViewModel { get; set; } = new("", "");
 
 
     public LoginModel(IdentityContext identityContext)
     {
-        _identityContext = identityContext;
+        _identityContext = identityContext ?? throw new ArgumentNullException(nameof(identityContext));
     }
 
     public void OnGet([FromQuery] string? returnUrl = null)
