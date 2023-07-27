@@ -36,10 +36,10 @@ services:
   microshop-view:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8000;http://+:7000
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7000:7000
-      - 8000:8000
+      - 7000:80
+      - 8000:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -49,10 +49,10 @@ services:
   apigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8001;http://+:7001
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7001:7001
-      - 8001:8001
+      - 7001:80
+      - 8001:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -65,10 +65,10 @@ services:
   identity-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8002;http://+:7002
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7002:7002
-      - 8002:8002
+      - 7002:80
+      - 8002:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -80,10 +80,14 @@ services:
   catalog-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8003;http://+:7003
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
+      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:82
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
     ports:
-      - 7003:7003
-      - 8003:8003
+      - 7003:80
+      - 8003:81
+      - 9003:82
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -95,10 +99,10 @@ services:
   cart-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8004;http://+:7004
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7004:7004
-      - 8004:8004
+      - 7004:80
+      - 8004:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -110,10 +114,10 @@ services:
   orders-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8005;http://+:7005
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7005:7005
-      - 8005:8005
+      - 7005:80
+      - 8005:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -124,10 +128,10 @@ services:
   microshop-healthchecksui:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:8010;http://+:7010
+      - ASPNETCORE_URLS=https://+:81;http://+:80
     ports:
-      - 7010:7010
-      - 8010:8010
+      - 7010:80
+      - 8010:81
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

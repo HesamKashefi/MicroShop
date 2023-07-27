@@ -6,7 +6,7 @@ using static Catalog.Api.Protos.CatalogService;
 namespace ApiGateway.Controllers
 {
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "OpenIddict.Validation.AspNetCore")]
     [Route("api/v1/[controller]")]
     public class CartController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace ApiGateway.Controllers
             {
                 query.Ids.Add(id);
             }
-            var products = await _catalogService.GetProductsByIdAsync(query);
+            var productsResponse = await _catalogService.GetProductsByIdAsync(query);
 
             return NoContent();
         }

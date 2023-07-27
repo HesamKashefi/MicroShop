@@ -45,6 +45,8 @@ namespace Common
         {
             builder.Host.UseNLog();
 
+            builder.Configuration.AddJsonFile("/src/projectSettings.json", false);
+
             builder.Services.AddHealthChecks();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -22,6 +22,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Content Include="../../../../projectSettings.json" CopyToOutputDirectory="Always"/>
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common\Common.csproj" />
   </ItemGroup>
