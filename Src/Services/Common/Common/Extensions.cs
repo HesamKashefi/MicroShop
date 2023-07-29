@@ -22,6 +22,7 @@ namespace Common
         {
             LogManager.Setup().LoadConfigurationFromAppSettings();
             LogManager.Configuration.Variables["AppName"] = loggerName;
+            LogManager.ReconfigExistingLoggers();
             var logger = LogManager.GetLogger(loggerName);
 
             logger.Debug("Init Main");
