@@ -1,4 +1,6 @@
-﻿using Catalog.Api.Protos;
+﻿using Cart.Api.Protos;
+using Catalog.Api.Protos;
+using Grpc.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Net.Http.Headers;
 using System.Globalization;
@@ -27,19 +29,33 @@ namespace ApiGateway.Extensions
                 var url = builder.Configuration.GetValue<string>("Urls:Grpc:Catalog")!;
                 options.Address = new Uri(url);
             })
-            .ConfigurePrimaryHttpMessageHandler(() =>
+            .ConfigurePrimaryHttpMessageHandler(GetHandler)
+            .AddCallCredentials(AddCredentials);
+
+
+            builder.Services.AddGrpcClient<CartService.CartServiceClient>((provider, options) =>
             {
-                var handler = new HttpClientHandler();
-                handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-                return handler;
+                var url = builder.Configuration.GetValue<string>("Urls:Grpc:Cart")!;
+                options.Address = new Uri(url);
             })
-            .AddCallCredentials(async (context, meta, provider) =>
-            {
-                var httpContext = provider.GetRequiredService<IHttpContextAccessor>().HttpContext!;
-                var token = await httpContext.GetTokenAsync("access_token");
-                token ??= httpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer", "", true, CultureInfo.CurrentCulture);
-                meta.Add("Authorization", "Bearer " + token);
-            });
+            .ConfigurePrimaryHttpMessageHandler(GetHandler)
+            .AddCallCredentials(AddCredentials);
+        }
+
+
+        private static HttpMessageHandler GetHandler()
+        {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            return handler;
+        }
+
+        private async static Task AddCredentials(AuthInterceptorContext context, Metadata meta, IServiceProvider provider)
+        {
+            var httpContext = provider.GetRequiredService<IHttpContextAccessor>().HttpContext!;
+            var token = await httpContext.GetTokenAsync("access_token");
+            token ??= httpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer", "", true, CultureInfo.CurrentCulture);
+            meta.Add("Authorization", "Bearer " + token);
         }
     }
 }

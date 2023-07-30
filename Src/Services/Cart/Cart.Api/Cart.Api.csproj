@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.Redis" Version="6.0.4" />
+		<PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
 		<PackageReference Include="OpenIddict.AspNetCore" Version="4.6.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
 		<PackageReference Include="StackExchange.Redis" Version="2.6.122" />
@@ -19,11 +20,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="../../../../projectSettings.json" CopyToOutputDirectory="Always"/>
+		<Content Include="../../../../projectSettings.json" CopyToOutputDirectory="Always" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Common\Common\Common.csproj" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<Protobuf Include="Protos\cart.proto" GrpcServices="Server" />
+	</ItemGroup>
+
 
 </Project>

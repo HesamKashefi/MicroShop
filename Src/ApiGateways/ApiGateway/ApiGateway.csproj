@@ -28,6 +28,9 @@
 	<ItemGroup>
 		<Protobuf Include="..\..\Services\Catalog\Catalog.Api\Protos\catalog.proto" GrpcServices="Client" />
 	</ItemGroup>
+	<ItemGroup>
+		<Protobuf Include="..\..\Services\Cart\Cart.Api\Protos\cart.proto" GrpcServices="Client" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Services\Common\Common\Common.csproj" />

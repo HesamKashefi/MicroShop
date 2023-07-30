@@ -103,10 +103,14 @@ services:
   cart-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
+      - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
+      - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
+      - Kestrel__Endpoints__GRPC__Protocols=Http2
     ports:
       - 7004:80
       - 8004:81
+      - 9004:82
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "Cart.Api.Protos";
+
+package CartApi;
+
+message CartItem 
+{
+	string productId = 1;
+	string productName = 2;
+	double productPrice = 3;
+	string productImageUrl = 4;
+	int32 quantity = 5;
+}
+
+message UpdateCartCommand {
+   repeated	CartItem cartItems = 1;
+}
+
+message UpdateCartResponse {
+	bool ok = 1;
+}
+
+service CartService {
+	rpc UpdateCart(UpdateCartCommand) returns (UpdateCartResponse);
+}

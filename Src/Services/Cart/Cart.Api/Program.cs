@@ -1,4 +1,5 @@
 using Cart.Api.Events;
+using Cart.Api.Grpc;
 using Cart.Api.Services;
 using Common;
 using Common.Options;
@@ -8,6 +9,7 @@ await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.AddServiceDefaults();
+    builder.Services.AddGrpc();
     builder.Services.AddHealthChecks()
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!, "redis", tags: new[] { "redis" });
 
@@ -26,6 +28,7 @@ await Extensions.RunInLoggerAsync(async () =>
 
     var app = builder.Build();
 
+    app.MapGrpcService<GrpcCartService>();
     // Configure the HTTP request pipeline.
     app.UseDefaultPipeline();
 
