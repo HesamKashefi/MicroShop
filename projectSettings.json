@@ -13,12 +13,12 @@
     "Cart": "https://cart-api:81/",
     "Orders": "https://orders-api:81/",
     "Grpc": {
-      "View": "http://microshop-view:82/",
-      "Apigateway": "http://apigateway:82/",
-      "Identity": "http://identity-api:82/",
-      "Catalog": "http://catalog-api:82/",
-      "Cart": "http://cart-api:82/",
-      "Orders": "http://orders-api:82/"
+      "View": "https://microshop-view:82/",
+      "Apigateway": "https://apigateway:82/",
+      "Identity": "https://identity-api:82/",
+      "Catalog": "https://catalog-api:82/",
+      "Cart": "https://cart-api:82/",
+      "Orders": "https://orders-api:82/"
     }
   }
 }

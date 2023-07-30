@@ -26,14 +26,20 @@ namespace ApiGateway.Extensions
             {
                 var url = builder.Configuration.GetValue<string>("Urls:Grpc:Catalog")!;
                 options.Address = new Uri(url);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                return handler;
+            })
+            .AddCallCredentials(async (context, meta, provider) =>
+            {
+                var httpContext = provider.GetRequiredService<IHttpContextAccessor>().HttpContext!;
+                var token = await httpContext.GetTokenAsync("access_token");
+                token ??= httpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer", "", true, CultureInfo.CurrentCulture);
+                meta.Add("Authorization", "Bearer " + token);
             });
-            //.AddCallCredentials(async (context, meta, provider) =>
-            //{
-            //    var httpContext = provider.GetRequiredService<IHttpContextAccessor>().HttpContext!;
-            //    var token = await httpContext.GetTokenAsync("access_token");
-            //    token ??= httpContext.Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer", "", true, CultureInfo.CurrentCulture);
-            //    meta.Add("Authorization", "Bearer " + token);
-            //});
         }
     }
 }

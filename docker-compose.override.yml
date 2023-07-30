@@ -86,7 +86,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - Kestrel__Endpoints__HTTP__Url=http://0.0.0.0:80
       - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
-      - Kestrel__Endpoints__GRPC__Url=http://0.0.0.0:82
+      - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
       - Kestrel__Endpoints__GRPC__Protocols=Http2
     ports:
       - 7003:80
