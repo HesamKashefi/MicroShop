@@ -45,6 +45,8 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
       - apigateway
+      - rabbitmq
+      - seq
 
   apigateway:
     environment:
@@ -61,6 +63,8 @@ services:
       - catalog-api
       - orders-api
       - cart-api
+      - seq
+      - rabbitmq
 
   identity-api:
     environment:
@@ -141,6 +145,8 @@ services:
       - catalog-api
       - orders-api
       - cart-api
+      - seq
+      - rabbitmq
 
 volumes:
   microshop-identity-sqldata:

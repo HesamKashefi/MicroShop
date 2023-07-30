@@ -1,15 +1,27 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Net;
 
 await Common.Extensions.RunInLoggerAsync(async () =>
 {
+    ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
     builder.Services.AddRazorPages();
     builder.Services.AddHealthChecks()
         .AddCheck("self", () => HealthCheckResult.Healthy());
-    builder.Services.AddHealthChecksUI()
-        .AddInMemoryStorage();
+    builder.Services.AddHealthChecksUI(c =>
+    {
+        c.UseApiEndpointHttpMessageHandler(s =>
+        {
+            return new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = delegate { return true; }
+            };
+        });
+    })
+    .AddInMemoryStorage();
 
     var app = builder.Build();
 
