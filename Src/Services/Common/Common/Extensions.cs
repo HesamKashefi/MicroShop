@@ -52,6 +52,7 @@ namespace Common
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers();
+            builder.Services.AddRazorPages();
 
             builder.AddDefaultAuthentication();
             builder.AddEventBus();
@@ -123,18 +124,21 @@ namespace Common
         {
             var o = options ?? throw new ArgumentNullException(nameof(options));
 
-            var scope = builder.ApplicationServices.CreateScope();
-            var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
-
-            var method = typeof(IEventBus).GetMethod(nameof(IEventBus.Subscribe))!;
-            foreach (var pair in o.Handlers)
+            Task.Delay(TimeSpan.FromSeconds(10)).ContinueWith(t =>
             {
-                foreach (var handler in pair.Value)
+                var scope = builder.ApplicationServices.CreateScope();
+                var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
+
+                var method = typeof(IEventBus).GetMethod(nameof(IEventBus.Subscribe))!;
+                foreach (var pair in o.Handlers)
                 {
-                    var genericMethod = method.MakeGenericMethod(pair.Key, handler);
-                    genericMethod.Invoke(bus, Array.Empty<object>());
+                    foreach (var handler in pair.Value)
+                    {
+                        var genericMethod = method.MakeGenericMethod(pair.Key, handler);
+                        genericMethod.Invoke(bus, Array.Empty<object>());
+                    }
                 }
-            }
+            });
         }
 
 
@@ -158,10 +162,12 @@ namespace Common
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllers();
-
             app.MapDefaultHealthChecks();
+
+            app.MapControllers();
+            app.MapRazorPages();
         }
+
         public static void MapDefaultHealthChecks(this IEndpointRouteBuilder routes)
         {
             routes.MapHealthChecks("/hc", new HealthCheckOptions()
