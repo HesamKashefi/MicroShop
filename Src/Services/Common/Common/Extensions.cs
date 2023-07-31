@@ -47,6 +47,7 @@ namespace Common
             builder.Host.UseNLog();
 
             builder.Configuration.AddJsonFile("/src/projectSettings.json", false);
+            builder.Services.Configure<Urls>(builder.Configuration.GetSection("Urls"));
 
             builder.Services.AddHealthChecks();
             builder.Services.AddEndpointsApiExplorer();

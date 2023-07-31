@@ -6,7 +6,6 @@ EXPOSE 80
 EXPOSE 81
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-COPY ["projectSettings.json", "app/projectSettings.json"]
 WORKDIR /src
 COPY ["MicroShop.sln", "MicroShop.sln"]
 

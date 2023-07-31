@@ -1,12 +1,15 @@
 ﻿@page
+@using Common.Options;
+@using Microsoft.Extensions.Options;
 @model IndexModel
+@inject IOptions<Urls> options
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">MicroShop</h1>
+    <p>Learn about <a href="https://github.com/hesamkashefi/MicroShop">MicroShop</a>.</p>
 </div>
 
 
@@ -16,11 +19,19 @@
          style="gap:1rem;">
         @foreach (var product in Model.Products)
         {
-            <div class="card" style="width: 200px; height: 300px;">
+            <div class="card shadow rounded" style="width: 200px; height: 300px;">
+
+                <img src="@("https://localhost:8001/" + product.ImageUrl?.TrimStart('/'))" 
+                class="card-img-top" 
+                alt="@product.Name"
+                style="aspect-ratio: 1/1">
+
                 <div class="card-body">
-                    <p class="card-text">@product.Name</p>
+                    <p class="card-title">@product.Name</p>
                     <p class="card-text">@product.Price</p>
                 </div>
+
+                <a href="#" class="btn btn-primary">Add To Cart</a>
             </div>
         }
     </div>
