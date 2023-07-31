@@ -16,7 +16,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Content Include="../../../projectSettings.json" CopyToOutputDirectory="Always"/>
+		<Content Include="../../../projectSettings.json" CopyToOutputDirectory="Always" />
 	</ItemGroup>
 	
   <ItemGroup>
