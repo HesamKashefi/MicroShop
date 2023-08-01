@@ -1,4 +1,6 @@
-﻿using Identity.Api.Data;
+﻿using Common.Options;
+using Identity.Api.Data;
+using Microsoft.Extensions.Options;
 using OpenIddict.Abstractions;
 
 namespace Identity.Api.Extensions
@@ -10,6 +12,7 @@ namespace Identity.Api.Extensions
             using var scope = app.ApplicationServices.CreateScope();
 
             var db = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+            var options = scope.ServiceProvider.GetService<IOptions<Urls>>()!;
             db.Database.EnsureCreated();
 
             if (!db.Users.Any())
@@ -39,10 +42,10 @@ namespace Identity.Api.Extensions
                     OpenIddictConstants.Permissions.Scopes.Roles
                 }
             };
-            foreach (var address in new string[] { "http://localhost:5000" })
+            foreach (var address in new string[] { options.Value.View })
             {
                 descriptor.PostLogoutRedirectUris.Add(new Uri(address));
-                descriptor.RedirectUris.Add(new Uri(address + "/login-callback"));
+                descriptor.RedirectUris.Add(new Uri(address + "/signin-oidc"));
             }
 
             descriptor.RedirectUris.Add(new Uri("https://oauth.pstmn.io/v1/callback"));
