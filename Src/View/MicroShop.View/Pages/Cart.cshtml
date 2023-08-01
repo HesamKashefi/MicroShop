@@ -1,0 +1,34 @@
+﻿@page
+@model MicroShop.View.Pages.CartModel
+@{
+}
+
+
+@if (Model.Cart?.CartItems is not null)
+{
+    <div class="d-flex justify-content-start flex-wrap"
+         style="gap:1rem;">
+        @foreach (var cartItem in Model.Cart.CartItems)
+        {
+            <form method="post" class="card shadow rounded" style="width: 200px;">
+                <input type="hidden" asp-for="CartItem.ProductId" value="@cartItem.ProductId">
+
+                <img src="@("https://localhost:8001/" + cartItem.ImageUrl?.TrimStart('/'))"
+                     class="card-img-top"
+                     alt="@cartItem.ProductName"
+                     style="aspect-ratio: 1/1">
+
+                <div class="card-body">
+                    <p class="card-title">@cartItem.ProductName</p>
+                    <p class="card-text">@cartItem.ProductPrice</p>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button class="btn btn-outline-primary" type="submit" asp-page-handler="Delete">-</button>
+                        <div>Quantity: @cartItem.Quantity</div>
+                        <button class="btn btn-outline-primary" type="submit" asp-page-handler="Add">+</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+}

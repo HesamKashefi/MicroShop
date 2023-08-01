@@ -54,6 +54,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
     ports:
       - 7001:80
       - 8001:81
@@ -92,6 +93,7 @@ services:
       - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
       - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
       - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
     ports:
       - 7003:80
       - 8003:81
@@ -111,6 +113,7 @@ services:
       - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
       - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
       - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
     ports:
       - 7004:80
       - 8004:81
@@ -127,6 +130,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
     ports:
       - 7005:80
       - 8005:81

@@ -21,7 +21,7 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                this.Products = await _http.GetFromJsonAsync<ProductDto[]>("/products");
+                this.Products = await _http.GetFromJsonAsync<ProductDto[]>("products");
                 _logger.LogTrace("Received Products {@Products}", new { this.Products });
             }
             catch (Exception e)

@@ -1,4 +1,5 @@
 using Common;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -33,12 +34,27 @@ await Extensions.RunInLoggerAsync(async () =>
         };
     });
 
-    builder.Services.AddScoped(sp => new HttpClient(new HttpClientHandler
+    builder.Services.AddScoped(sp =>
     {
-        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-    })
-    {
-        BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:Apigateway")!),
+        using var scope = sp.CreateScope();
+        var accessor = scope.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+        var client = new HttpClient(handler)
+        {
+            BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:Apigateway")!)
+        };
+        if (accessor.HttpContext is not null)
+        {
+            var token = accessor.HttpContext.GetTokenAsync("access_token").Result;
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+            }
+        }
+        return client;
     });
 
     var app = builder.Build();
