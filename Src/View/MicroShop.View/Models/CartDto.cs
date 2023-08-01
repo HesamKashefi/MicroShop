@@ -5,5 +5,17 @@
 
 
     public record CartUpdateDto(CartItemUpdateDto[] CartItems);
-    public record CartItemUpdateDto(string ProductId, int Quantity);
+    public class CartItemUpdateDto
+    {
+        public CartItemUpdateDto() { }
+
+        public CartItemUpdateDto(string productId, int quantity)
+        {
+            ProductId = productId;
+            Quantity = quantity;
+        }
+
+        public string? ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
 }

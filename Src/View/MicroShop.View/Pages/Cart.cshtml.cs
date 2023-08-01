@@ -38,22 +38,20 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart");
-                var cartItem = Cart.CartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
+                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart") ?? new CartDto(Array.Empty<CartItemDto>());
 
-                var list = new List<CartItemUpdateDto>();
-
-                if (cartItem is null)
+                var cartItems = Cart.CartItems.Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)).ToList();
+                var cartItem = cartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
+                if (cartItem is not null)
                 {
-                    list.Add(new CartItemUpdateDto(this.CartItem.ProductId, 1));
+                    cartItem.Quantity++;
                 }
                 else
                 {
-                    list.Add(new CartItemUpdateDto(this.CartItem.ProductId, cartItem.Quantity + 1));
+                    cartItems.Add(new CartItemUpdateDto(CartItem.ProductId, 1));
                 }
-                list.AddRange(Cart.CartItems.Where(x => x.ProductId != CartItem.ProductId).Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)));
 
-                var cartUpdate = new CartUpdateDto(list.ToArray());
+                var cartUpdate = new CartUpdateDto(cartItems.ToArray());
                 var response = await _httpClient.PutAsJsonAsync("api/v1/Cart", cartUpdate);
                 response.EnsureSuccessStatusCode();
             }
@@ -68,21 +66,21 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart");
-                var cartItem = Cart.CartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
+                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart") ?? new CartDto(Array.Empty<CartItemDto>());
 
-                var list = new List<CartItemUpdateDto>();
-
+                var cartItems = Cart.CartItems.Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)).ToList();
+                var cartItem = cartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
                 if (cartItem is not null)
                 {
-                    if (cartItem.Quantity > 1)
+                    cartItem.Quantity--;
+                    if (cartItem.Quantity < 1)
                     {
-                        list.Add(new CartItemUpdateDto(this.CartItem.ProductId, cartItem.Quantity - 1));
+                        cartItems.Remove(cartItem);
                     }
                 }
-                list.AddRange(Cart.CartItems.Where(x => x.ProductId != CartItem.ProductId).Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)));
 
-                var cartUpdate = new CartUpdateDto(list.ToArray());
+                var cartUpdate = new CartUpdateDto(cartItems.ToArray());
+
                 var response = await _httpClient.PutAsJsonAsync("api/v1/Cart", cartUpdate);
                 response.EnsureSuccessStatusCode();
             }
