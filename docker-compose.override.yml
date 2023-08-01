@@ -37,6 +37,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
+      - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001
     ports:
       - 7000:80
       - 8000:81
@@ -70,6 +72,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__View=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8000
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002
     ports:
       - 7002:80
       - 8002:81
