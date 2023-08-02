@@ -1,5 +1,5 @@
 ﻿using Identity.Api.Data;
-using OpenIddict.Abstractions;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Identity.Api.Extensions
 {
@@ -20,18 +20,17 @@ namespace Identity.Api.Extensions
                     c.UseAspNetCore()
                     .EnableAuthorizationEndpointPassthrough()
                     .EnableTokenEndpointPassthrough()
+                    .EnableUserinfoEndpointPassthrough()
 
                     //disable https
                     .DisableTransportSecurityRequirement();
 
-                    c.RegisterScopes(
-                        OpenIddictConstants.Scopes.Email,
-                        OpenIddictConstants.Scopes.Profile,
-                        OpenIddictConstants.Scopes.Roles,
-                        OpenIddictConstants.Scopes.OfflineAccess);
+                    c.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, Scopes.OfflineAccess);
+                    c.RegisterClaims(Claims.Subject, Claims.Name);
 
                     c.SetAuthorizationEndpointUris("/connect/authorize")
-                    .SetTokenEndpointUris("/connect/token");
+                    .SetTokenEndpointUris("/connect/token")
+                    .SetUserinfoEndpointUris("/connect/userinfo");
 
                     c.AllowAuthorizationCodeFlow()
                     .AllowRefreshTokenFlow();
@@ -43,6 +42,12 @@ namespace Identity.Api.Extensions
 
                     c.DisableAccessTokenEncryption();
                 });
+
+                o.AddValidation(options =>
+                 {
+                     options.UseLocalServer();
+                     options.UseAspNetCore();
+                 });
             });
             return services;
         }
