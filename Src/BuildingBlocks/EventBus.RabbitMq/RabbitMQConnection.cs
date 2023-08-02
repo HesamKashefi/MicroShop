@@ -47,7 +47,7 @@ namespace EventBus.RabbitMq
                 var policy = Polly.Policy
                     .Handle<SocketException>()
                     .Or<ConnectFailureException>()
-                    .WaitAndRetry(3, x => TimeSpan.FromSeconds(Math.Pow(2, x)), (ex, time) =>
+                    .WaitAndRetry(6, x => TimeSpan.FromSeconds(Math.Pow(2, x)), (ex, time) =>
                     {
                         _logger.LogError(ex, "RabbitMQ connection failed after {TimeOut}s", $"{time.TotalSeconds:n1}");
                     });
