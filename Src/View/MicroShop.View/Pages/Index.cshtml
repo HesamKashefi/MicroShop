@@ -22,7 +22,7 @@
             <form asp-page="cart" 
                   asp-page-handler="Add"
                   method="post"
-                  class="card shadow rounded" style="width: 200px; height: 300px;">
+                  class="card shadow rounded" style="width: 200px;">
 
                 <img src="@("https://localhost:8001/" + product.ImageUrl?.TrimStart('/'))" 
                 class="card-img-top" 
@@ -36,7 +36,10 @@
 
                 <input type="hidden" name="ProductId" value="@product.Id">
 
-                <Button class="btn btn-primary" type="submit">Add To Cart</Button>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <Button class="btn btn-primary" type="submit">Add To Cart</Button>
+                }
             </form>
         }
     </div>

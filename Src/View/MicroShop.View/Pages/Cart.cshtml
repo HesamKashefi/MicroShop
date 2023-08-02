@@ -4,7 +4,7 @@
 }
 
 
-@if (Model.Cart?.CartItems is not null)
+@if (Model.Cart?.CartItems is not null && Model.Cart.CartItems.Length > 0)
 {
     <div class="d-flex justify-content-start flex-wrap"
          style="gap:1rem;">
@@ -30,5 +30,11 @@
                 </div>
             </form>
         }
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center">
+        <p>Your cart is empty!</p>
     </div>
 }

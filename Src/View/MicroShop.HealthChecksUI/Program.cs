@@ -41,7 +41,10 @@ await Common.Extensions.RunInLoggerAsync(async () =>
     app.UseAuthorization();
 
     app.UseHealthChecks("/hc");
-    app.UseHealthChecksUI();
+    app.UseHealthChecksUI(c =>
+    {
+        c.UIPath = "/hc-ui";
+    });
 
     await app.RunAsync();
 }, "HealthChecksUI");

@@ -15,13 +15,13 @@
 
                 <div class="form-group">
                     <label asp-for="LoginViewModel.Username"></label>
-                    <input asp-for="LoginViewModel.Username" class="form-control" />
+                    <input asp-for="LoginViewModel.Username" class="form-control" autocomplete="username" />
                     <span asp-validation-for="LoginViewModel.Username" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="LoginViewModel.Password"></label>
-                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" />
+                    <input asp-for="LoginViewModel.Password" class="form-control" type="password" autocomplete="password"/>
                     <span asp-validation-for="LoginViewModel.Password" class="text-danger"></span>
                 </div>
 
