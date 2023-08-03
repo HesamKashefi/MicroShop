@@ -11,13 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="6.0.2" />
-	  <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
-	  <PackageReference Include="MediatR" Version="12.1.1" />
-	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-	  <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
-	  <PackageReference Include="OpenIddict.AspNetCore" Version="4.6.0" />
-	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	  <PackageReference Include="AspNetCore.HealthChecks.MongoDb"  />
+	  <PackageReference Include="Grpc.AspNetCore"  />
+	  <PackageReference Include="MediatR" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"  />
+	  <PackageReference Include="MongoDB.Driver" />
+	  <PackageReference Include="OpenIddict.AspNetCore"  />
+	  <PackageReference Include="Swashbuckle.AspNetCore"  />
   </ItemGroup>
 
   <ItemGroup>

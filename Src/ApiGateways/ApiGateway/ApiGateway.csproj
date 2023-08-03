@@ -11,14 +11,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Grpc.AspNetCore.Server.ClientFactory" Version="2.55.0" />
-		<PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.55.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.56.2" PrivateAssets="All" />
-		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageReference Include="Yarp.ReverseProxy" Version="2.0.1" />
+		<PackageReference Include="Grpc.AspNetCore.Server.ClientFactory"  />
+		<PackageReference Include="Grpc.AspNetCore"  />
+		<PackageReference Include="Grpc.Net.Client"  />
+		<PackageReference Include="Grpc.Tools" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi"  />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"  />
+		<PackageReference Include="Swashbuckle.AspNetCore"  />
+		<PackageReference Include="Yarp.ReverseProxy"  />
 	</ItemGroup>
 
 	<ItemGroup>

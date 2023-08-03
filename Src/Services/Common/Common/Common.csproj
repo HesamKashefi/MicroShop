@@ -17,12 +17,12 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-		<PackageReference Include="NLog.Targets.Seq" Version="3.0.0" />
-		<PackageReference Include="NLog.Web.AspNetCore" Version="5.3.2" />
-		<PackageReference Include="OpenIddict.AspNetCore" Version="4.6.0" />
-		<PackageReference Include="Scrutor" Version="4.2.2" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client"  />
+		<PackageReference Include="NLog.Targets.Seq"  />
+		<PackageReference Include="NLog.Web.AspNetCore"  />
+		<PackageReference Include="OpenIddict.AspNetCore"  />
+		<PackageReference Include="Scrutor"  />
+		<PackageReference Include="Swashbuckle.AspNetCore"  />
 	</ItemGroup>
 
 	<ItemGroup>
