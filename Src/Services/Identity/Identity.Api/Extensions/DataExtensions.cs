@@ -44,8 +44,9 @@ namespace Identity.Api.Extensions
             };
             foreach (var address in new string[] { options.Value.View })
             {
-                descriptor.PostLogoutRedirectUris.Add(new Uri(address));
-                descriptor.RedirectUris.Add(new Uri(address + "/signin-oidc"));
+                var modifiedAddress = address.TrimEnd('/') + '/';
+                descriptor.PostLogoutRedirectUris.Add(new Uri(modifiedAddress));
+                descriptor.RedirectUris.Add(new Uri(modifiedAddress + "signin-oidc"));
             }
 
             descriptor.RedirectUris.Add(new Uri("https://oauth.pstmn.io/v1/callback"));

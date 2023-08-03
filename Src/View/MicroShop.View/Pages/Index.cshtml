@@ -1,6 +1,4 @@
 ﻿@page
-@using Common.Options;
-@using Microsoft.Extensions.Options;
 @model IndexModel
 @inject IOptions<Urls> options
 @{
@@ -24,7 +22,7 @@
                   method="post"
                   class="card shadow rounded" style="width: 200px;">
 
-                <img src="@("https://localhost:8001/" + product.ImageUrl?.TrimStart('/'))" 
+                <img src="@(options.Value.Apigateway + product.ImageUrl?.TrimStart('/'))" 
                 class="card-img-top" 
                 alt="@product.Name"
                 style="aspect-ratio: 1/1">
