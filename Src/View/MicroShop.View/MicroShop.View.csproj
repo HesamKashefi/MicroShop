@@ -11,9 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="AspNetCore.HealthChecks.UI"  />
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect"  />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"  />
+	<PackageReference Include="AspNetCore.HealthChecks.UI" />
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
   </ItemGroup>
 
 	<ItemGroup>

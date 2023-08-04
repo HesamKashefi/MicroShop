@@ -1,4 +1,4 @@
-﻿namespace MicroShop.View.Models
+﻿namespace MicroShop.View.Models.DTOs
 {
     public class ProductDto
     {

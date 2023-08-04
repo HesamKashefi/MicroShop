@@ -1,4 +1,5 @@
-using MicroShop.View.Models;
+using MicroShop.View.Models.DTOs;
+using MicroShop.View.Models.HttpClients;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,7 +9,7 @@ namespace MicroShop.View.Pages
     [Authorize]
     public class CartModel : PageModel
     {
-        private readonly HttpClient _httpClient;
+        private readonly ICartService _cartService;
         private readonly ILogger<CartModel> _logger;
 
         public CartDto? Cart { get; private set; }
@@ -16,9 +17,9 @@ namespace MicroShop.View.Pages
         [BindProperty]
         public CartItemUpdateDto CartItem { get; set; }
 
-        public CartModel(HttpClient httpClient, ILogger<CartModel> logger)
+        public CartModel(ICartService cartService, ILogger<CartModel> logger)
         {
-            _httpClient = httpClient;
+            _cartService = cartService;
             _logger = logger;
         }
 
@@ -26,7 +27,7 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart");
+                Cart = await _cartService.GetCartAsync();
             }
             catch (Exception e)
             {
@@ -38,22 +39,7 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart") ?? new CartDto(Array.Empty<CartItemDto>());
-
-                var cartItems = Cart.CartItems.Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)).ToList();
-                var cartItem = cartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
-                if (cartItem is not null)
-                {
-                    cartItem.Quantity++;
-                }
-                else
-                {
-                    cartItems.Add(new CartItemUpdateDto(CartItem.ProductId, 1));
-                }
-
-                var cartUpdate = new CartUpdateDto(cartItems.ToArray());
-                var response = await _httpClient.PutAsJsonAsync("api/v1/Cart", cartUpdate);
-                response.EnsureSuccessStatusCode();
+                await _cartService.AddItemAsync(CartItem.ProductId);
             }
             catch (Exception e)
             {
@@ -66,23 +52,7 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                Cart = await _httpClient.GetFromJsonAsync<CartDto>("/Cart") ?? new CartDto(Array.Empty<CartItemDto>());
-
-                var cartItems = Cart.CartItems.Select(x => new CartItemUpdateDto(x.ProductId, x.Quantity)).ToList();
-                var cartItem = cartItems.FirstOrDefault(x => x.ProductId == CartItem.ProductId);
-                if (cartItem is not null)
-                {
-                    cartItem.Quantity--;
-                    if (cartItem.Quantity < 1)
-                    {
-                        cartItems.Remove(cartItem);
-                    }
-                }
-
-                var cartUpdate = new CartUpdateDto(cartItems.ToArray());
-
-                var response = await _httpClient.PutAsJsonAsync("api/v1/Cart", cartUpdate);
-                response.EnsureSuccessStatusCode();
+                await _cartService.RemoveItemAsync(CartItem.ProductId);
             }
             catch (Exception e)
             {

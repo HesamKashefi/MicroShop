@@ -1,4 +1,5 @@
-﻿using MicroShop.View.Models;
+﻿using MicroShop.View.Models.DTOs;
+using MicroShop.View.Models.HttpClients;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MicroShop.View.Pages
@@ -6,23 +7,22 @@ namespace MicroShop.View.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly HttpClient _http;
+        private readonly ICatalogService _catalogService;
 
         public ProductDto[]? Products { get; set; }
 
 
-        public IndexModel(ILogger<IndexModel> logger, HttpClient http)
+        public IndexModel(ILogger<IndexModel> logger, ICatalogService catalogService)
         {
             _logger = logger;
-            _http = http;
+            _catalogService = catalogService;
         }
 
         public async Task OnGetAsync()
         {
             try
             {
-                this.Products = await _http.GetFromJsonAsync<ProductDto[]>("products");
-                _logger.LogTrace("Received Products {@Products}", new { this.Products });
+                this.Products = await _catalogService.GetProductsAsync();
             }
             catch (Exception e)
             {

@@ -1,5 +1,5 @@
 using Common;
-using MicroShop.View.Models;
+using MicroShop.View.Models.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Net;
 
@@ -15,6 +15,7 @@ await Extensions.RunInLoggerAsync(async () =>
     .AddCheck("self", () => HealthCheckResult.Healthy());
 
     builder.AddViewDefaultAuthentication();
+    builder.AddHttpClients();
 
     var app = builder.Build();
 
