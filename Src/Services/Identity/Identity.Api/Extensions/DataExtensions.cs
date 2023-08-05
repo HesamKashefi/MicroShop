@@ -17,7 +17,9 @@ namespace Identity.Api.Extensions
 
             if (!db.Users.Any())
             {
-                db.Users.Add(Identity.Api.Entities.User.Create("hesam", "hesam"));
+                var user = Identity.Api.Entities.User.Create("hesam", "hesam");
+                user.SetRoleAsAdmin();
+                db.Users.Add(user);
                 db.SaveChanges();
             }
 

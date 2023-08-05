@@ -6,6 +6,7 @@
 
         public int Id { get; set; }
         public required string Username { get; set; }
+        public string? Roles { get; private set; }
         public required byte[] PasswordHash { get; init; }
         public required byte[] PasswordSalt { get; init; }
 
@@ -44,6 +45,11 @@
             var passwordHash = sha.ComputeHash(concatenated);
 
             return Enumerable.SequenceEqual(passwordHash, this.PasswordHash);
+        }
+
+        public void SetRoleAsAdmin()
+        {
+            Roles = "admin";
         }
     }
 }

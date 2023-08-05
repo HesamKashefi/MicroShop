@@ -168,6 +168,10 @@ public class AuthorizationController : ControllerBase
             new(Claims.Subject, user.Id.ToString()),
             new(Claims.Name, user.Username)
         };
+        if (!string.IsNullOrEmpty(user.Roles))
+        {
+            claims.AddRange(user.Roles.Split(",").Select(x => new Claim(Claims.Role, x)));
+        }
         var identity = new ClaimsIdentity(claims, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme, Claims.Name, Claims.Role);
         var principal = new ClaimsPrincipal(identity);
 
@@ -215,6 +219,7 @@ public class AuthorizationController : ControllerBase
         return claim.Type switch
         {
             Claims.Name or
+            Claims.Role or
             Claims.Subject
                 // when claim.Subject.HasScope(Scopes.Profile)
                 //_identityOptions.Value.ClaimsIdentity.SecurityStampClaimType
