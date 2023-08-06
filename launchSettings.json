@@ -10,7 +10,8 @@
         "cart.api": "StartDebugging",
         "apigateway": "StartDebugging",
         "catalog.api": "StartDebugging",
-        "microshop.healthchecksui": "StartDebugging"
+        "microshop.healthchecksui": "StartDebugging",
+        "microshop.admin": "StartDebugging"
       }
     }
   }

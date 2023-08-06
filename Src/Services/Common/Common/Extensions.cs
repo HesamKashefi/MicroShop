@@ -42,7 +42,7 @@ namespace Common
             }
         }
 
-        public static void AddServiceDefaults(this WebApplicationBuilder builder)
+        public static void AddEssentialServiceDefaults(this WebApplicationBuilder builder)
         {
             builder.Host.UseNLog();
 
@@ -54,8 +54,14 @@ namespace Common
             builder.Services.AddHealthChecks();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddControllers();
             builder.Services.AddRazorPages();
+        }
+
+        public static void AddServiceDefaults(this WebApplicationBuilder builder)
+        {
+            builder.AddEssentialServiceDefaults();
 
             builder.AddDefaultAuthentication();
             builder.AddEventBus();

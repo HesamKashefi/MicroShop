@@ -48,7 +48,8 @@
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="7.0.9" />
-    <PackageVersion Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.9" />
+	<PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.9" />
+	<PackageVersion Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.9" />
     <PackageVersion Include="Microsoft.Build.Utilities.Core" Version="17.4.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />

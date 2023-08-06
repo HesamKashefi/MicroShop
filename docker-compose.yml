@@ -21,6 +21,12 @@ services:
     build:
       context: .
       dockerfile: Src/View/MicroShop.View/Dockerfile
+      
+  microshop-admin:
+    image: ${DOCKER_REGISTRY-}microshopadmin
+    build:
+      context: .
+      dockerfile: Src/View/MicroShop.Admin/Dockerfile
 
   orders-api:
     image: ${DOCKER_REGISTRY-}ordersapi
@@ -58,3 +64,4 @@ services:
       context: .
       dockerfile: Src/View/MicroShop.HealthChecksUI/Dockerfile
 
+      

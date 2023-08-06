@@ -44,7 +44,7 @@ namespace Identity.Api.Extensions
                     OpenIddictConstants.Permissions.Scopes.Roles
                 }
             };
-            foreach (var address in new string[] { options.Value.View })
+            foreach (var address in new string[] { options.Value.View, options.Value.Admin })
             {
                 var modifiedAddress = address.TrimEnd('/') + '/';
                 descriptor.PostLogoutRedirectUris.Add(new Uri(modifiedAddress));

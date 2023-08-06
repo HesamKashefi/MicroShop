@@ -3,6 +3,7 @@
     public class Urls
     {
         public required string View { get; init; }
+        public required string Admin { get; init; }
         public required string Apigateway { get; init; }
         public required string Identity { get; init; }
         public required string Catalog { get; init; }

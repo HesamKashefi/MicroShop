@@ -10,7 +10,7 @@ await Extensions.RunInLoggerAsync(async () =>
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
-    builder.AddServiceDefaults();
+    builder.AddEssentialServiceDefaults();
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy());
 

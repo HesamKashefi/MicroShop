@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		projectSettings.json = projectSettings.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.Admin", "Src\View\MicroShop.Admin\MicroShop.Admin.csproj", "{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A742CD5D-B71D-42C3-B36B-A435D19E665E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +147,7 @@ Global
 		{30F928E1-ABE8-44A5-AB16-8B2DFDFE6D88} = {555CE2EF-E7FC-48A0-9040-63F74E4ABB71}
 		{550FA7D7-CBA5-43F4-B83D-BEAC3CCC9410} = {30F928E1-ABE8-44A5-AB16-8B2DFDFE6D88}
 		{A742CD5D-B71D-42C3-B36B-A435D19E665E} = {9E1AA586-CF04-40DC-9625-A2FB66B53B40}
+		{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3} = {9E1AA586-CF04-40DC-9625-A2FB66B53B40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {997B5CC7-FA43-41A9-BF18-3EB443462F19}

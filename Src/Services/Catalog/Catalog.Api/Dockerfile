@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["MicroShop.sln", "MicroShop.sln"]
 
 COPY ["Src/View/MicroShop.View/MicroShop.View.csproj", "Src/View/MicroShop.View/"]
+COPY ["Src/View/MicroShop.Admin/MicroShop.Admin.csproj", "Src/View/MicroShop.Admin/"]
 COPY ["Src/ApiGateways/ApiGateway/ApiGateway.csproj", "Src/ApiGateways/ApiGateway/"]
 COPY ["Src/View/MicroShop.HealthChecksUI/MicroShop.HealthChecksUI.csproj", "Src/View/MicroShop.HealthChecksUI/"]
 COPY ["Src/Services/Identity/Identity.Api/Identity.Api.csproj", "Src/Services/Identity/Identity.Api/"]

@@ -50,6 +50,21 @@ services:
       - rabbitmq
       - seq
 
+  microshop-admin:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HOSTINGSTARTUPASSEMBLIES="Microsoft.AspNetCore.SpaProxy"
+      - ASPNETCORE_URLS=http://+:80
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
+      - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001/
+    ports:
+      - 7011:80
+      - 4200:4200
+    depends_on:
+      - apigateway
+      - rabbitmq
+      - seq
+
   apigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -165,4 +180,5 @@ volumes:
     external: false
   microshop-catalog-mongodata:
     external: false
+
 

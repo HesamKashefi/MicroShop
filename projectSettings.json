@@ -7,6 +7,7 @@
   },
   "Urls": {
     "View": "https://microshop-view:81/",
+    "Admin": "http://microshop-admin:80/",
     "Apigateway": "https://apigateway:81/",
     "Identity": "https://identity-api:81/",
     "Catalog": "https://catalog-api:81/",

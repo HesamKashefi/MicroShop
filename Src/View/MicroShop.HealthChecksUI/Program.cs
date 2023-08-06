@@ -1,14 +1,15 @@
+using Common;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Net;
 
-await Common.Extensions.RunInLoggerAsync(async () =>
+await Extensions.RunInLoggerAsync(async () =>
 {
     ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
     var builder = WebApplication.CreateBuilder(args);
+    builder.AddEssentialServiceDefaults();
 
     // Add services to the container.
-    builder.Services.AddRazorPages();
     builder.Services.AddHealthChecks()
         .AddCheck("self", () => HealthCheckResult.Healthy());
     builder.Services.AddHealthChecksUI(c =>
