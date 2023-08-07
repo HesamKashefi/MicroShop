@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { AppLoggedInComponent } from './app-logged-in/app-logged-in.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { CatalogModule } from '../catalog/catalog.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
     SharedModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
+    CatalogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

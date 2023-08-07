@@ -4,6 +4,7 @@ import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ConfigService } from "./services/config.service";
 import { environment } from "src/environments/environment";
+import { HttpService } from "./services/http.service";
 
 export function configLoader(configService: ConfigService) {
     return () => configService.load(environment.config);
@@ -19,6 +20,7 @@ const modules: any[] = [
     imports: [...modules],
     exports: [...modules],
     providers: [
+        HttpService,
         ConfigService,
         {
             provide: APP_INITIALIZER,

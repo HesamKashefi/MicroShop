@@ -1,33 +1,37 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { switchMap, tap } from "rxjs";
+import { BehaviorSubject, switchMap, tap } from "rxjs";
 
 export interface Config {
     ApiAddress: string;
+}
+export interface ServerUrlsConfig {
+    apigateway: string;
+    identity: string;
+    adminLocalSpa: string;
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class ConfigService {
-    private _config?: Config;
-    Config: {
-        apigateway: string;
-        identity: string;
-    } | any;
+    private _spaConfig?: Config;
+    Config?: ServerUrlsConfig;
+    Config$ = new BehaviorSubject<ServerUrlsConfig | undefined>(undefined);
 
     constructor(private http: HttpClient) { }
 
     load(configName: string) {
         return this.http.get<Config>(configName).pipe(
             tap(config => {
-                this._config = config;
+                this._spaConfig = config;
             }),
             switchMap(config => {
-                return this.http.get(config.ApiAddress + '/api/config');
+                return this.http.get<ServerUrlsConfig>(config.ApiAddress + '/api/config');
             }),
             tap(config => {
                 this.Config = config;
+                this.Config$.next(config);
             }),
         );
     }

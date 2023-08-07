@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ConfigService } from "./config.service";
+import { ConfigService, ServerUrlsConfig } from "./config.service";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
-import { Subject } from "rxjs";
+import { Subject, filter } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,13 +10,27 @@ export class AuthService {
     user$ = new Subject<any>();
 
     constructor(private configService: ConfigService, private oauthService: OAuthService) {
+        const config = this.configService.Config;
+
+        if (!config) {
+            configService.Config$
+                .pipe(filter(x => !!x))
+                .subscribe(c => this.configureOAuth(c!));
+        }
+        else {
+            this.configureOAuth(config);
+        }
+    }
+
+
+    private configureOAuth(config: ServerUrlsConfig) {
         const authCodeFlowConfig: AuthConfig = {
             // Url of the Identity Provider
-            issuer: this.configService.Config.identity,
-            tokenEndpoint: this.configService.Config.identity + 'connect/token',
+            issuer: config.identity,
+            tokenEndpoint: config.identity + 'connect/token',
 
             // URL of the SPA to redirect the user to after login
-            redirectUri: this.configService.Config.adminLocalSpa + 'signin-oidc',
+            redirectUri: config.adminLocalSpa + 'signin-oidc',
             clientId: 'MicroShop',
             dummyClientSecret: '38567b43-tebe-18ce-8ba8-ab57356d4dga',
 
@@ -37,5 +51,4 @@ export class AuthService {
             }
         });
     }
-
 }
