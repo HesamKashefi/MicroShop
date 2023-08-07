@@ -9,9 +9,9 @@ export const avoidUnAuthorizedAccess = () => {
     const unAuthorized = !oauthService.hasValidAccessToken();
     if (unAuthorized) {
         const router = inject(Router);
-        router.navigateByUrl("/");
+        router.navigateByUrl("/login");
     }
-    return unAuthorized;
+    return !unAuthorized;
 }
 export const avoidAuthorizedAccess = () => {
     const oauthService = inject(OAuthService);
@@ -20,7 +20,7 @@ export const avoidAuthorizedAccess = () => {
         const router = inject(Router);
         router.navigateByUrl("/");
     }
-    return authorized;
+    return !authorized;
 }
 
 @NgModule({
