@@ -55,6 +55,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HOSTINGSTARTUPASSEMBLIES="Microsoft.AspNetCore.SpaProxy"
       - ASPNETCORE_URLS=http://+:80
+      - Urls__Admin=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:7011/
+      - Urls__AdminLocalSpa=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:4200/
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
       - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001/
     ports:
@@ -88,6 +90,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__Admin=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:7011/
+      - Urls__AdminLocalSpa=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:4200/
       - Urls__View=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8000/
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
     ports:

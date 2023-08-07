@@ -57,6 +57,19 @@ namespace Common
 
             builder.Services.AddControllers();
             builder.Services.AddRazorPages();
+
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddCors(x =>
+                {
+                    x.AddDefaultPolicy(p =>
+                    {
+                        p.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+                });
+            }
         }
 
         public static void AddServiceDefaults(this WebApplicationBuilder builder)
@@ -160,6 +173,7 @@ namespace Common
 
             if (app.Environment.IsDevelopment())
             {
+                app.UseCors();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }

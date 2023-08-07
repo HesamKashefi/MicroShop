@@ -11,7 +11,10 @@ export interface Config {
 })
 export class ConfigService {
     private _config?: Config;
-    Config: any;
+    Config: {
+        apigateway: string;
+        identity: string;
+    } | any;
 
     constructor(private http: HttpClient) { }
 

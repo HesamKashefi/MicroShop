@@ -10,18 +10,6 @@ await Extensions.RunInLoggerAsync(async () =>
 
     builder.AddEssentialServiceDefaults();
     builder.Services.AddControllersWithViews();
-    if (builder.Environment.IsDevelopment())
-    {
-        builder.Services.AddCors(x =>
-        {
-            x.AddDefaultPolicy(p =>
-            {
-                p.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-            });
-        });
-    }
 
     var app = builder.Build();
 

@@ -8,6 +8,7 @@
   "Urls": {
     "View": "https://microshop-view:81/",
     "Admin": "http://microshop-admin:80/",
+    "AdminLocalSpa": "http://localhost:4200/",
     "Apigateway": "https://apigateway:81/",
     "Identity": "https://identity-api:81/",
     "Catalog": "https://catalog-api:81/",
