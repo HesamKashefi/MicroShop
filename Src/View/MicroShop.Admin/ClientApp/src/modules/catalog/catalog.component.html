@@ -1,5 +1,15 @@
 <h2>Catalog</h2>
-<section>
-    <app-catalog-item *ngFor="let product of products"
-                      [product]="product"></app-catalog-item>
+<section *ngIf="products?.data">
+   <app-catalog-item *ngFor="let product of products?.data"
+                     [product]="product"></app-catalog-item>
 </section>
+
+<div *ngIf="products"
+     class="w-100 my-5 d-flex justify-content-center align-items-center">
+   <button *ngIf="products.currentPage > 1"
+           class="btn btn-outline-secondary"
+           (click)="fetch(products.currentPage - 1)">Prev</button>
+   <button *ngIf="products.currentPage < products.totalPages"
+           class="btn btn-outline-secondary"
+           (click)="fetch(products.currentPage + 1)">Next</button>
+</div>

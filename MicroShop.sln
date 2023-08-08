@@ -57,7 +57,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		projectSettings.json = projectSettings.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroShop.Admin", "Src\View\MicroShop.Admin\MicroShop.Admin.csproj", "{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroShop.Admin", "Src\View\MicroShop.Admin\MicroShop.Admin.csproj", "{B395AD18-C7AE-4D21-8E54-A9C8CD558AD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

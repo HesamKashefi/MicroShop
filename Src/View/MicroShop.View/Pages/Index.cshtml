@@ -15,7 +15,7 @@
 {
     <div class="d-flex justify-content-start flex-wrap"
          style="gap:1rem;">
-        @foreach (var product in Model.Products)
+        @foreach (var product in Model.Products.Data)
         {
             <form asp-page="cart" 
                   asp-page-handler="Add"
@@ -41,4 +41,6 @@
             </form>
         }
     </div>
+
+    <partial name="_Pagination" for="Products"></partial>
 }

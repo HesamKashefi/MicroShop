@@ -1,6 +1,8 @@
 ﻿using Catalog.Application.Commands;
 using Catalog.Application.Models;
 using Catalog.Application.Queries;
+using Catalog.Domain;
+using Common.Data;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +27,9 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ProductDto[]> GetAll()
+        public async Task<PagedResult<ProductDto[]>> GetAll([FromQuery] int page = 1)
         {
-            return await _mediator.Send(new GetProductsQuery(), HttpContext.RequestAborted);
+            return await _mediator.Send(new GetProductsQuery(page), HttpContext.RequestAborted);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MicroShop.View.Models.DTOs;
+﻿using Common.Data;
+using MicroShop.View.Models.DTOs;
 
 namespace MicroShop.View.Models.HttpClients
 {
@@ -13,11 +14,11 @@ namespace MicroShop.View.Models.HttpClients
             _logger = logger;
         }
 
-        public async Task<ProductDto[]> GetProductsAsync()
+        public async Task<PagedResult<ProductDto[]>> GetProductsAsync(int page = 1)
         {
             try
             {
-                var products = await _client.GetFromJsonAsync<ProductDto[]>("products");
+                var products = await _client.GetFromJsonAsync<PagedResult<ProductDto[]>>("products?page=" + page);
                 _logger.LogTrace("Received Products {@Products}", new { Products = products });
                 return products!;
             }

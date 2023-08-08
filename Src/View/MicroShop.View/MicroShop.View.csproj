@@ -9,6 +9,10 @@
     <DockerfileContext>..\..\..</DockerfileContext>
     <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+	
+  <ItemGroup>
+    <None Include="Pages\_Pagination.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
 	<PackageReference Include="AspNetCore.HealthChecks.UI" />

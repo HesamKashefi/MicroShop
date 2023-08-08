@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from './services/catalog.serivce';
 import { ProductDto } from './models/product-dto';
+import { PagedResult } from '../shared/models/paged-result';
 
 @Component({
   selector: 'app-catalog',
@@ -8,14 +9,21 @@ import { ProductDto } from './models/product-dto';
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-  products: ProductDto[] = [];
+  products?: PagedResult<ProductDto[]>;
+  currentPage = 1;
 
   constructor(private catalogService: CatalogService) { }
 
   ngOnInit(): void {
-    this.catalogService.getProducts().subscribe(products => {
-      this.products = products;
-    });
+    this.fetch(1);
+  }
+
+  fetch(page: number) {
+    this.catalogService.getProducts(page)
+      .subscribe(products => {
+        this.currentPage = page;
+        this.products = products;
+      });
   }
 
 }

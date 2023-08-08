@@ -1,5 +1,7 @@
-﻿using MicroShop.View.Models.DTOs;
+﻿using Common.Data;
+using MicroShop.View.Models.DTOs;
 using MicroShop.View.Models.HttpClients;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MicroShop.View.Pages
@@ -9,7 +11,10 @@ namespace MicroShop.View.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly ICatalogService _catalogService;
 
-        public ProductDto[]? Products { get; set; }
+        [FromQuery]
+        public int PageNumber { get; set; } = 1;
+
+        public PagedResult<ProductDto[]>? Products { get; set; }
 
 
         public IndexModel(ILogger<IndexModel> logger, ICatalogService catalogService)
@@ -22,7 +27,7 @@ namespace MicroShop.View.Pages
         {
             try
             {
-                this.Products = await _catalogService.GetProductsAsync();
+                this.Products = await _catalogService.GetProductsAsync(PageNumber);
             }
             catch (Exception e)
             {

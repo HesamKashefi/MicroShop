@@ -55,7 +55,7 @@ namespace Common
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
             if (builder.Environment.IsDevelopment())

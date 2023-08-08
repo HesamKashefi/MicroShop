@@ -1,9 +1,10 @@
-﻿using MicroShop.View.Models.DTOs;
+﻿using Common.Data;
+using MicroShop.View.Models.DTOs;
 
 namespace MicroShop.View.Models.HttpClients
 {
     public interface ICatalogService
     {
-        Task<ProductDto[]> GetProductsAsync();
+        Task<PagedResult<ProductDto[]>> GetProductsAsync(int page = 1);
     }
 }
