@@ -21,14 +21,8 @@ export class ConfigService {
 
     constructor(private http: HttpClient) { }
 
-    load(configName: string) {
-        return this.http.get<Config>(configName).pipe(
-            tap(config => {
-                this._spaConfig = config;
-            }),
-            switchMap(config => {
-                return this.http.get<ServerUrlsConfig>(config.ApiAddress + '/api/config');
-            }),
+    load() {
+        return this.http.get<ServerUrlsConfig>('/api/config').pipe(
             tap(config => {
                 this.Config = config;
                 this.Config$.next(config);
