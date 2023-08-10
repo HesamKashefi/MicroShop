@@ -1,0 +1,19 @@
+<section>
+    <h4>
+        Welcome, {{user?.name}}!
+    </h4>
+    <hr>
+    <a [routerLink]="['/catalog']"
+       routerLinkActive="active">
+        <span>Catalog</span>
+    </a>
+    <a [routerLink]="['/orders']"
+       routerLinkActive="active">
+        <span>Orders</span>
+    </a>
+    <hr>
+    <button class="btn btn-outline-danger m-3"
+            (click)="onLogoutClicked()">
+        Logout
+    </button>
+</section>

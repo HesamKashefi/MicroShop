@@ -6,7 +6,7 @@ import { PagedResult } from '../shared/models/paged-result';
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+  styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
   products?: PagedResult<ProductDto[]>;

@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { ConfigService, ServerUrlsConfig } from "./config.service";
 import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
-import { Subject, filter } from "rxjs";
+import { BehaviorSubject, filter } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    user$ = new Subject<any>();
+    user$ = new BehaviorSubject<any>(undefined);
 
     constructor(private configService: ConfigService, private oauthService: OAuthService) {
         const config = this.configService.Config;
@@ -20,6 +20,10 @@ export class AuthService {
         else {
             this.configureOAuth(config);
         }
+    }
+
+    logout() {
+        this.oauthService.logOut();
     }
 
 
@@ -43,6 +47,7 @@ export class AuthService {
 
         this.oauthService.configure(authCodeFlowConfig);
 
+        this.user$.next(this.oauthService.getIdentityClaims());
         this.oauthService.events.subscribe(e => {
             if (e.type === "token_received") {
                 const claims = this.oauthService.getIdentityClaims();
