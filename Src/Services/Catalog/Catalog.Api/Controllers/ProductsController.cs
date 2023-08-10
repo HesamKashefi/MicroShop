@@ -4,6 +4,7 @@ using Catalog.Application.Queries;
 using Catalog.Domain;
 using Common.Data;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.Api.Controllers
@@ -20,6 +21,7 @@ namespace Catalog.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Update([FromBody] UpdateProductPriceCommand command)
         {
             await _mediator.Send(command, HttpContext.RequestAborted);
