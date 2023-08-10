@@ -44,7 +44,6 @@ export class AuthService {
         this.oauthService.configure(authCodeFlowConfig);
 
         this.oauthService.events.subscribe(e => {
-            console.log(e);
             if (e.type === "token_received") {
                 const claims = this.oauthService.getIdentityClaims();
                 this.user$.next(claims);

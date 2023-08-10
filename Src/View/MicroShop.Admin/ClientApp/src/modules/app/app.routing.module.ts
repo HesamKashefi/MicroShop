@@ -7,12 +7,12 @@ import { CatalogComponent } from "../catalog/catalog.component";
 
 export const avoidUnAuthorizedAccess = () => {
     const oauthService = inject(OAuthService);
-    const unAuthorized = !oauthService.hasValidAccessToken();
-    if (unAuthorized) {
+    const authorized = oauthService.hasValidAccessToken();
+    if (!authorized) {
         const router = inject(Router);
         router.navigateByUrl("/login");
     }
-    return !unAuthorized;
+    return authorized;
 }
 export const avoidAuthorizedAccess = () => {
     const oauthService = inject(OAuthService);
@@ -25,22 +25,25 @@ export const avoidAuthorizedAccess = () => {
 }
 
 @NgModule({
-    imports: [RouterModule.forRoot([
-        {
-            path: '',
-            component: AppLoggedInComponent,
-            canActivate: [avoidUnAuthorizedAccess],
-            canActivateChild: [avoidUnAuthorizedAccess],
-            children: [
-                { path: 'catalog', component: CatalogComponent },
-                { path: '**', redirectTo: 'catalog' },
-            ]
-        },
-        { path: 'login', component: LoginComponent, canActivate: [avoidAuthorizedAccess] },
-        { path: 'signin-oidc', component: LoginComponent },
-        { path: '**', redirectTo: '' }
+    imports: [
+        RouterModule.forRoot(
+            [
+                { path: 'login', component: LoginComponent, canActivate: [avoidAuthorizedAccess] },
+                { path: 'signin-oidc', component: LoginComponent, canActivate: [avoidAuthorizedAccess] },
+                {
+                    path: '',
+                    component: AppLoggedInComponent,
+                    canActivate: [avoidUnAuthorizedAccess],
+                    canActivateChild: [avoidUnAuthorizedAccess],
+                    children: [
+                        { path: 'catalog', component: CatalogComponent },
+                        { path: '**', redirectTo: 'catalog' },
+                    ]
+                },
+                { path: '**', redirectTo: '' }
 
-    ])],
+            ])
+    ],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

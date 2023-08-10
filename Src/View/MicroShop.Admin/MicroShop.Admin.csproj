@@ -7,7 +7,8 @@
 	<SpaRoot>/app/ClientApp/</SpaRoot>
 	<SpaProxyServerUrl>http://localhost:4200</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
-	<!--<SpaProxyTimeoutInSeconds>300</SpaProxyTimeoutInSeconds>-->
+	<SpaProxyTimeoutInSeconds>600</SpaProxyTimeoutInSeconds>
+	<SpaProxyKeepAlive>True</SpaProxyKeepAlive>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
