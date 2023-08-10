@@ -10,7 +10,9 @@
           "strict": true
         },
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss",
+          "skipImport": true,
+          "skipTests": true
         }
       },
       "root": "",
