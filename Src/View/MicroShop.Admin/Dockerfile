@@ -10,10 +10,10 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get -y install nodejs
 #install our npm dependencies
 WORKDIR /app/ClientApp
-COPY Src/View/MicroShop.Admin/ClientApp/package.json .
-COPY Src/View/MicroShop.Admin/ClientApp/package-lock.json .
-RUN npm install
-RUN npm -v
+#COPY Src/View/MicroShop.Admin/ClientApp/package.json .
+#COPY Src/View/MicroShop.Admin/ClientApp/package-lock.json .
+#RUN npm install
+#RUN npm -v
 EXPOSE 80
 
 From node:20-alpine AS node-build
