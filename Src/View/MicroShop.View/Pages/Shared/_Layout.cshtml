@@ -25,15 +25,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Cart">Cart</a>
-                        </li>
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Cart">Cart</a>
+                            </li>
+                        }
                     </ul>
                     @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <span class="navbar-text">
                             @User.Identity?.Name
                         </span>
+                        <div class="nav-item">
+                            <a class="nav-link text-danger" asp-area="" asp-controller="Account" asp-action="SignOut">LogOut</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="SignIn">Login</a>
+                        </div>
                     }
                 </div>
             </div>
