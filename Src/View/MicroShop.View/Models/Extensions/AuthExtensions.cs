@@ -23,6 +23,7 @@ namespace MicroShop.View.Models.Extensions
                 options.ClientId = "MicroShop";
                 options.ClientSecret = "38567b43-tebe-18ce-8ba8-ab57356d4dga";
                 options.SaveTokens = true;
+                options.UsePkce = true;
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.RequireHttpsMetadata = false;
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;

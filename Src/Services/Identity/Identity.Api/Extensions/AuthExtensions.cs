@@ -25,6 +25,8 @@ namespace Identity.Api.Extensions
                     //disable https
                     .DisableTransportSecurityRequirement();
 
+                    c.RequireProofKeyForCodeExchange();
+
                     c.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, Scopes.OfflineAccess);
                     c.RegisterClaims(Claims.Subject, Claims.Name);
 
