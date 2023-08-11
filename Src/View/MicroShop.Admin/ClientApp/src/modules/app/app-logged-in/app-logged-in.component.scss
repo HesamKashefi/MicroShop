@@ -4,6 +4,18 @@ section {
     display: grid;
     grid-template-columns: 15% 1fr;
     gap: 1rem;
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: 25% 1fr;
+    }
+
+    @media screen and (max-width: 900px) {
+        grid-template-columns: 35% 1fr;
+    }
+
+    @media screen and (max-width: 500px) {
+        grid-template-columns: 40% 1fr;
+    }
 }
 
 section div:last-of-type() {

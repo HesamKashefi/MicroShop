@@ -9,4 +9,7 @@ import { ProductDto } from '../models/product-dto';
 export class CatalogItemComponent {
   @Input()
   product!: ProductDto;
+
+  @Input()
+  apigatewayUrl!: string;
 }

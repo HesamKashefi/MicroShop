@@ -1,0 +1,14 @@
+<h3>Edit Product</h3>
+<hr>
+<div *ngIf="product">
+    <p>Name: {{ product.name }}</p>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <app-update-product-price [product]="product">
+                </app-update-product-price>
+            </div>
+        </div>
+    </div>
+</div>

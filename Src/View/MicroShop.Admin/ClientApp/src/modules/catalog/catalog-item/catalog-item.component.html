@@ -1,16 +1,16 @@
 <div class="card shadow rounded"
      style="width: 200px;">
 
-    <img [src]="'https://localhost:8001' + product.imageUrl"
-         class="card-img-top"
-         [alt]="product.name"
-         style="aspect-ratio: 1/1">
+     <img [src]="apigatewayUrl + product.imageUrl"
+          class="card-img-top"
+          [alt]="product.name"
+          style="aspect-ratio: 1/1">
 
-    <div class="card-body">
-        <p class="card-title">{{ product.name }}</p>
-        <p class="card-text">{{ product.price }}</p>
-    </div>
+     <div class="card-body">
+          <p class="card-title product-name">{{ product.name }}</p>
+          <p class="card-text product-price">{{ product.price }}$</p>
+     </div>
 
-    <Button class="btn btn-primary"
-            type="submit">Manage</Button>
+     <a class="btn btn-primary"
+        [routerLink]="[product.id]">Manage</a>
 </div>

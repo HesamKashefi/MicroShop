@@ -4,6 +4,7 @@ import { AppLoggedInComponent } from "./app-logged-in/app-logged-in.component";
 import { LoginComponent } from "../auth/login/login.component";
 import { OAuthService } from "angular-oauth2-oidc";
 import { CatalogComponent } from "../catalog/catalog.component";
+import { ProductEditComponent } from "../catalog/product-edit/product-edit.component";
 
 export const avoidUnAuthorizedAccess = () => {
     const oauthService = inject(OAuthService);
@@ -37,6 +38,7 @@ export const avoidAuthorizedAccess = () => {
                     canActivateChild: [avoidUnAuthorizedAccess],
                     children: [
                         { path: 'catalog', component: CatalogComponent },
+                        { path: 'catalog/:id', component: ProductEditComponent },
                         { path: '**', redirectTo: 'catalog' },
                     ]
                 },

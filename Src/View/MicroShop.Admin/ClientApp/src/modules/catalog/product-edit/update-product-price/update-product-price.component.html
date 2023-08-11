@@ -1,0 +1,28 @@
+<section class="card">
+    <p>Current Price: {{ product.price }}$</p>
+    <div class="form-floating mb-3">
+        <input id="newPrice"
+               type="number"
+               placeholder="New Price"
+               class="form-control"
+               [(ngModel)]="newPrice">
+        <label for="newPrice">
+            New Price
+        </label>
+    </div>
+    <div class="mb-3">
+        <span *ngIf="newPrice > product.price"
+              class="text-success">
+            + {{ (newPrice - product.price) * 100 / product.price }}%
+        </span>
+        <span *ngIf="newPrice < product.price"
+              class="text-danger">
+            - {{ (product.price - newPrice) * 100 / product.price }}%
+        </span>
+    </div>
+    <button class="btn btn-primary"
+            [disabled]="newPrice === product.price"
+            (click)="onSubmit()">
+        Update
+    </button>
+</section>

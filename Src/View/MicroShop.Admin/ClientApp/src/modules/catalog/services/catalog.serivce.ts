@@ -10,7 +10,15 @@ export class CatalogService {
     constructor(private http: HttpService) { }
 
     getProducts(page: number): Observable<PagedResult<ProductDto[]>> {
-        return this.http.get<PagedResult<ProductDto[]>>((baseUrl) => UrlsConfig.getCatalog(baseUrl))
+        return this.http.get<PagedResult<ProductDto[]>>((baseUrl) => UrlsConfig.catalog_getCatalog(baseUrl, page));
+    }
+
+    getProductById(id: string): Observable<ProductDto | null> {
+        return this.http.get<ProductDto | null>((baseUrl) => UrlsConfig.catalog_getProductById(baseUrl, id));
+    }
+
+    updatePrice(productId: string, newPrice: number) {
+        return this.http.put<void>((baseUrl) => UrlsConfig.catalog_updateProductPrice(baseUrl), { productId, newPrice });
     }
 }
 

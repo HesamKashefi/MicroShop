@@ -16,11 +16,29 @@ export class HttpService {
             return this.configService.Config$.pipe(filter(c => !!c), switchMap(x => this.get<T>(urlBuilder)));
         }
 
-        const headers = new HttpHeaders();
+        let headers = this.getHeaders();
+
+        return this.http.get<T>(urlBuilder(this.configService.Config.apigateway), { headers })
+    }
+
+
+
+    put<T>(urlBuilder: (basePath: string) => string, body: any): Observable<T> {
+        if (!this.configService.Config) {
+            return this.configService.Config$.pipe(filter(c => !!c), switchMap(x => this.put<T>(urlBuilder, body)));
+        }
+
+        let headers = this.getHeaders();
+
+        return this.http.put<T>(urlBuilder(this.configService.Config.apigateway), body, { headers });
+    }
+
+    private getHeaders() {
+        let headers = new HttpHeaders();
         const token = this.oauthService.hasValidAccessToken() ? this.oauthService.getAccessToken() : undefined;
         if (token) {
-            headers.set('Authorization', 'Bearer ' + token)
+            headers = headers.set('Authorization', 'Bearer ' + token);
         }
-        return this.http.get<T>(urlBuilder(this.configService.Config.apigateway), { headers })
+        return headers;
     }
 }

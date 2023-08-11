@@ -1,7 +1,8 @@
 <h2>Catalog</h2>
 <section *ngIf="products?.data">
    <app-catalog-item *ngFor="let product of products?.data"
-                     [product]="product"></app-catalog-item>
+                     [product]="product"
+                     [apigatewayUrl]="apigatewayUrl"></app-catalog-item>
 </section>
 
 <div *ngIf="products"

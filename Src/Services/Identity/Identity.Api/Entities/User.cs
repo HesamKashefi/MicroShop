@@ -49,7 +49,7 @@
 
         public void SetRoleAsAdmin()
         {
-            Roles = "admin";
+            Roles = "Admin";
         }
     }
 }
