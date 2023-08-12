@@ -19,18 +19,24 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 - \#EventDrivenArchitecture
 - \#CQRS
 - \#YARP
+- \#Angular
 
 ## Architecture
 
-### Services:
-- Identity.Api
-- Catalog.Api
-- Cart.Api
-- Orders.Api
-- APIGateway
-- View
-- HealthChecks
-- Seq
+### Addresses:
+
+| Service   |     Address     |
+|----------|:-------------:|
+|  View  |  https://+:8000 |
+|  Admin  |  http://+:7011 |
+|  APIGateway  |  https://+:8001 |
+|  Identity.Api  |  https://+:8002 |
+|  Catalog.Api  |  https://+:8003 |
+|  Orders.Api  |  https://+:8004 |
+|  Identity.Api  |  https://+:8005 |
+|  HealthChecks  |  https://+:8010/hc-ui |
+|  Seq  |  http://+:5340 |
+
 
 ### View
 https://+:8000
@@ -55,7 +61,7 @@ https://+:8003
 
 Maintains a list of products. 
 
-Built using CQRS architecture.
+Built using CQRS pattern.
 
 MongoDb is used as the database.
 
