@@ -1,6 +1,7 @@
 ﻿using Catalog.Application.Models;
 using Catalog.Domain;
 using MediatR;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -11,15 +12,17 @@ namespace Catalog.Application.Queries
     public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto?>
     {
         private readonly IMongoDatabase _database;
+        private readonly IOptions<PictureFileSettings> _options;
 
-        public GetProductByIdQueryHandler(IMongoDatabase database)
+        public GetProductByIdQueryHandler(IMongoDatabase database, IOptions<PictureFileSettings> options)
         {
             _database = database;
+            _options = options;
         }
 
         public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            var collection = _database.GetCollection<Product>("Products");
+            var collection = _database.GetCollection<Product>(Product.CollectionName);
             var filter = Builders<Product>.Filter.Eq(x => x.Id, ObjectId.Parse(request.Id));
             var product = await collection.Find(filter).FirstOrDefaultAsync(cancellationToken);
 
@@ -32,7 +35,8 @@ namespace Catalog.Application.Queries
             {
                 Id = product.Id.ToString(),
                 Name = product.Name,
-                ImageUrl = product.ImageUrl,
+                ImageUrl = _options.Value.ImageBaseUrl.Replace("[0]", product.Id.ToString()),
+                ImageFileName = product.ImageFileName,
                 Price = product.Price
             };
         }

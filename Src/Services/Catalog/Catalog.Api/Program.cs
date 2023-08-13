@@ -1,5 +1,6 @@
 using Catalog.Api.Extensions;
 using Catalog.Api.Grpc;
+using Catalog.Application.Models;
 using Catalog.Application.Queries;
 using Common;
 using Common.Options;
@@ -11,6 +12,8 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.AddServiceDefaults();
     builder.Services.AddHealthChecks()
     .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" });
+
+    builder.Services.Configure<PictureFileSettings>(builder.Configuration.GetSection("Urls"));
 
     builder.Services.AddGrpc();
     builder.AddEventHandlers(typeof(Program).Assembly);

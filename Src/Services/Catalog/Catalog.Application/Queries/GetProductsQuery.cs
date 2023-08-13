@@ -2,6 +2,7 @@
 using Catalog.Domain;
 using Common.Data;
 using MediatR;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -12,27 +13,30 @@ namespace Catalog.Application.Queries
     public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PagedResult<ProductDto[]>>
     {
         private readonly IMongoDatabase _db;
+        private readonly IOptions<PictureFileSettings> _options;
 
-        public GetProductsQueryHandler(IMongoDatabase db)
+        public GetProductsQueryHandler(IMongoDatabase db, IOptions<PictureFileSettings> options)
         {
             _db = db;
+            _options = options;
         }
 
         public async Task<PagedResult<ProductDto[]>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
-            var collection = _db.GetCollection<Product>("Products");
+            var collection = _db.GetCollection<Product>(Product.CollectionName);
             var query = collection.AsQueryable().OrderBy(x => x.Id);
             var products = await query
                 .Skip((request.Page - 1) * PagedResult.PageSize)
                 .Take(PagedResult.PageSize)
                 .ToListAsync();
             var dtos = products
-                .Select(x => new ProductDto
+                .Select(product => new ProductDto
                 {
-                    Id = x.Id.ToString(),
-                    Name = x.Name,
-                    ImageUrl = x.ImageUrl,
-                    Price = x.Price
+                    Id = product.Id.ToString(),
+                    Name = product.Name,
+                    ImageUrl = _options.Value.ImageBaseUrl.Replace("[0]", product.Id.ToString()),
+                    ImageFileName = product.ImageFileName,
+                    Price = product.Price
                 })
                 .ToArray();
 

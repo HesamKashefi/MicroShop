@@ -1,7 +1,7 @@
 ﻿namespace MicroShop.View.Models.DTOs
 {
     public record CartDto(CartItemDto[] CartItems);
-    public record CartItemDto(string ProductId, string ProductName, string ImageUrl, double ProductPrice, int Quantity);
+    public record CartItemDto(string ProductId, string ProductName, string ProductImageUrl, double ProductPrice, int Quantity);
 
 
     public record CartUpdateDto(CartItemUpdateDto[] CartItems);

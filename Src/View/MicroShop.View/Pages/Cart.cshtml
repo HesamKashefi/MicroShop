@@ -1,5 +1,4 @@
 ﻿@page
-@inject IOptions<Urls> options
 @model MicroShop.View.Pages.CartModel
 @{
 }
@@ -14,7 +13,7 @@
             <form method="post" class="card shadow rounded" style="width: 200px;">
                 <input type="hidden" asp-for="CartItem.ProductId" value="@cartItem.ProductId">
 
-                <img src="@(options.Value.Apigateway + cartItem.ImageUrl?.TrimStart('/'))"
+                <img src="@cartItem.ProductImageUrl"
                      class="card-img-top"
                      alt="@cartItem.ProductName"
                      style="aspect-ratio: 1/1">

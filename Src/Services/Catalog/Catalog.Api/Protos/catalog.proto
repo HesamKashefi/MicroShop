@@ -11,7 +11,7 @@ message GetProductsByIdsQuery {
 message ProductDto {
 	string id = 1;
 	string name = 2;
-	double  price = 3;
+	double price = 3;
 	string imageUrl = 4;
 }
 

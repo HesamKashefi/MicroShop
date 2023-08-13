@@ -1,6 +1,5 @@
 ﻿@page
 @model IndexModel
-@inject IOptions<Urls> options
 @{
     ViewData["Title"] = "Home page";
 }
@@ -22,7 +21,7 @@
                   method="post"
                   class="card shadow rounded" style="width: 200px;">
 
-                <img src="@(options.Value.Apigateway + product.ImageUrl?.TrimStart('/'))" 
+                <img src="@product.ImageUrl" 
                 class="card-img-top" 
                 alt="@product.Name"
                 style="aspect-ratio: 1/1">

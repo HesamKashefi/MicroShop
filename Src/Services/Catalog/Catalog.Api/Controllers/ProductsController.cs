@@ -38,5 +38,24 @@ namespace Catalog.Api.Controllers
         {
             return await _mediator.Send(new GetProductByIdQuery(id), HttpContext.RequestAborted);
         }
+
+        [HttpGet("{id}/Image")]
+        public async Task<IActionResult> GetImageAsync(string id, [FromServices] IWebHostEnvironment env)
+        {
+            var product = await _mediator.Send(new GetProductByIdQuery(id), HttpContext.RequestAborted);
+
+            if (product?.ImageFileName is null)
+            {
+                return NotFound();
+            }
+
+            string path = Path.Combine(env.WebRootPath, "Images", product.ImageFileName);
+            if (!System.IO.File.Exists(path))
+            {
+                return NotFound();
+            }
+            var bytes = await System.IO.File.ReadAllBytesAsync(path);
+            return File(bytes, "image/png");
+        }
     }
 }
