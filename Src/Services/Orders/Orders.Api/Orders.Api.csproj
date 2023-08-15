@@ -11,17 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="OpenIddict.AspNetCore"  />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"  />
-	<PackageReference Include="Swashbuckle.AspNetCore"  />
+	  <PackageReference Include="OpenIddict.AspNetCore" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
 	<ItemGroup>
-		<Content Include="../../../../projectSettings.json" CopyToOutputDirectory="Always"/>
+		<Content Include="../../../../projectSettings.json" CopyToOutputDirectory="Always" />
 	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common\Common.csproj" />
+    <ProjectReference Include="..\Orders.Application\Orders.Application.csproj" />
+    <ProjectReference Include="..\Orders.Domain\Orders.Domain.csproj" />
   </ItemGroup>
 
 </Project>
