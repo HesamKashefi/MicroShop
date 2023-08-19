@@ -8,7 +8,7 @@ services:
       - "5340:80"
       - "5341:5341"
 
-  identity-db:
+  sql-db:
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
@@ -101,7 +101,7 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
-      - identity-db
+      - sql-db
       - rabbitmq
       - seq
 

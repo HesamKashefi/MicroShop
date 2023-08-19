@@ -18,6 +18,7 @@ COPY ["Src/Services/Cart/Cart.Api/Cart.Api.csproj", "Src/Services/Cart/Cart.Api/
 COPY ["Src/Services/Orders/Orders.Api/Orders.Api.csproj", "Src/Services/Orders/Orders.Api/"]
 COPY ["Src/Services/Orders/Orders.Application/Orders.Application.csproj", "Src/Services/Orders/Orders.Application/"]
 COPY ["Src/Services/Orders/Orders.Domain/Orders.Domain.csproj", "Src/Services/Orders/Orders.Domain/"]
+COPY ["Src/Services/Orders/Orders.Persistence/Orders.Persistence.csproj", "Src/Services/Orders/Orders.Persistence/"]
 COPY ["Src/Services/Orders/Tests.Orders/Tests.Orders.csproj", "Src/Services/Orders/Tests.Orders/"]
 COPY ["Src/Services/Catalog/Catalog.Api/Catalog.Api.csproj", "Src/Services/Catalog/Catalog.Api/"]
 COPY ["Src/Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Src/Services/Catalog/Catalog.Application/"]

@@ -2,6 +2,8 @@
 {
     public class Order
     {
+        public int Id { get; private set; }
+
         public int BuyerId { get; init; }
 
         public DateTime CreatedAt { get; private init; } = DateTime.Now;

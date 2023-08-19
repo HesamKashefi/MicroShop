@@ -4,7 +4,7 @@ services:
   seq:
     image: datalust/seq:latest
 
-  identity-db:
+  sql-db:
     image: mcr.microsoft.com/mssql/server:2019-latest 
 
   catalog-db:
