@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.SqlServer"  />
+	<PackageReference Include="AspNetCore.HealthChecks.SqlServer"  />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"  />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi"  />
 	<PackageReference Include="Microsoft.EntityFrameworkCore"  />

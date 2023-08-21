@@ -4,14 +4,18 @@ using Catalog.Application.Models;
 using Catalog.Application.Queries;
 using Common;
 using Common.Options;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MongoDB.Driver;
+using RabbitMQ.Client;
 
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
     builder.AddServiceDefaults();
     builder.Services.AddHealthChecks()
-    .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" });
+    .AddCheck("self", () => HealthCheckResult.Healthy())
+    .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" })
+    .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
 
     builder.Services.Configure<PictureFileSettings>(builder.Configuration.GetSection("Urls"));
 

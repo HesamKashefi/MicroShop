@@ -11,6 +11,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AspNetCore.HealthChecks.RabbitMq"  />
 		<PackageReference Include="AspNetCore.HealthChecks.Redis"  />
 		<PackageReference Include="Grpc.AspNetCore"  />
 		<PackageReference Include="OpenIddict.AspNetCore"  />

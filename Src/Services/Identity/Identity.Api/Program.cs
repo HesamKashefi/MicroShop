@@ -2,6 +2,7 @@ using Common;
 using Identity.Api.Data;
 using Identity.Api.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 await Extensions.RunInLoggerAsync(async () =>
 {
@@ -10,6 +11,7 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.AddServiceDefaults();
     builder.Services.AddRazorPages();
     builder.Services.AddHealthChecks()
+    .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddSqlServer(builder.Configuration.GetConnectionString("Default")!, name: "sqlserver", tags: new[] { "sqlserver" });
 
     builder.Services.AddAuthentication()

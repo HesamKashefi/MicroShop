@@ -3,6 +3,8 @@ using Cart.Api.Grpc;
 using Cart.Api.Services;
 using Common;
 using Common.Options;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using RabbitMQ.Client;
 using StackExchange.Redis;
 
 await Extensions.RunInLoggerAsync(async () =>
@@ -11,7 +13,9 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.AddServiceDefaults();
     builder.Services.AddGrpc();
     builder.Services.AddHealthChecks()
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!, "redis", tags: new[] { "redis" });
+    .AddCheck("self", () => HealthCheckResult.Healthy())
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!, "redis", tags: new[] { "redis" })
+    .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
 
     builder.Services.AddScoped<ICartService, CartService>();
     builder.AddEventHandlers(typeof(ProductPriceUpdatedHandler).Assembly);
