@@ -126,6 +126,7 @@ namespace Common
                     DispatchConsumersAsync = true
                 };
             });
+            builder.Services.AddSingleton<IEventBusSubscriptionManager, DefaultEventBusSubscriptionManager>();
             builder.Services.AddSingleton<IRabbitMQPersistentConnection, RabbitMQConnection>();
             builder.Services.AddSingleton<IEventBus, RabbitMQBus>();
         }
@@ -146,21 +147,25 @@ namespace Common
         {
             var o = options ?? throw new ArgumentNullException(nameof(options));
 
-            Task.Delay(TimeSpan.FromSeconds(10)).ContinueWith(t =>
-            {
-                var scope = builder.ApplicationServices.CreateScope();
-                var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
+            var scope = builder.ApplicationServices.CreateScope();
+            var bus = scope.ServiceProvider.GetRequiredService<IEventBus>();
+            var connection = scope.ServiceProvider.GetRequiredService<IRabbitMQPersistentConnection>();
 
-                var method = typeof(IEventBus).GetMethod(nameof(IEventBus.Subscribe))!;
-                foreach (var pair in o.Handlers)
+            var method = typeof(IEventBus).GetMethod(nameof(IEventBus.Subscribe))!;
+            foreach (var pair in o.Handlers)
+            {
+                foreach (var handler in pair.Value)
                 {
-                    foreach (var handler in pair.Value)
-                    {
-                        var genericMethod = method.MakeGenericMethod(pair.Key, handler);
-                        genericMethod.Invoke(bus, Array.Empty<object>());
-                    }
+                    var genericMethod = method.MakeGenericMethod(pair.Key, handler);
+                    genericMethod.Invoke(bus, Array.Empty<object>());
                 }
-            });
+            }
+
+            Task.Delay(TimeSpan.FromSeconds(10))
+                .ContinueWith((t) =>
+                {
+                    connection.TryConnect();
+                });
         }
 
 

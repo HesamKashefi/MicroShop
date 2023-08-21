@@ -1,8 +1,9 @@
 ﻿namespace EventBus.Core
 {
-    public interface IEventBus
+    public interface IEventBusSubscriptionManager
     {
-        void Publish<TEvent>(TEvent @event) where TEvent : Event;
+        IReadOnlyDictionary<string, List<Type>> Handlers { get; }
+        IReadOnlyList<Type> Events { get; }
 
         void Subscribe<TEvent, TEventHandler>()
             where TEvent : Event

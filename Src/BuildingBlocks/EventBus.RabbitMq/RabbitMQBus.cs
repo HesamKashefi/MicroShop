@@ -11,25 +11,34 @@ namespace EventBus.RabbitMq
     public class RabbitMQBus : IEventBus
     {
         #region Fields
-        private readonly Dictionary<string, List<Type>> _handlers = new();
-        private readonly List<Type> _events = new();
-        private readonly IRabbitMQPersistentConnection _rabbitMQPersistentConnection;
-        private readonly IServiceProvider _serviceProvider;
+        private IReadOnlyDictionary<string, List<Type>> _handlers => _eventBusSubscriptionManager.Handlers;
+        private IReadOnlyList<Type> _events => _eventBusSubscriptionManager.Events;
         #endregion
 
         #region Dependencies
+        private readonly IRabbitMQPersistentConnection _rabbitMQPersistentConnection;
+        private readonly IEventBusSubscriptionManager _eventBusSubscriptionManager;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<RabbitMQBus> _logger;
         #endregion
 
         #region Ctor
         public RabbitMQBus(
             IRabbitMQPersistentConnection rabbitMQPersistentConnection,
+            IEventBusSubscriptionManager eventBusSubscriptionManager,
             IServiceProvider serviceProvider,
             ILogger<RabbitMQBus> logger)
         {
             _rabbitMQPersistentConnection = rabbitMQPersistentConnection ?? throw new ArgumentNullException(nameof(rabbitMQPersistentConnection));
+            _eventBusSubscriptionManager = eventBusSubscriptionManager ?? throw new ArgumentNullException(nameof(eventBusSubscriptionManager));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            rabbitMQPersistentConnection.OnConnected += delegate
+            {
+                foreach (var @event in _events)
+                    BasicConsume(@event);
+            };
         }
         #endregion
 
@@ -56,35 +65,14 @@ namespace EventBus.RabbitMq
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {
-            var eventType = typeof(TEvent);
-            if (!_events.Contains(eventType))
-            {
-                _events.Add(eventType);
-            }
-
-            if (!_handlers.ContainsKey(eventType.Name))
-            {
-                _handlers.Add(eventType.Name, new List<Type>());
-            }
-
-            if (_handlers[eventType.Name].Contains(typeof(TEventHandler)))
-            {
-                throw new InvalidOperationException($"Handler : {typeof(TEventHandler).Name} is already registered for Event : {eventType.Name}");
-            }
-
-            _handlers[eventType.Name].Add(typeof(TEventHandler));
-            _logger.LogTrace("Registered Handler : {Handler} For Event: {Event}", typeof(TEventHandler).Name, eventType.Name);
-
-            BasicConsume<TEvent, TEventHandler>();
+            _eventBusSubscriptionManager.Subscribe<TEvent, TEventHandler>();
         }
 
         #endregion
 
         #region Private Methods
 
-        private void BasicConsume<TEvent, TEventHandler>()
-            where TEvent : Event
-            where TEventHandler : IEventHandler<TEvent>
+        private void BasicConsume(Type eventType)
         {
             if (!_rabbitMQPersistentConnection.IsConnected && !_rabbitMQPersistentConnection.TryConnect())
             {
@@ -92,7 +80,7 @@ namespace EventBus.RabbitMq
             }
             var model = _rabbitMQPersistentConnection.CreateModel();
 
-            var eventName = typeof(TEvent).Name;
+            var eventName = eventType.Name;
 
             model.QueueDeclare(eventName, false, false, false, null);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EventBus.Core;
+using Microsoft.Extensions.Logging;
 using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -16,6 +17,8 @@ namespace EventBus.RabbitMq
 
         private bool Disposed = false;
         private IConnection? _connection;
+
+        public event EventBusConnectionEventHandler? OnConnected;
 
         public RabbitMQConnection(
             IConnectionFactory connectionFactory,
@@ -65,6 +68,7 @@ namespace EventBus.RabbitMq
                     _connection!.ConnectionBlocked += OnConnectionBlocked;
                     _connection!.CallbackException += OnCallbackException;
 
+                    OnConnected?.Invoke(this, new EventBusConnectionEventArgs());
 
                     return true;
                 }
