@@ -1,4 +1,5 @@
 ﻿using Common.Options;
+using Common.Services;
 using EventBus.Core;
 using EventBus.RabbitMq;
 using HealthChecks.UI.Client;
@@ -114,6 +115,7 @@ namespace Common
 
             builder.Services.AddCors();
             builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
+            builder.Services.AddScoped<IUserService, UserService>();
         }
 
         public static void AddEventBus(this WebApplicationBuilder builder)
