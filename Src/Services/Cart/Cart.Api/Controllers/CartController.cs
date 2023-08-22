@@ -1,4 +1,8 @@
-﻿using Cart.Api.Services;
+﻿using Cart.Api.Events;
+using Cart.Api.Models;
+using Cart.Api.Services;
+using Common.Services;
+using EventBus.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,31 +14,51 @@ namespace Cart.Api.Controllers
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
+        private readonly IEventBus _bus;
+        private readonly IUserService _userService;
 
-        public CartController(ICartService cartService)
+        public CartController(ICartService cartService, IEventBus bus, IUserService userService)
         {
-            _cartService = cartService;
+            _cartService = cartService ?? throw new ArgumentNullException(nameof(cartService));
+            _bus = bus ?? throw new ArgumentNullException(nameof(bus));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
         [HttpGet]
         public async Task<Models.Cart> Get()
         {
-            var cart = await _cartService.GetCartAsync(User.Identity!.Name!);
+            var cart = await _cartService.GetCartAsync(_userService.GetId().ToString());
             return cart;
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateCart([FromBody] Models.Cart cart)
         {
-            await _cartService.UpdateCartAsync(User.Identity!.Name!, cart);
+            await _cartService.UpdateCartAsync(_userService.GetId().ToString(), cart);
             return NoContent();
         }
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteCart()
         {
-            await _cartService.DeleteCartAsync(User.Identity!.Name!);
+            await _cartService.DeleteCartAsync(_userService.GetId().ToString());
             return NoContent();
+        }
+
+        [HttpPost("Checkout")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        public async Task<IActionResult> Checkout([FromBody] CartCheckout cartCheckout)
+        {
+            var userId = _userService.GetId();
+            var cart = await _cartService.GetCartAsync(userId.ToString());
+
+            var userCheckoutStartedEvent = new UserCheckoutStartedEvent(userId, cart, cartCheckout.Country, cartCheckout.City, cartCheckout.Street, cartCheckout.ZipCode);
+
+            _bus.Publish(userCheckoutStartedEvent);
+
+            return Accepted();
         }
     }
 }

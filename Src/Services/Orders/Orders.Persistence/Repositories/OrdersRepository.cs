@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Data;
+using Microsoft.EntityFrameworkCore;
 using Orders.Domain;
 using Orders.Domain.Contracts;
+using Orders.Domain.Dtos;
 
 namespace Orders.Persistence.Repositories
 {
@@ -13,12 +15,23 @@ namespace Orders.Persistence.Repositories
             _db = db;
         }
 
-        public async Task<Order[]> GetBuyerOrdersAsync(int buyerId)
+        public async Task<PagedResult<OrderDto[]>> GetBuyerOrdersAsync(int buyerId, int page = 1)
         {
-            return await _db.Orders
+            var query = _db.Orders
                 .Where(order => order.BuyerId == buyerId)
-                .AsNoTracking()
-                .ToArrayAsync();
+                .Skip((page - 1) * PagedResult.PageSize)
+                .Take(PagedResult.PageSize)
+                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address))
+                .AsNoTracking();
+            var data = await query.ToArrayAsync();
+            var count = await query.CountAsync();
+            return new PagedResult<OrderDto[]>
+            {
+                Data = data,
+                CurrentPage = page,
+                TotalCount = count,
+                TotalPages = (int)Math.Ceiling((double)count / PagedResult.PageSize)
+            };
         }
 
         public async Task<Order?> GetOrderAsync(int orderId)

@@ -11,5 +11,11 @@
 
         private List<OrderItem> _orderItems = new();
         public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
+
+        public void Add(OrderItem orderItem)
+        {
+            ArgumentNullException.ThrowIfNull(orderItem);
+            _orderItems.Add(orderItem);
+        }
     }
 }
