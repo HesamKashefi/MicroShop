@@ -27,7 +27,7 @@ namespace Cart.Api.Controllers
         [HttpGet]
         public async Task<Models.Cart> Get()
         {
-            var cart = await _cartService.GetCartAsync(_userService.GetId().ToString());
+            var cart = await _cartService.GetCartAsync(_userService.GetName());
             return cart;
         }
 
@@ -35,7 +35,7 @@ namespace Cart.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateCart([FromBody] Models.Cart cart)
         {
-            await _cartService.UpdateCartAsync(_userService.GetId().ToString(), cart);
+            await _cartService.UpdateCartAsync(_userService.GetName(), cart);
             return NoContent();
         }
 
@@ -43,7 +43,7 @@ namespace Cart.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteCart()
         {
-            await _cartService.DeleteCartAsync(_userService.GetId().ToString());
+            await _cartService.DeleteCartAsync(_userService.GetName());
             return NoContent();
         }
 
@@ -51,10 +51,9 @@ namespace Cart.Api.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public async Task<IActionResult> Checkout([FromBody] CartCheckout cartCheckout)
         {
-            var userId = _userService.GetId();
-            var cart = await _cartService.GetCartAsync(userId.ToString());
+            var cart = await _cartService.GetCartAsync(_userService.GetName());
 
-            var userCheckoutStartedEvent = new UserCheckoutStartedEvent(userId, cart, cartCheckout.Country, cartCheckout.City, cartCheckout.Street, cartCheckout.ZipCode);
+            var userCheckoutStartedEvent = new UserCheckoutStartedEvent(_userService.GetId(), cart, cartCheckout.Country, cartCheckout.City, cartCheckout.Street, cartCheckout.ZipCode);
 
             _bus.Publish(userCheckoutStartedEvent);
 

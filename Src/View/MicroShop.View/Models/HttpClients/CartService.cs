@@ -77,5 +77,19 @@ namespace MicroShop.View.Models.HttpClients
                 throw;
             }
         }
+
+        public async Task Checkout(CartCheckoutDto dto)
+        {
+            try
+            {
+                var response = await _client.PostAsJsonAsync("Cart/Checkout", dto);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Could not update cart");
+                throw;
+            }
+        }
     }
 }

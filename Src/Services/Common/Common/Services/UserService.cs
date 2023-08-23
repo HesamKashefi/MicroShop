@@ -17,7 +17,16 @@ namespace Common.Services
             {
                 throw new InvalidOperationException("User is not authenticated");
             }
-            return int.Parse(_httpContextAccessor.HttpContext!.User!.Identity!.Name!);
+            return int.Parse(_httpContextAccessor.HttpContext!.User!.Claims.First(x => x.Type == "sub").Value!);
+        }
+
+        public string GetName()
+        {
+            if (_httpContextAccessor.HttpContext?.User?.Identity is null)
+            {
+                throw new InvalidOperationException("User is not authenticated");
+            }
+            return _httpContextAccessor.HttpContext!.User!.Identity!.Name!;
         }
     }
 }

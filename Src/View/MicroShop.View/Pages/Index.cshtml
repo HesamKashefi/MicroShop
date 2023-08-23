@@ -16,7 +16,7 @@
          style="gap:1rem;">
         @foreach (var product in Model.Products.Data)
         {
-            <form asp-page="cart" 
+            <form asp-page="/Cart/Index"
                   asp-page-handler="Add"
                   method="post"
                   class="card shadow rounded" style="width: 200px;">

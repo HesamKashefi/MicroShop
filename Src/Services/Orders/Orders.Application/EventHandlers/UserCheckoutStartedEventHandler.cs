@@ -16,7 +16,7 @@ namespace Orders.Application.EventHandlers
 
         public async Task Handle(UserCheckoutStartedEvent @event)
         {
-            await _mediator.Send(new CreateOrderCommand());
+            await _mediator.Send(new CreateOrderCommand(@event.BuyerId, @event.Cart, @event.Country, @event.City, @event.Street, @event.ZipCode));
         }
     }
 }

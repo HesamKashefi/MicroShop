@@ -3,5 +3,6 @@
     public interface IUserService
     {
         int GetId();
+        string GetName();
     }
 }

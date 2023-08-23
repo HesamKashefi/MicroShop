@@ -38,6 +38,7 @@ await Extensions.RunInLoggerAsync(async () =>
 
     app.ConfigureEventBus(new UseEventBusOptions()
         .Subscribe<ProductPriceUpdated, ProductPriceUpdatedHandler>()
+        .Subscribe<OrderStatusChangedToSubmittedEvent, OrderStatusChangedToSubmittedEventHandler>()
     );
 
     await app.RunAsync();

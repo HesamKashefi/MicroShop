@@ -1,0 +1,65 @@
+﻿@page
+@model MicroShop.View.Pages.Cart.CheckoutModel
+@{
+}
+
+
+@if (Model.Cart?.CartItems is not null && Model.Cart.CartItems.Length > 0)
+{
+    <div class="d-flex justify-content-start flex-wrap"
+         style="gap:1rem;">
+        @foreach (var cartItem in Model.Cart.CartItems)
+        {
+            <div class="card shadow rounded" style="width: 200px;">
+
+                <img src="@cartItem.ProductImageUrl"
+                     class="card-img-top"
+                     alt="@cartItem.ProductName"
+                     style="aspect-ratio: 1/1">
+
+                <div class="card-body">
+                    <p class="card-title">@cartItem.ProductName</p>
+                    <p class="card-text">@cartItem.ProductPrice</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <hr class="my-4" />
+
+    <form method="post">
+        <div>
+            <label asp-for="CartCheckoutDto!.Country" class="form-label"></label>
+            <input asp-for="CartCheckoutDto!.Country" class="form-control">
+            <span asp-validation-for="CartCheckoutDto!.Country" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CartCheckoutDto!.City" class="form-label"></label>
+            <input asp-for="CartCheckoutDto!.City" class="form-control">
+            <span asp-validation-for="CartCheckoutDto!.City" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CartCheckoutDto!.Street" class="form-label"></label>
+            <input asp-for="CartCheckoutDto!.Street" class="form-control">
+            <span asp-validation-for="CartCheckoutDto!.Street" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CartCheckoutDto!.ZipCode" class="form-label"></label>
+            <input asp-for="CartCheckoutDto!.ZipCode" class="form-control">
+            <span asp-validation-for="CartCheckoutDto!.ZipCode" class="text-danger"></span>
+        </div>
+
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <button type="submit"
+                class="btn btn-primary my-3">
+            Place Order
+        </button>
+    </form>
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

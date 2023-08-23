@@ -1,5 +1,5 @@
 ﻿@page
-@model MicroShop.View.Pages.CartModel
+@model MicroShop.View.Pages.Cart.IndexModel
 @{
 }
 
@@ -11,7 +11,7 @@
         @foreach (var cartItem in Model.Cart.CartItems)
         {
             <form method="post" class="card shadow rounded" style="width: 200px;">
-                <input type="hidden" asp-for="CartItem.ProductId" value="@cartItem.ProductId">
+                <input type="hidden" asp-for="ProductId" value="@cartItem.ProductId">
 
                 <img src="@cartItem.ProductImageUrl"
                      class="card-img-top"
@@ -31,6 +31,11 @@
             </form>
         }
     </div>
+
+    <hr class="my-4"/>
+
+    <a class="btn btn-primary"
+       asp-page="./Checkout">Checkout</a>
 }
 else
 {

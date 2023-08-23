@@ -8,5 +8,6 @@ namespace MicroShop.View.Models.HttpClients
         Task UpdateCartAsync(CartUpdateDto cart);
         Task AddItemAsync(string productId);
         Task RemoveItemAsync(string productId);
+        Task Checkout(CartCheckoutDto dto);
     }
 }

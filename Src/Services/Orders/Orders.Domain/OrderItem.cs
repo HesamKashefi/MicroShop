@@ -2,10 +2,12 @@
 {
     public class OrderItem
     {
-        public int OrderId { get; set; }
-        public string ProductId { get; }
-        public string ProductName { get; }
-        public int Quantity { get; }
+        public int OrderId { get; private set; }
+        public string ProductId { get; private set; }
+        public string ProductName { get; private set; }
+        public int Quantity { get; private set; }
+
+        private OrderItem() { }
 
         public OrderItem(string productId, string productName, int quantity)
         {
