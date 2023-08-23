@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using EventBus.Core;
+using MediatR;
+using Orders.Application.Events;
 using Orders.Application.Models;
 using Orders.Domain;
 using Orders.Domain.Contracts;
@@ -10,10 +12,12 @@ namespace Orders.Application.Commands
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {
         private readonly IOrdersRepository _repository;
+        private readonly IEventBus _bus;
 
-        public CreateOrderCommandHandler(IOrdersRepository repository)
+        public CreateOrderCommandHandler(IOrdersRepository repository, IEventBus bus)
         {
             _repository = repository;
+            _bus = bus;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -35,6 +39,7 @@ namespace Orders.Application.Commands
             }
 
             await _repository.SaveOrderAsync(order);
+            _bus.Publish(new OrderStatusChangedToSubmittedEvent(order.BuyerId, order.Id));
         }
     }
 }
