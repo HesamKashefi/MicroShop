@@ -27,6 +27,15 @@
 
     <hr class="my-4" />
 
+    <div>
+
+        <p>Total Items: @Model.Cart.CartItems.Select(x => x.Quantity).Sum()</p>
+        <p>Total Price: @Model.Cart.CartItems.Select(x => x.ProductPrice * x.Quantity).Sum()</p>
+
+    </div>
+
+    <hr class="my-4" />
+
     <form method="post">
         <div>
             <label asp-for="CartCheckoutDto!.Country" class="form-label"></label>

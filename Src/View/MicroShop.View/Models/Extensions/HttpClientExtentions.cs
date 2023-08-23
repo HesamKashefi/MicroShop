@@ -9,22 +9,22 @@ namespace MicroShop.View.Models.Extensions
         {
             builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 
-            builder.Services.AddHttpClient<ICatalogService, CatalogService>((sp, client) =>
-            {
-                client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:Apigateway")!);
-            })
-            .AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
-            .ConfigurePrimaryHttpMessageHandler(ConfigureHttpMessageHandler);
+            builder.Register<ICatalogService, CatalogService>();
+            builder.Register<ICartService, CartService>();
+            builder.Register<IOrdersService, OrdersService>();
+        }
 
-
-            builder.Services.AddHttpClient<ICartService, CartService>((sp, client) =>
+        private static void Register<TInterface, TImplementation>(this WebApplicationBuilder builder)
+            where TInterface : class
+            where TImplementation : class, TInterface
+        {
+            builder.Services.AddHttpClient<TInterface, TImplementation>((IServiceProvider sp, HttpClient client) =>
             {
                 client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("Urls:Apigateway")!);
             })
             .AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
             .ConfigurePrimaryHttpMessageHandler(ConfigureHttpMessageHandler);
         }
-
 
         private static HttpMessageHandler ConfigureHttpMessageHandler(IServiceProvider sp)
         {

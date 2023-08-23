@@ -1,4 +1,5 @@
 ﻿using Common.Data;
+using Common.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Orders.Application.Models;
@@ -10,9 +11,9 @@ namespace Orders.Application.Queries
     public partial class OrdersController : BaseController
     {
         [HttpGet]
-        public async Task<PagedResult<OrderDto[]>> GetBuyerOrders()
+        public async Task<PagedResult<OrderDto[]>> GetBuyerOrders([FromServices] IUserService userService)
         {
-            var userId = int.Parse(User.Identity!.Name!);
+            var userId = userService.GetId();
             return await Mediator.Send(new GetBuyerOrdersQuery(userId), HttpContext.RequestAborted);
         }
     }

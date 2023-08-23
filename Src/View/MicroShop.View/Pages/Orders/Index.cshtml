@@ -4,3 +4,25 @@
 }
 
 <h1>My Orders</h1>
+
+@if (Model.Orders is not null)
+{
+    <table class="table table-hover table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model.Orders.Data)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.CreatedAt</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
