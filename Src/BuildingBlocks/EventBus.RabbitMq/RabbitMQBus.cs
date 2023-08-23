@@ -115,7 +115,10 @@ namespace EventBus.RabbitMq
                     try
                     {
                         var handler = scope.ServiceProvider.GetService(handlerType);
-                        if (handler is null) continue;
+                        if (handler is null)
+                        {
+                            throw new InvalidOperationException($"Handler: {handlerType.Name} for Event Type: {eventType.Name} Was not registered with the DI Container");
+                        }
 
                         _logger.LogTrace("Processing Event {Event} Using Handler: {EventHandler} With Message : {Message}", eventName, handlerType.Name, message);
                         await Task.Yield();
