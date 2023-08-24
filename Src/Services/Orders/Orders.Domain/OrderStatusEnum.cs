@@ -4,8 +4,7 @@
     {
         Submitted = 0,
         Approved = 1,
-        Shipping = 3,
-        Shipped = 4,
-        Cancelled = 5
+        Shipped = 2,
+        Cancelled = 10
     }
 }

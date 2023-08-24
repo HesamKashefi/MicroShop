@@ -21,7 +21,7 @@ namespace Orders.Persistence.Repositories
                 .Where(order => order.BuyerId == buyerId)
                 .Skip((page - 1) * PagedResult.PageSize)
                 .Take(PagedResult.PageSize)
-                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address))
+                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status))
                 .AsNoTracking();
             var data = await query.ToArrayAsync();
             var count = await query.CountAsync();

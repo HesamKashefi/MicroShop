@@ -11,6 +11,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Status</th>
                 <th>Date</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
             {
                 <tr>
                     <td>@order.Id</td>
+                    <td>@order.Status.ToString()</td>
                     <td>@order.CreatedAt</td>
                 </tr>
             }
