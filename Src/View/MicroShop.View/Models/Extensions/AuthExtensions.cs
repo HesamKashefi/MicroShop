@@ -10,13 +10,17 @@ namespace MicroShop.View.Models.Extensions
     {
         public static void AddViewDefaultAuthentication(this WebApplicationBuilder builder)
         {
+            builder.Services.AddScoped<CustomCookieAuthenticationEvents>();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddCookie()
+            .AddCookie(c =>
+            {
+                c.EventsType = typeof(CustomCookieAuthenticationEvents);
+            })
             .AddOpenIdConnect(options =>
             {
                 options.Authority = builder.Configuration.GetValue<string>("Urls:Identity");
