@@ -27,6 +27,7 @@
     <hr class="my-4" />
 
     <div>
+        <p>Placed At: @Model.OrderDetails.CreatedAt.ToString("G")</p>
         <p>Status: @Model.OrderDetails.Status.ToString()</p>
     </div>
 
@@ -44,19 +45,19 @@
     <div>
         <div>
             <label asp-for="OrderDetails.Address!.Country" class="form-label"></label>
-            <input asp-for="OrderDetails.Address!.Country" class="form-control form-control-plaintext" readonly>
+            <input asp-for="OrderDetails.Address!.Country" class="form-control" readonly>
         </div>
         <div>
             <label asp-for="OrderDetails.Address!.City" class="form-label"></label>
-            <input asp-for="OrderDetails.Address!.City" class="form-control form-control-plaintext" readonly>
+            <input asp-for="OrderDetails.Address!.City" class="form-control" readonly>
         </div>
         <div>
             <label asp-for="OrderDetails.Address!.Street" class="form-label"></label>
-            <input asp-for="OrderDetails.Address!.Street" class="form-control form-control-plaintext" readonly>
+            <input asp-for="OrderDetails.Address!.Street" class="form-control" readonly>
         </div>
         <div>
             <label asp-for="OrderDetails.Address!.ZipCode" class="form-label"></label>
-            <input asp-for="OrderDetails.Address!.ZipCode" class="form-control form-control-plaintext" readonly>
+            <input asp-for="OrderDetails.Address!.ZipCode" class="form-control" readonly>
         </div>
     </div>
 }
