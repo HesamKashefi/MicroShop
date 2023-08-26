@@ -10,7 +10,7 @@ namespace Orders.Application.Queries
 {
     public partial class OrdersController : BaseController
     {
-        [HttpGet]
+        [HttpGet("All")]
         public async Task<PagedResult<OrderDto[]>> GetAllOrders([FromQuery] int page = 1)
         {
             return await Mediator.Send(new GetAllOrdersQuery(page), HttpContext.RequestAborted);

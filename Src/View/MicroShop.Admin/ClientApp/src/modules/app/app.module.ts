@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
@@ -8,6 +8,12 @@ import { AppLoggedInComponent } from './app-logged-in/app-logged-in.component';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { CatalogModule } from '../catalog/catalog.module';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { ConfigService } from '../shared/services/config.service';
+
+
+export function configLoader(configService: ConfigService) {
+  return () => configService.load();
+}
 
 @NgModule({
   declarations: [
@@ -22,7 +28,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     OAuthModule.forRoot(),
     CatalogModule
   ],
-  providers: [],
+  providers: [
+    ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configLoader,
+      deps: [ConfigService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

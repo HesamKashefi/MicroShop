@@ -10,6 +10,7 @@ export class CatalogService {
     constructor(private http: HttpService) { }
 
     getProducts(page: number): Observable<PagedResult<ProductDto[]>> {
+        console.log(UrlsConfig.catalog_getCatalog('http://localhost/', page));
         return this.http.get<PagedResult<ProductDto[]>>((baseUrl) => UrlsConfig.catalog_getCatalog(baseUrl, page));
     }
 

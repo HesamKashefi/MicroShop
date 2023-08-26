@@ -11,9 +11,7 @@ export interface ServerUrlsConfig {
     adminLocalSpa: string;
 }
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class ConfigService {
     private _spaConfig?: Config;
     Config?: ServerUrlsConfig;

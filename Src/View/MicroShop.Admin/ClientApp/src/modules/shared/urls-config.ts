@@ -8,4 +8,12 @@ export class UrlsConfig {
     static catalog_updateProductPrice(base: string) {
         return `${base}products`;
     }
+
+
+    static orders_getAll(base: string, page: number = 1) {
+        return `${base}orders/all?page=${page}`;
+    }
+    static orders_getById(base: string, orderId: number) {
+        return `${base}orders/${orderId}`;
+    }
 }

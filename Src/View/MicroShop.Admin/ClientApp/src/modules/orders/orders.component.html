@@ -1,0 +1,23 @@
+<h1>Orders</h1>
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orders?.data">
+            <td>{{ order.id }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.createdAt }}</td>
+            <td>
+                <a class="btn btn-outline-info">Details</a>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
