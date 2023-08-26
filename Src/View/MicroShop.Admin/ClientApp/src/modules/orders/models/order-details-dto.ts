@@ -11,5 +11,7 @@ export interface OrderDetailsDto {
         zipCode: string;
     };
 
-    orderItems: { productId: string; productImageUrl: string; productPrice: number; quantity: number }[];
+    orderItems: OrderItem[];
 }
+
+export interface OrderItem { productId: string; productName: string; productImageUrl: string; productPrice: number; quantity: number }

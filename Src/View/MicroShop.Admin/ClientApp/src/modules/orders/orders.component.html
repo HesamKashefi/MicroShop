@@ -15,7 +15,8 @@
             <td>{{ order.status }}</td>
             <td>{{ order.createdAt }}</td>
             <td>
-                <a class="btn btn-outline-info">Details</a>
+                <a class="btn btn-outline-info"
+                   [routerLink]="[order.id]">Details</a>
             </td>
         </tr>
     </tbody>

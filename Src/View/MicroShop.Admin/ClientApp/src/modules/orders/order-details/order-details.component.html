@@ -1,1 +1,25 @@
-<p>order-details works!</p>
+<h2>Order Details</h2>
+<div *ngIf="order">
+    <p>Status: {{ order.status }}</p>
+
+    <hr>
+
+    <h5>Address</h5>
+
+    <div *ngIf="order.address">
+        <p>Country: {{ order.address.country }}</p>
+        <p>City: {{ order.address.city }}</p>
+        <p>Street: {{ order.address.street }}</p>
+        <p>ZipCode: {{ order.address.zipCode }}</p>
+    </div>
+
+    <hr>
+
+    <h5>Order Items: </h5>
+
+    <div class="d-flex justify-content-start gap-3">
+        <app-order-item *ngFor="let orderItem of order.orderItems"
+                        [orderItem]="orderItem">
+        </app-order-item>
+    </div>
+</div>

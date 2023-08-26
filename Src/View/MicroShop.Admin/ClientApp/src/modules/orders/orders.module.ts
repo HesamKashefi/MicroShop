@@ -7,16 +7,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { OrdersService } from "./services/orders.service";
 
 const routes: Routes = [
-    {
-        path: '',
-        component: OrdersComponent,
-        children: [
-            {
-                path: ':id',
-                component: OrderDetailsComponent
-            }
-        ]
-    }
+    { path: '', component: OrdersComponent },
+    { path: ':id', component: OrderDetailsComponent }
 ];
 
 @NgModule({

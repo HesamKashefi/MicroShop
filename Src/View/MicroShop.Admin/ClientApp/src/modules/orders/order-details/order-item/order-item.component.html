@@ -1,1 +1,13 @@
-<p>order-item works!</p>
+<div class="card shadow rounded"
+     style="width: 200px;">
+
+    <img [src]="orderItem.productImageUrl"
+         class="card-img-top"
+         [alt]="orderItem.productName"
+         style="aspect-ratio: 1/1">
+
+    <div class="card-body">
+        <p class="card-title product-name">{{ orderItem.productName }}</p>
+        <p class="card-text product-price">{{ orderItem.productPrice }}$</p>
+    </div>
+</div>
