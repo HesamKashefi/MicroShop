@@ -35,7 +35,7 @@ namespace Orders.Application.Commands
             };
             foreach (var item in request.Cart.CartItems)
             {
-                order.Add(new OrderItem(item.ProductId, item.ProductName, item.Quantity));
+                order.Add(new OrderItem(item.ProductId, item.ProductName, item.ProductImageUrl, item.ProductPrice, item.Quantity));
             }
 
             await _repository.SaveOrderAsync(order);

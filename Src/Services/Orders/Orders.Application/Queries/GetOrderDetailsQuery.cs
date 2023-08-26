@@ -65,6 +65,8 @@ namespace Orders.Application.Queries
         public int Id { get; init; }
 
         public int BuyerId { get; init; }
+        public string? ProductImageUrl { get; init; }
+        public double ProductPrice { get; init; }
 
         public DateTime CreatedAt { get; init; }
         public required Address Address { get; init; }
