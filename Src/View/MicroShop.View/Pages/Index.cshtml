@@ -10,7 +10,7 @@
 </div>
 
 
-@if (Model.Products is not null)
+@if (Model.Products?.Data is not null)
 {
     <div class="d-flex justify-content-start flex-wrap"
          style="gap:1rem;">
@@ -41,5 +41,8 @@
         }
     </div>
 
-    <partial name="_Pagination" for="Products"></partial>
+    @if (Model.Products?.Pager is not null)
+    {        
+        <partial name="_Pagination" for="Products!.Pager"></partial>
+    }
 }

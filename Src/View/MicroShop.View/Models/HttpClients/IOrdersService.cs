@@ -5,6 +5,6 @@ namespace MicroShop.View.Models.HttpClients
 {
     public interface IOrdersService
     {
-        Task<PagedResult<OrderDto[]>> GetOrdersAsync();
+        Task<PagedResult<OrderDto[]>> GetOrdersAsync(int page);
     }
 }

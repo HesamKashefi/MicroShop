@@ -19,24 +19,20 @@ namespace Orders.Persistence.Repositories
         {
             var query = _db.Orders
                 .Where(order => order.BuyerId == buyerId)
-                .Skip((page - 1) * PagedResult.PageSize)
-                .Take(PagedResult.PageSize)
+                .Skip((page - 1) * Pager.DefaultPageSize)
+                .Take(Pager.DefaultPageSize)
                 .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status))
                 .AsNoTracking();
             var data = await query.ToArrayAsync();
             var count = await query.CountAsync();
-            return new PagedResult<OrderDto[]>
-            {
-                Data = data,
-                CurrentPage = page,
-                TotalCount = count,
-                TotalPages = (int)Math.Ceiling((double)count / PagedResult.PageSize)
-            };
+
+            return Result.Success(data, new(count, page));
         }
 
         public async Task<Order?> GetOrderAsync(int orderId)
         {
             return await _db.Orders
+                .Include(order => order.OrderItems)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(order => order.BuyerId == orderId);
         }

@@ -1,6 +1,7 @@
 using Common.Data;
 using MicroShop.View.Models.DTOs;
 using MicroShop.View.Models.HttpClients;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MicroShop.View.Pages.Orders
@@ -8,6 +9,9 @@ namespace MicroShop.View.Pages.Orders
     public class IndexModel : PageModel
     {
         private readonly IOrdersService _ordersService;
+
+        [FromQuery]
+        public int PageNumber { get; set; } = 1;
 
         public PagedResult<OrderDto[]>? Orders { get; set; }
 
@@ -18,7 +22,7 @@ namespace MicroShop.View.Pages.Orders
 
         public async Task OnGet()
         {
-            this.Orders = await _ordersService.GetOrdersAsync();
+            this.Orders = await _ordersService.GetOrdersAsync(PageNumber);
         }
     }
 }

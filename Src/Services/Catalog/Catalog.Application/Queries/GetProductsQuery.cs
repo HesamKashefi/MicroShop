@@ -26,8 +26,8 @@ namespace Catalog.Application.Queries
             var collection = _db.GetCollection<Product>(Product.CollectionName);
             var query = collection.AsQueryable().OrderBy(x => x.Id);
             var products = await query
-                .Skip((request.Page - 1) * PagedResult.PageSize)
-                .Take(PagedResult.PageSize)
+                .Skip((request.Page - 1) * Pager.DefaultPageSize)
+                .Take(Pager.DefaultPageSize)
                 .ToListAsync();
             var dtos = products
                 .Select(product => new ProductDto
@@ -42,13 +42,7 @@ namespace Catalog.Application.Queries
 
             var count = await query.CountAsync();
 
-            return new PagedResult<ProductDto[]>
-            {
-                Data = dtos,
-                TotalCount = count,
-                CurrentPage = request.Page,
-                TotalPages = (int)Math.Ceiling((double)count / PagedResult.PageSize)
-            };
+            return Result.Success(dtos, new(count, request.Page));
         }
     }
 }

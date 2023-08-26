@@ -5,7 +5,7 @@
 
 <h1>My Orders</h1>
 
-@if (Model.Orders is not null)
+@if (Model.Orders?.Data is not null)
 {
     <table class="table table-hover table-bordered table-responsive">
         <thead>
@@ -27,4 +27,9 @@
         </tbody>
 
     </table>
+
+    @if (Model.Orders?.Pager is not null)
+    {
+        <partial name="_Pagination" for="Orders!.Pager"></partial>
+    }
 }

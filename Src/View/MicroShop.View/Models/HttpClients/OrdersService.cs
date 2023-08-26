@@ -14,9 +14,9 @@ namespace MicroShop.View.Models.HttpClients
             _logger = logger;
         }
 
-        public async Task<PagedResult<OrderDto[]>> GetOrdersAsync()
+        public async Task<PagedResult<OrderDto[]>> GetOrdersAsync(int page)
         {
-            var data = await _client.GetFromJsonAsync<PagedResult<OrderDto[]>>("Orders");
+            var data = await _client.GetFromJsonAsync<PagedResult<OrderDto[]>>("Orders?page=" + page);
             _logger.LogTrace("Orders Received {@Orders}", data!);
             return data!;
         }
