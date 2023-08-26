@@ -31,6 +31,7 @@
     public record PagedResult<TData>(TData? Data, Pager? Pager, DomainStatusCodes Status) : Result<TData>(Data, Status) where TData : class
     {
         public static new PagedResult<TData> Fail(DomainStatusCodes domainStatusCodes) => new(null, null, domainStatusCodes);
+        public static new PagedResult<TData> Forbidden() => new(null, null, DomainStatusCodes.Forbidden);
     }
 
     public record Pager(int TotalCount, int CurrentPage, int PageSize = Pager.DefaultPageSize)
