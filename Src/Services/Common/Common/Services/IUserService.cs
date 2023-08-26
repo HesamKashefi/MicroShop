@@ -4,5 +4,6 @@
     {
         int GetId();
         string GetName();
+        bool IsAdmin();
     }
 }

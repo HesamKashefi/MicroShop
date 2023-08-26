@@ -28,5 +28,14 @@ namespace Common.Services
             }
             return _httpContextAccessor.HttpContext!.User!.Identity!.Name!;
         }
+
+        public bool IsAdmin()
+        {
+            if (_httpContextAccessor.HttpContext?.User?.Identity is null)
+            {
+                throw new InvalidOperationException("User is not authenticated");
+            }
+            return _httpContextAccessor.HttpContext!.User!.IsInRole("Admin");
+        }
     }
 }
