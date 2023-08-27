@@ -1,0 +1,20 @@
+name: Build Cart Api
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - Src/BuildingBlocks/**
+    - Src/Services/Cart/**
+    - .github/workflows/cart-api.yml
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Src/Services/Cart/Cart.Api/Dockerfile --tag microshop/cart-api
