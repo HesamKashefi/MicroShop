@@ -1,0 +1,20 @@
+name: Build Catalog Api
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - Src/BuildingBlocks/**
+    - Src/Services/Catalog/**
+    - .github/workflows/catalog-api.yml
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Src/Services/Catalog/Catalog.Api/Dockerfile --tag microshop/catalog-api
