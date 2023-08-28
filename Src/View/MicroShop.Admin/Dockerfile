@@ -49,6 +49,8 @@ COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBloc
 COPY ["NuGet.config", "NuGet.config"]
 COPY ["Directory.Packages.props", "Directory.Packages.props"]
 
+COPY ["docker-compose.dcproj", "docker-compose.dcproj"]
+
 RUN dotnet restore "MicroShop.sln"
 COPY . .
 COPY --from=node-build /app Src/View/MicroShop.Admin/wwwroot/
