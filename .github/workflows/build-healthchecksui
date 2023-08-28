@@ -1,0 +1,20 @@
+name: Build HealthChecksUI Api
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - Src/BuildingBlocks/**
+    - Src/View/MicroShop.HealthChecksUI/**
+    - .github/workflows/build-healthchecksui.yml
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Src/View/MicroShop.HealthChecksUI/Dockerfile --tag microshop/microshop-healthchecksui

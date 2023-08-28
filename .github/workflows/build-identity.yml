@@ -1,0 +1,20 @@
+name: Build Identity Api
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - Src/BuildingBlocks/**
+    - Src/Services/Identity/**
+    - .github/workflows/build-identity.yml
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Src/Services/Identity/Identity.Api/Dockerfile --tag microshop/identity-api

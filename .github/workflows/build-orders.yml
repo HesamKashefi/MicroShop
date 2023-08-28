@@ -1,12 +1,12 @@
-name: Build Catalog Api
+name: Build Orders Api
 
 on:
   push:
     branches: [ "main" ]
     paths:
     - Src/BuildingBlocks/**
-    - Src/Services/Catalog/**
-    - .github/workflows/build-catalog.yml
+    - Src/Services/Orders/**
+    - .github/workflows/build-orders.yml
 
 jobs:
 
@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Src/Services/Catalog/Catalog.Api/Dockerfile --tag microshop/catalog-api
+      run: docker build . --file Src/Services/Orders/Orders.Api/Dockerfile --tag microshop/orders-api

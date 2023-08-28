@@ -6,7 +6,7 @@ on:
     paths:
     - Src/BuildingBlocks/**
     - Src/Services/Cart/**
-    - .github/workflows/cart-api.yml
+    - .github/workflows/build-cart.yml
 
 jobs:
 
