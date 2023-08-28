@@ -4,6 +4,19 @@ This is a sample project for Microservices Architecture that I've developed just
 
 Since I've been learning by looking at the Microsoft's sample, [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers), You'll see many similarities here to that project!
 
+## Build Status
+
+| Image | Status |
+| :--- | :--- |
+| cart-api | [![Build Cart Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-cart.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-cart.yml) |
+| orders-api | [![Build Orders Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml) |
+| catalog-api | [![Build Catalog Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml) |
+| identity-api | [![Build Identity Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml) |
+| apiggateway | [![Build ApiGateway Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml) |
+| healthchecksui | [![Build HealthChecksUI](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yml) |
+| view | [![Build View Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml) |
+| admin | [![Build Admin Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml) |
+
 ### Some of the technologies, patterns and tools used in this project
 - \#Docker
 - \#ASP.NET Core
