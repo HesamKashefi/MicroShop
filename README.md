@@ -4,6 +4,12 @@ This is a sample project for Microservices Architecture that I've developed just
 
 Since I've been learning by looking at the Microsoft's sample, [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers), You'll see many similarities here to that project!
 
+### Main View:
+![Main View UI](/Img/View.png "Main View UI")
+
+### Admin:
+![Admin UI](/Img/Admin.png "Admin UI")
+
 ## Build Status
 
 | Image | Status |
@@ -34,6 +40,17 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 - \#YARP
 - \#Angular
 
+## How To Run
+
+You need `docker` installed to run this project.
+
+First replace your machine's IP in the `.env` file.
+
+In Visual Studio Simply hit `F5` to run and debug.
+
+Note: Admin takes a lot of time to start but it generally depends on your machine's speed. When it gets started, replace the localhost in the address bar with your machine's IP and hit refresh.
+
+
 ## Architecture
 
 ### Addresses:
@@ -51,10 +68,16 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 |  Seq  |  http://+:5340 |
 
 
+
 ### View
 https://+:8000
 
 View is an AspNetCore UI
+
+### Admin
+http://+:7011
+
+Admin implemented in Angular
 
 ### APIGateway
 https://+:8001
@@ -86,6 +109,13 @@ Cart/Basket information.
 
 Redist is used as the database.
 
+### Orders.Api
+https://+:8005
+
+Orders information.
+
+Built using CQRS pattern.
+SQL Server is used as the database.
 
 
 ### Seq
