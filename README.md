@@ -12,10 +12,10 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 | orders-api | [![Build Orders Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml) |
 | catalog-api | [![Build Catalog Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml) |
 | identity-api | [![Build Identity Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml) |
-| apiggateway | [![Build ApiGateway Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml) |
-| healthchecksui | [![Build HealthChecksUI Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yaml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yaml) |
-| view | [![Build View Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml) |
-| admin | [![Build Admin Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml) |
+| apiggateway | [![Build ApiGateway](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml) |
+| healthchecksui | [![Build HealthChecksUI](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yaml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-healthchecksui.yaml) |
+| view | [![Build View](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-view.yml) |
+| admin | [![Build Admin](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-admin.yml) |
 
 ### Some of the technologies, patterns and tools used in this project
 - \#Docker

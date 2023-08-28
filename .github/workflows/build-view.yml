@@ -1,4 +1,4 @@
-name: Build View Api
+name: Build View
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Build HealthChecksUI Api
+name: Build HealthChecksUI
 
 on:
   push:

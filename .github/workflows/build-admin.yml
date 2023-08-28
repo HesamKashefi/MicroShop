@@ -1,4 +1,4 @@
-name: Build Admin Api
+name: Build Admin
 
 on:
   push:

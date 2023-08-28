@@ -1,4 +1,4 @@
-name: Build ApiGateway Api
+name: Build ApiGateway
 
 on:
   push:
