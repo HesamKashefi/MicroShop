@@ -50,6 +50,7 @@ COPY ["Src/Services/Catalog/Catalog.Domain/Catalog.Domain.csproj", "Src/Services
 COPY ["Src/Services/Common/Common/Common.csproj", "Src/Services/Common/Common/"]
 COPY ["Src/BuildingBlocks/EventBus.RabbitMq/EventBus.RabbitMq.csproj", "Src/BuildingBlocks/EventBus.RabbitMq/"]
 COPY ["Src/BuildingBlocks/EventBus.Core/EventBus.Core.csproj", "Src/BuildingBlocks/EventBus.Core/"]
+COPY ["Src/BuildingBlocks/EventLog/EventLog.csproj", "Src/BuildingBlocks/EventLog/"]
 
 COPY ["NuGet.config", "NuGet.config"]
 COPY ["Directory.Packages.props", "Directory.Packages.props"]
