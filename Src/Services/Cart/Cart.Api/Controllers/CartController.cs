@@ -5,6 +5,7 @@ using Common.Services;
 using EventBus.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Cart.Api.Controllers
 {
@@ -53,7 +54,7 @@ namespace Cart.Api.Controllers
         {
             var cart = await _cartService.GetCartAsync(_userService.GetName());
 
-            var userCheckoutStartedEvent = new UserCheckoutStartedEvent(_userService.GetId(), cart, cartCheckout.Country, cartCheckout.City, cartCheckout.Street, cartCheckout.ZipCode);
+            var userCheckoutStartedEvent = new UserCheckoutStartedEvent(_userService.GetId(), User.FindFirstValue("name")!, cart, cartCheckout.Country, cartCheckout.City, cartCheckout.Street, cartCheckout.ZipCode);
 
             _bus.Publish(userCheckoutStartedEvent);
 

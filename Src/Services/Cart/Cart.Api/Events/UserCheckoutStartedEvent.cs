@@ -4,9 +4,10 @@ namespace Cart.Api.Events
 {
     public class UserCheckoutStartedEvent : Event
     {
-        public UserCheckoutStartedEvent(int buyerId, Models.Cart cart, string country, string city, string street, string zipCode)
+        public UserCheckoutStartedEvent(int buyerId, string buyerName, Models.Cart cart, string country, string city, string street, string zipCode)
         {
             BuyerId = buyerId;
+            BuyerName = buyerName ?? throw new ArgumentNullException(nameof(buyerName));
             Cart = cart ?? throw new ArgumentNullException(nameof(cart));
             Country = country ?? throw new ArgumentNullException(nameof(country));
             City = city ?? throw new ArgumentNullException(nameof(city));
@@ -14,13 +15,13 @@ namespace Cart.Api.Events
             ZipCode = zipCode ?? throw new ArgumentNullException(nameof(zipCode));
         }
 
-        public int BuyerId { get; }
+        public int BuyerId { get; private set; }
+        public string BuyerName { get; private set; }
+        public Models.Cart Cart { get; private set; }
 
-        public Models.Cart Cart { get; }
-
-        public string Country { get; }
-        public string City { get; }
-        public string Street { get; }
-        public string ZipCode { get; }
+        public string Country { get; private set; }
+        public string City { get; private set; }
+        public string Street { get; private set; }
+        public string ZipCode { get; private set; }
     }
 }

@@ -5,9 +5,10 @@ namespace Orders.Application.Events
 {
     public class UserCheckoutStartedEvent : Event
     {
-        public UserCheckoutStartedEvent(int buyerId, Cart cart, string country, string city, string street, string zipCode)
+        public UserCheckoutStartedEvent(int buyerId, string buyerName, Cart cart, string country, string city, string street, string zipCode)
         {
             BuyerId = buyerId;
+            BuyerName = buyerName ?? throw new ArgumentNullException(nameof(buyerName));
             Cart = cart ?? throw new ArgumentNullException(nameof(cart));
             Country = country ?? throw new ArgumentNullException(nameof(country));
             City = city ?? throw new ArgumentNullException(nameof(city));
@@ -16,7 +17,7 @@ namespace Orders.Application.Events
         }
 
         public int BuyerId { get; private set; }
-
+        public string BuyerName { get; private set; }
         public Cart Cart { get; private set; }
 
         public string Country { get; private set; }

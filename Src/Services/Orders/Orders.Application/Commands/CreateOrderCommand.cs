@@ -7,7 +7,7 @@ using Orders.Domain.Contracts;
 
 namespace Orders.Application.Commands
 {
-    public record CreateOrderCommand(int BuyerId, Cart Cart, string Country, string City, string Street, string ZipCode) : IRequest;
+    public record CreateOrderCommand(int BuyerId, string BuyerName, Cart Cart, string Country, string City, string Street, string ZipCode) : IRequest;
 
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {
@@ -40,7 +40,7 @@ namespace Orders.Application.Commands
 
             using var transaction = await _repository.BeginTransactionAsync();
             await _repository.SaveOrderAsync(order);
-            await _eventLogService.AddEventAsync(new OrderStatusChangedToSubmittedEvent(order.BuyerId, order.Id), transaction, cancellationToken);
+            await _eventLogService.AddEventAsync(new OrderStatusChangedToSubmittedEvent(order.BuyerId, request.BuyerName, order.Id), transaction, cancellationToken);
             await _eventLogService.PublishPendingEventsAsync(transaction, cancellationToken);
             await transaction.CommitAsync();
         }
