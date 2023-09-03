@@ -1,4 +1,6 @@
-﻿using Orders.Persistence;
+﻿using EventLog;
+using Microsoft.EntityFrameworkCore;
+using Orders.Persistence;
 
 namespace Orders.Api.Models
 {
@@ -8,7 +10,11 @@ namespace Orders.Api.Models
         {
             using var scope = app.Services.CreateScope();
             using var db = scope.ServiceProvider.GetRequiredService<OrdersDb>();
-            await db.Database.EnsureCreatedAsync();
+            await db.Database.MigrateAsync();
+
+
+            using var eventLogContext = scope.ServiceProvider.GetRequiredService<EventLogContext>();
+            await eventLogContext.Database.MigrateAsync();
         }
     }
 }

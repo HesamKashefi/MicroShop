@@ -15,6 +15,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\EventLog\EventLog.csproj" />
 	  <ProjectReference Include="..\Orders.Domain\Orders.Domain.csproj" />
 	</ItemGroup>
 

@@ -7,12 +7,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\EventLog\EventLog.csproj" />
 		<ProjectReference Include="..\..\Common\Common\Common.csproj" />
 		<ProjectReference Include="..\Orders.Domain\Orders.Domain.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
 	</ItemGroup>
 
 </Project>

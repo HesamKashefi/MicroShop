@@ -12,7 +12,7 @@ namespace EventBus.Core
         #endregion
 
         #region Dependencies
-        
+
         private readonly ILogger<DefaultEventBusSubscriptionManager> _logger;
 
         #endregion
@@ -31,6 +31,15 @@ namespace EventBus.Core
         public IReadOnlyDictionary<string, List<Type>> Handlers => _handlers.AsReadOnly();
 
         public IReadOnlyList<Type> Events => _events.AsReadOnly();
+
+        public void RegisterEventType<TEvent>() where TEvent : Event
+        {
+            var eventType = typeof(TEvent);
+            if (!_events.Contains(eventType))
+            {
+                _events.Add(eventType);
+            }
+        }
 
         public void Subscribe<TEvent, TEventHandler>()
             where TEvent : Event

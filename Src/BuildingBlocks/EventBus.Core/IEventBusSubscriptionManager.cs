@@ -8,5 +8,7 @@
         void Subscribe<TEvent, TEventHandler>()
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>;
+        void RegisterEventType<TEvent>()
+            where TEvent : Event;
     }
 }

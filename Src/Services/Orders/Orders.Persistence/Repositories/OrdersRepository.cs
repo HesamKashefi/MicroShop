@@ -1,5 +1,6 @@
 ﻿using Common.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Orders.Domain;
 using Orders.Domain.Contracts;
 using Orders.Domain.Dtos;
@@ -13,6 +14,11 @@ namespace Orders.Persistence.Repositories
         public OrdersRepository(OrdersDb db)
         {
             _db = db;
+        }
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        {
+            return await _db.Database.BeginTransactionAsync();
         }
 
         public async Task<PagedResult<OrderDto[]>> GetAllOrdersAsync(int page = 1)

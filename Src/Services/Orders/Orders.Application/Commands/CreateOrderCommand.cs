@@ -1,4 +1,4 @@
-﻿using EventBus.Core;
+﻿using EventLog;
 using MediatR;
 using Orders.Application.Events;
 using Orders.Application.Models;
@@ -12,12 +12,12 @@ namespace Orders.Application.Commands
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand>
     {
         private readonly IOrdersRepository _repository;
-        private readonly IEventBus _bus;
+        private readonly IEventLogService _eventLogService;
 
-        public CreateOrderCommandHandler(IOrdersRepository repository, IEventBus bus)
+        public CreateOrderCommandHandler(IOrdersRepository repository, IEventLogService eventLogService)
         {
             _repository = repository;
-            _bus = bus;
+            _eventLogService = eventLogService;
         }
 
         public async Task Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -38,8 +38,11 @@ namespace Orders.Application.Commands
                 order.Add(new OrderItem(item.ProductId, item.ProductName, item.ProductImageUrl, item.ProductPrice, item.Quantity));
             }
 
+            using var transaction = await _repository.BeginTransactionAsync();
             await _repository.SaveOrderAsync(order);
-            _bus.Publish(new OrderStatusChangedToSubmittedEvent(order.BuyerId, order.Id));
+            await _eventLogService.AddEventAsync(new OrderStatusChangedToSubmittedEvent(order.BuyerId, order.Id), transaction, cancellationToken);
+            await _eventLogService.PublishPendingEventsAsync(transaction, cancellationToken);
+            await transaction.CommitAsync();
         }
     }
 }

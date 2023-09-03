@@ -11,8 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="AspNetCore.HealthChecks.SqlServer"  />
-	<PackageReference Include="AspNetCore.HealthChecks.RabbitMq"  />
+	  <PackageReference Include="AspNetCore.HealthChecks.SqlServer" />
+	<PackageReference Include="AspNetCore.HealthChecks.RabbitMq" />
 	<PackageReference Include="OpenIddict.AspNetCore" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
@@ -23,6 +23,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventLog\EventLog.csproj" />
     <ProjectReference Include="..\..\Common\Common\Common.csproj" />
     <ProjectReference Include="..\Orders.Application\Orders.Application.csproj" />
     <ProjectReference Include="..\Orders.Domain\Orders.Domain.csproj" />

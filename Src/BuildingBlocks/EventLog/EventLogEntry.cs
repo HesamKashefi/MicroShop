@@ -1,5 +1,5 @@
 ﻿using EventBus.Core;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace EventLog;
 
@@ -18,7 +18,7 @@ public class EventLogEntry
         ArgumentNullException.ThrowIfNull(@event);
 
         EventId = @event.EventId;
-        Content = JsonSerializer.Serialize(@event);
+        Content = JsonConvert.SerializeObject(@event);
         EventType = @event.GetType().Name;
         CreatedAt = DateTime.Now;
     }

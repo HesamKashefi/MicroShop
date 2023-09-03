@@ -1,5 +1,7 @@
 using Common;
 using Common.Options;
+using EventBus.Core;
+using EventLog;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Orders.Api.Models;
@@ -21,7 +23,18 @@ await Extensions.RunInLoggerAsync(async () =>
     .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
     builder.Services.AddDbContext<OrdersDb>(c =>
     {
-        c.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+        c.UseSqlServer(builder.Configuration.GetConnectionString("Default"), d =>
+        {
+            d.MigrationsAssembly(typeof(OrdersDb).Assembly.FullName!);
+        });
+    });
+    builder.Services.AddDbContext<EventLogContext>((s, c) =>
+    {
+        var dbConnection = s.GetRequiredService<OrdersDb>().Database.GetDbConnection();
+        c.UseSqlServer(dbConnection, d =>
+        {
+            d.MigrationsAssembly(typeof(EventLogContext).Assembly.FullName!);
+        });
     });
 
     builder.AddEventHandlers(typeof(UserCheckoutStartedEvent).Assembly);
@@ -30,6 +43,7 @@ await Extensions.RunInLoggerAsync(async () =>
         c.RegisterServicesFromAssemblyContaining(typeof(GetBuyerOrdersQuery));
     });
     builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
+    builder.Services.AddScoped<IEventLogService, EventLogService>();
 
     var app = builder.Build();
 
@@ -38,6 +52,12 @@ await Extensions.RunInLoggerAsync(async () =>
 
     app.ConfigureEventBus(new UseEventBusOptions()
         .Subscribe<UserCheckoutStartedEvent, UserCheckoutStartedEventHandler>());
+
+    using (var scope = app.Services.CreateScope())
+    {
+        var subscriptionManager = scope.ServiceProvider.GetRequiredService<IEventBusSubscriptionManager>();
+        subscriptionManager.RegisterEventType<OrderStatusChangedToSubmittedEvent>();
+    }
 
     await app.DbInitAsync();
     await app.RunAsync();
