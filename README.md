@@ -16,6 +16,7 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 | :--- | :--- |
 | cart-api | [![Build Cart Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-cart.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-cart.yml) |
 | orders-api | [![Build Orders Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders.yml) |
+| orders-singalR | [![Build Orders SignalR](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders-signalr.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-orders-signalr.yml) |
 | catalog-api | [![Build Catalog Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-catalog.yml) |
 | identity-api | [![Build Identity Api](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-identity.yml) |
 | apiggateway | [![Build ApiGateway](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml/badge.svg)](https://github.com/HesamKashefi/MicroShop/actions/workflows/build-apigateway.yml) |
