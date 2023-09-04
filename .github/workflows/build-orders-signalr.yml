@@ -1,0 +1,20 @@
+name: Build Orders SignalR
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+    - Src/BuildingBlocks/**
+    - Src/Services/Orders/**
+    - .github/workflows/build-orders-signalr.yml
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Src/Services/Orders/Orders.SignalR/Dockerfile --tag microshop/orders-signalr
