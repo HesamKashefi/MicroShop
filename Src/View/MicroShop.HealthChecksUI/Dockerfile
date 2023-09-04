@@ -15,6 +15,7 @@ COPY ["Src/ApiGateways/ApiGateway/ApiGateway.csproj", "Src/ApiGateways/ApiGatewa
 COPY ["Src/View/MicroShop.HealthChecksUI/MicroShop.HealthChecksUI.csproj", "Src/View/MicroShop.HealthChecksUI/"]
 COPY ["Src/Services/Identity/Identity.Api/Identity.Api.csproj", "Src/Services/Identity/Identity.Api/"]
 COPY ["Src/Services/Cart/Cart.Api/Cart.Api.csproj", "Src/Services/Cart/Cart.Api/"]
+COPY ["Src/Services/Orders/Orders.SignalR/Orders.SignalR.csproj", "Src/Services/Orders/Orders.SignalR/"]
 COPY ["Src/Services/Orders/Orders.Api/Orders.Api.csproj", "Src/Services/Orders/Orders.Api/"]
 COPY ["Src/Services/Orders/Orders.Application/Orders.Application.csproj", "Src/Services/Orders/Orders.Application/"]
 COPY ["Src/Services/Orders/Orders.Domain/Orders.Domain.csproj", "Src/Services/Orders/Orders.Domain/"]
