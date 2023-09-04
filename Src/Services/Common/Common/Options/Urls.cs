@@ -10,6 +10,7 @@
         public required string Catalog { get; init; }
         public required string Cart { get; init; }
         public required string Orders { get; init; }
+        public required string OrdersSignalR { get; init; }
         public required Grpc Grpc { get; init; }
     }
 

@@ -33,6 +33,12 @@ services:
     build:
       context: .
       dockerfile: Src/Services/Orders/Orders.Api/Dockerfile
+
+  orders-signalr:
+    image: ${DOCKER_REGISTRY-}orderssignalr
+    build:
+      context: .
+      dockerfile: Src/Services/Orders/Orders.SignalR/Dockerfile
       
   identity-api:
     image: ${DOCKER_REGISTRY-}identityapi

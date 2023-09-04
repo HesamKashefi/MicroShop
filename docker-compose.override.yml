@@ -160,7 +160,22 @@ services:
     depends_on:
       - rabbitmq
       - seq
-      
+
+  orders-signalr:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
+    ports:
+      - 7006:80
+      - 8006:81
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - rabbitmq
+      - seq
+
   microshop-healthchecksui:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
