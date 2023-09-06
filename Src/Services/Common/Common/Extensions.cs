@@ -50,7 +50,8 @@ namespace Common
             builder.Configuration.AddJsonFile("/src/projectSettings.json", false);
             builder.Configuration.AddEnvironmentVariables();
 
-            builder.Services.Configure<Urls>(builder.Configuration.GetSection("Urls"));
+            var urlsConfiguration = builder.Configuration.GetSection("Urls");
+            builder.Services.Configure<Urls>(urlsConfiguration);
 
             builder.Services.AddHealthChecks();
             builder.Services.AddEndpointsApiExplorer();
@@ -61,13 +62,15 @@ namespace Common
 
             if (builder.Environment.IsDevelopment())
             {
+                var urls = urlsConfiguration.Get<Urls>()!;
                 builder.Services.AddCors(x =>
                 {
                     x.AddDefaultPolicy(p =>
                     {
-                        p.AllowAnyOrigin()
+                        p.WithOrigins(urls.Admin.TrimEnd('/'), urls.AdminLocalSpa.TrimEnd('/'), urls.View.TrimEnd('/'), urls.Identity.TrimEnd('/'), urls.OrdersSignalR.TrimEnd('/'))
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .AllowCredentials();
                     });
                 });
             }
@@ -113,7 +116,6 @@ namespace Common
                     options.UseAspNetCore();
                 });
 
-            builder.Services.AddCors();
             builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
             builder.Services.AddScoped<IUserService, UserService>();
         }
