@@ -37,8 +37,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
-      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
       - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001/
+      - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
+      #- Urls__OrdersSignalR=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:7006/
+      - Urls__OrdersSignalR=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8006/
     ports:
       - 7000:80
       - 8000:81
@@ -59,6 +61,7 @@ services:
       - Urls__AdminLocalSpa=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:4200/
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
       - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001/
+      - Urls__OrdersSignalR=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8006/
     ports:
       - 7011:80
       - 4200:4200
@@ -164,7 +167,9 @@ services:
   orders-signalr:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:81;http://+:80
+      - Urls__View=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8000/
+      - Urls__Apigateway=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8001/
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
     ports:
       - 7006:80
@@ -175,6 +180,7 @@ services:
     depends_on:
       - rabbitmq
       - seq
+      - orders-api
 
   microshop-healthchecksui:
     environment:
