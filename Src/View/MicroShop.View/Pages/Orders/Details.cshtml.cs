@@ -1,10 +1,12 @@
 using MicroShop.View.Models.DTOs;
 using MicroShop.View.Models.HttpClients;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MicroShop.View.Pages.Orders
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly IOrdersService _ordersService;
