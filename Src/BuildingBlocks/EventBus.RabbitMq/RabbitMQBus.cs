@@ -11,6 +11,7 @@ namespace EventBus.RabbitMq
     public class RabbitMQBus : IEventBus
     {
         #region Fields
+        private const string Exchange_Name = "MicroShop.Exchange";
         private IReadOnlyDictionary<string, List<Type>> _handlers => _eventBusSubscriptionManager.Handlers;
         private IReadOnlyList<Type> _events => _eventBusSubscriptionManager.Events;
         #endregion
@@ -20,6 +21,7 @@ namespace EventBus.RabbitMq
         private readonly IEventBusSubscriptionManager _eventBusSubscriptionManager;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<RabbitMQBus> _logger;
+        private readonly string _serviceName;
         #endregion
 
         #region Ctor
@@ -27,19 +29,20 @@ namespace EventBus.RabbitMq
             IRabbitMQPersistentConnection rabbitMQPersistentConnection,
             IEventBusSubscriptionManager eventBusSubscriptionManager,
             IServiceProvider serviceProvider,
-            ILogger<RabbitMQBus> logger)
+            ILogger<RabbitMQBus> logger,
+            string serviceName)
         {
             _rabbitMQPersistentConnection = rabbitMQPersistentConnection ?? throw new ArgumentNullException(nameof(rabbitMQPersistentConnection));
             _eventBusSubscriptionManager = eventBusSubscriptionManager ?? throw new ArgumentNullException(nameof(eventBusSubscriptionManager));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
+            _serviceName = serviceName ?? throw new ArgumentNullException(nameof(serviceName));
             rabbitMQPersistentConnection.OnConnected += delegate
             {
-                foreach (var @event in _events)
-                    BasicConsume(@event);
+                RegisterEvents();
             };
         }
+
         #endregion
 
         #region Implementation of IEventBus
@@ -53,12 +56,13 @@ namespace EventBus.RabbitMq
             var model = _rabbitMQPersistentConnection.CreateModel();
 
             var eventName = @event.GetType().Name;
+            var routingKey = eventName;
 
-            model.QueueDeclare(eventName, false, false, false, null);
+            model.ExchangeDeclare(Exchange_Name, ExchangeType.Topic, true, false, null);
 
             var body = JsonSerializer.SerializeToUtf8Bytes(@event);
 
-            model.BasicPublish(string.Empty, eventName, null, body);
+            model.BasicPublish(Exchange_Name, routingKey, null, body);
         }
 
         public void Subscribe<TEvent, TEventHandler>()
@@ -72,6 +76,20 @@ namespace EventBus.RabbitMq
 
         #region Private Methods
 
+        private void RegisterEvents()
+        {
+            if (!_rabbitMQPersistentConnection.IsConnected && !_rabbitMQPersistentConnection.TryConnect())
+            {
+                throw new Exception("RabbitMQ Connection Failed");
+            }
+            var model = _rabbitMQPersistentConnection.CreateModel();
+
+            model.ExchangeDeclare(Exchange_Name, ExchangeType.Topic, true, false, null);
+
+            foreach (var @event in _events)
+                BasicConsume(@event);
+        }
+
         private void BasicConsume(Type eventType)
         {
             if (!_rabbitMQPersistentConnection.IsConnected && !_rabbitMQPersistentConnection.TryConnect())
@@ -82,12 +100,16 @@ namespace EventBus.RabbitMq
 
             var eventName = eventType.Name;
 
-            model.QueueDeclare(eventName, false, false, false, null);
+            var queueName = $"{_serviceName}.{eventName}";
+
+            model.QueueDeclare(queueName, false, false, false, null);
+
+            model.QueueBind(queueName, Exchange_Name, eventName);
 
             var consumer = new AsyncEventingBasicConsumer(model);
             consumer.Received += ConsumerOnReceived;
 
-            model.BasicConsume(eventName, true, consumer);
+            model.BasicConsume(queueName, true, consumer);
         }
 
         private async Task ConsumerOnReceived(object sender, BasicDeliverEventArgs e)

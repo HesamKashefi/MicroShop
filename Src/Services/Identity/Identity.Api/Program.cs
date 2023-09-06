@@ -8,7 +8,7 @@ await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("IdentityAPI");
     builder.Services.AddRazorPages();
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())

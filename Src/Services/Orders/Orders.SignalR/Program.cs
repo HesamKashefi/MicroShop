@@ -6,14 +6,14 @@ await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("OrdersSignalR");
     builder.Services.AddSignalR();
 
     var app = builder.Build();
 
     app.UseDefaultPipeline();
 
-    app.MapHub<OrderingHub>("Hubs/Orders/Update");
+    app.MapHub<OrderingHub>("/Hubs/Orders/Updates");
 
     app.ConfigureEventBus(new Common.Options.UseEventBusOptions()
         .Subscribe<OrderStatusChangedToSubmittedEvent, OrderStatusChangedToSubmittedEventHandler>());

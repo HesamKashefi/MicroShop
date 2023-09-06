@@ -4,7 +4,7 @@ using Common;
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("ApiGateway");
     builder.AddReverseProxy();
     builder.AddGrpcServices();
 

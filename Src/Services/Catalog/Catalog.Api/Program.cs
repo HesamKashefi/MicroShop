@@ -11,7 +11,7 @@ using RabbitMQ.Client;
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("CatalogAPI");
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" })

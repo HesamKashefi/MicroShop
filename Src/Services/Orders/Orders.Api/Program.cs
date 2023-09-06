@@ -16,7 +16,7 @@ using RabbitMQ.Client;
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("OrdersAPI");
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddSqlServer(builder.Configuration.GetConnectionString("Default")!, name: "sqlserver", tags: new[] { "sqlserver" })

@@ -10,7 +10,7 @@ using StackExchange.Redis;
 await Extensions.RunInLoggerAsync(async () =>
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.AddServiceDefaults();
+    builder.AddServiceDefaults("CartAPI");
     builder.Services.AddGrpc();
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())

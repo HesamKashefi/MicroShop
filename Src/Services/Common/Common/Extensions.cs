@@ -76,12 +76,12 @@ namespace Common
             }
         }
 
-        public static void AddServiceDefaults(this WebApplicationBuilder builder)
+        public static void AddServiceDefaults(this WebApplicationBuilder builder, string serviceName)
         {
             builder.AddEssentialServiceDefaults();
 
             builder.AddDefaultAuthentication();
-            builder.AddEventBus();
+            builder.AddEventBus(serviceName);
         }
 
         public static void AddDefaultAuthentication(this WebApplicationBuilder builder)
@@ -120,7 +120,7 @@ namespace Common
             builder.Services.AddScoped<IUserService, UserService>();
         }
 
-        public static void AddEventBus(this WebApplicationBuilder builder)
+        public static void AddEventBus(this WebApplicationBuilder builder, string serviceName)
         {
             builder.Services.AddSingleton<IConnectionFactory>(x =>
             {
@@ -132,6 +132,7 @@ namespace Common
             });
             builder.Services.AddSingleton<IEventBusSubscriptionManager, DefaultEventBusSubscriptionManager>();
             builder.Services.AddSingleton<IRabbitMQPersistentConnection, RabbitMQConnection>();
+            builder.Services.AddSingleton<string>(serviceName);
             builder.Services.AddSingleton<IEventBus, RabbitMQBus>();
         }
 
