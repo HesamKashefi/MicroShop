@@ -24,11 +24,6 @@ RUN npm install
 COPY Src/View/MicroShop.Admin/ClientApp .
 RUN npm run build
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 81
-
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["MicroShop.sln", "MicroShop.sln"]
@@ -67,7 +62,9 @@ RUN dotnet build "MicroShop.Admin.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "MicroShop.Admin.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
+EXPOSE 80
+EXPOSE 81
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "MicroShop.Admin.dll"]
