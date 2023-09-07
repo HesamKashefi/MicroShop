@@ -43,9 +43,11 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 
 ## How To Run
 
-You need `docker` installed to run this project.
+You need `docker`, `Visual Studio 2022`, `.NET 7.0 SDK` and `node.js` installed to run this project.
 
 First replace your machine's IP in the `.env` file.
+
+In this path: `Src/View/Admin/ClientApp` run this command: `npm install -f`
 
 In Visual Studio Simply hit `F5` to run and debug.
 
