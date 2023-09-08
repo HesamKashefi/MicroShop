@@ -53,6 +53,8 @@ In Visual Studio Simply hit `F5` to run and debug.
 
 Note: Admin takes a lot of time to start but it generally depends on your machine's speed. When it gets started, replace the localhost in the address bar with your machine's IP and hit refresh.
 
+To login use UserName/Password : hesam/hesam
+
 
 ## Architecture
 
