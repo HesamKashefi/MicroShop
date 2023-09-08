@@ -1,6 +1,5 @@
 ﻿@page
 @using Microsoft.AspNetCore.Authentication;
-@inject IOptions<Common.Options.Urls> UrlsOptions
 @model MicroShop.View.Pages.Orders.IndexModel
 @{
 }
@@ -46,12 +45,8 @@
 @section Scripts
 {
     <script>
-        var token = "@await HttpContext.GetTokenAsync("access_token")";
         var connection = new signalR.HubConnectionBuilder()
-            .withUrl('@UrlsOptions.Value.OrdersSignalR' + "Hubs/Orders/Updates", { 
-                accessTokenFactory: () => this.token,
-                skipNegotiation: true,
-                transport: signalR.HttpTransportType.WebSockets })
+            .withUrl("Hubs/Orders/Updates")
             .configureLogging(signalR.LogLevel.Information)
         .build();
 

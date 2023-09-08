@@ -43,12 +43,10 @@ namespace ApiGateway.Extensions
         }
 
 
-        private static HttpMessageHandler GetHandler()
+        private static HttpMessageHandler GetHandler() => new HttpClientHandler
         {
-            var handler = new HttpClientHandler();
-            handler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            return handler;
-        }
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
 
         private async static Task AddCredentials(AuthInterceptorContext context, Metadata meta, IServiceProvider provider)
         {

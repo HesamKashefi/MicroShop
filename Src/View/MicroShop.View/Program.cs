@@ -10,6 +10,7 @@ await Extensions.RunInLoggerAsync(async () =>
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
+    builder.Services.AddHttpForwarder();
     builder.AddEssentialServiceDefaults();
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy());
@@ -20,6 +21,7 @@ await Extensions.RunInLoggerAsync(async () =>
     var app = builder.Build();
 
     app.UseDefaultPipeline();
+    app.MapSignalRForwarder();
 
     await app.RunAsync();
 }, "MicroShop.View");

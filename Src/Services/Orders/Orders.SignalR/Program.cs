@@ -8,6 +8,7 @@ await Extensions.RunInLoggerAsync(async () =>
 
     builder.AddServiceDefaults("OrdersSignalR");
     builder.Services.AddSignalR();
+    builder.AddEventHandlers(typeof(OrderStatusChangedToSubmittedEvent).Assembly);
 
     var app = builder.Build();
 
