@@ -57,6 +57,12 @@ services:
     build:
       context: .
       dockerfile: Src/Services/Catalog/Catalog.Api/Dockerfile
+            
+  payments-api:
+    image: ${DOCKER_REGISTRY-}paymentsapi
+    build:
+      context: .
+      dockerfile: Src/Services/Payments/Payments.Api/Dockerfile
       
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway

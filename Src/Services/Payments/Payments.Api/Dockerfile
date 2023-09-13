@@ -1,28 +1,9 @@
 #See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-#debug in visual studio
-#note: visual studio will mount the directory automattically for debug, so we don't need to copy source files
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS debug
-#install nodejs
-RUN apt-get update
-RUN apt-get -y install curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get -y install nodejs
-#install our npm dependencies
-WORKDIR /app/ClientApp
-#COPY Src/View/MicroShop.Admin/ClientApp/package.json .
-#COPY Src/View/MicroShop.Admin/ClientApp/package-lock.json .
-#RUN npm install
-#RUN npm -v
-EXPOSE 80
-
-From node:20-alpine AS node-build
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-COPY Src/View/MicroShop.Admin/ClientApp/package.json .
-COPY Src/View/MicroShop.Admin/ClientApp/package-lock.json .
-RUN npm install
-COPY Src/View/MicroShop.Admin/ClientApp .
-RUN npm run build
+EXPOSE 80
+EXPOSE 81
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
@@ -56,16 +37,13 @@ COPY ["docker-compose.dcproj", "docker-compose.dcproj"]
 
 RUN dotnet restore "MicroShop.sln"
 COPY . .
-COPY --from=node-build /app Src/View/MicroShop.Admin/wwwroot/
-WORKDIR "/src/Src/View/MicroShop.Admin"
-RUN dotnet build "MicroShop.Admin.csproj" -c Release -o /app/build
+WORKDIR "/src/Src/Services/Payments/Payments.Api"
+RUN dotnet build "Payments.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MicroShop.Admin.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Payments.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
+FROM base AS final
 WORKDIR /app
-EXPOSE 80
-EXPOSE 81
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MicroShop.Admin.dll"]
+ENTRYPOINT ["dotnet", "Payments.Api.dll"]

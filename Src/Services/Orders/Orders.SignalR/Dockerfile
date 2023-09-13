@@ -21,6 +21,7 @@ COPY ["Src/Services/Orders/Orders.Application/Orders.Application.csproj", "Src/S
 COPY ["Src/Services/Orders/Orders.Domain/Orders.Domain.csproj", "Src/Services/Orders/Orders.Domain/"]
 COPY ["Src/Services/Orders/Orders.Persistence/Orders.Persistence.csproj", "Src/Services/Orders/Orders.Persistence/"]
 COPY ["Src/Services/Orders/Tests.Orders/Tests.Orders.csproj", "Src/Services/Orders/Tests.Orders/"]
+COPY ["Src/Services/Payments/Payments.Api/Payments.Api.csproj", "Src/Services/Payments/Payments.Api/"]
 COPY ["Src/Services/Catalog/Catalog.Api/Catalog.Api.csproj", "Src/Services/Catalog/Catalog.Api/"]
 COPY ["Src/Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Src/Services/Catalog/Catalog.Application/"]
 COPY ["Src/Services/Catalog/Catalog.Domain/Catalog.Domain.csproj", "Src/Services/Catalog/Catalog.Domain/"]

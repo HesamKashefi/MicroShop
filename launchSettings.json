@@ -12,7 +12,8 @@
         "catalog.api": "StartDebugging",
         "microshop.healthchecksui": "StartDebugging",
         "microshop.admin": "StartDebugging",
-        "orders.signalr": "StartDebugging"
+        "orders.signalr": "StartDebugging",
+        "payments.api": "StartDebugging"
       }
     }
   }

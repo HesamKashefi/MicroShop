@@ -14,7 +14,7 @@
     <PackageVersion Include="AspNetCore.HealthChecks.UI.Client" Version="7.0.0" />
     <PackageVersion Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="7.0.0" />
     <PackageVersion Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
-	<PackageVersion Include="coverlet.collector" Version="3.2.0" />
+    <PackageVersion Include="coverlet.collector" Version="3.2.0" />
     <PackageVersion Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageVersion Include="Azure.Identity" Version="1.8.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.12.0" />
@@ -49,8 +49,8 @@
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis" Version="7.0.9" />
-	<PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.9" />
-	<PackageVersion Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.9" />
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="7.0.9" />
     <PackageVersion Include="Microsoft.Build.Utilities.Core" Version="17.4.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
@@ -73,7 +73,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.AzureAppServices" Version="7.0.9" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageVersion Include="Microsoft.NETCore.Platforms" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageVersion Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.4" />
     <PackageVersion Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageVersion Include="MongoDb.Driver" Version="2.20.0" />

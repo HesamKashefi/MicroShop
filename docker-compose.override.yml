@@ -182,6 +182,20 @@ services:
       - seq
       - orders-api
 
+  payments-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:81;http://+:80
+    ports:
+      - 7007:80
+      - 8007:81
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - seq
+      - rabbitmq
+
   microshop-healthchecksui:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -201,10 +215,12 @@ services:
       - seq
       - rabbitmq
 
+
 volumes:
   microshop-identity-sqldata:
     external: false
   microshop-catalog-mongodata:
     external: false
+
 
 
