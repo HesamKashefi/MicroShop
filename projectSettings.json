@@ -18,6 +18,7 @@
     "Cart": "https://cart-api:81/",
     "Orders": "https://orders-api:81/",
     "OrdersSignalR": "https://orders-signalr:81/",
+    "Payments": "https://payments-api:81/",
     "Grpc": {
       "View": "https://microshop-view:82/",
       "Apigateway": "https://apigateway:82/",
