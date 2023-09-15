@@ -51,7 +51,9 @@ await Extensions.RunInLoggerAsync(async () =>
     app.UseDefaultPipeline();
 
     app.ConfigureEventBus(new UseEventBusOptions()
-        .Subscribe<UserCheckoutStartedEvent, UserCheckoutStartedEventHandler>());
+        .Subscribe<UserCheckoutStartedEvent, UserCheckoutStartedEventHandler>()
+        .Subscribe<OrderPaymentFailedEvent, OrderPaymentFailedEventHandler>()
+        .Subscribe<OrderPaymentSucceedEvent, OrderPaymentSucceedEventHandler>());
 
     using (var scope = app.Services.CreateScope())
     {

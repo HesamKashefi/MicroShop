@@ -24,9 +24,10 @@ namespace Orders.Persistence.Repositories
         public async Task<PagedResult<OrderDto[]>> GetAllOrdersAsync(int page = 1)
         {
             var query = _db.Orders
+                .OrderByDescending(x => x.CreatedAt)
                 .Skip((page - 1) * Pager.DefaultPageSize)
                 .Take(Pager.DefaultPageSize)
-                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status))
+                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status, order.IsPaid))
                 .AsNoTracking();
             var data = await query.ToArrayAsync();
             var count = await query.CountAsync();
@@ -38,9 +39,10 @@ namespace Orders.Persistence.Repositories
         {
             var query = _db.Orders
                 .Where(order => order.BuyerId == buyerId)
+                .OrderByDescending(x => x.CreatedAt)
                 .Skip((page - 1) * Pager.DefaultPageSize)
                 .Take(Pager.DefaultPageSize)
-                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status))
+                .Select(order => new OrderDto(order.Id, order.CreatedAt, order.Address, order.Status, order.IsPaid))
                 .AsNoTracking();
             var data = await query.ToArrayAsync();
             var count = await query.CountAsync();
@@ -53,7 +55,7 @@ namespace Orders.Persistence.Repositories
             return await _db.Orders
                 .Include(order => order.OrderItems)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(order => order.BuyerId == orderId);
+                .FirstOrDefaultAsync(order => order.Id == orderId);
         }
 
         public async Task SaveOrderAsync(Order order)

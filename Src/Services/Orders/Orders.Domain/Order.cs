@@ -8,6 +8,7 @@
         public required Address Address { get; init; }
 
         public OrderStatusEnum Status { get; private set; }
+        public bool IsPaid { get; private set; }
 
         private List<OrderItem> _orderItems = new();
         public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
@@ -16,6 +17,15 @@
         {
             ArgumentNullException.ThrowIfNull(orderItem);
             _orderItems.Add(orderItem);
+        }
+
+        public void MarkAsPaid()
+        {
+            // payment can be done either online or in person
+            if (this.Status is OrderStatusEnum.Submitted or OrderStatusEnum.Shipped)
+            {
+                this.IsPaid = true;
+            }
         }
 
         public void SetStatusApproved()

@@ -13,6 +13,7 @@
             <tr>
                 <th>Id</th>
                 <th>Status</th>
+                <th>Is Paid</th>
                 <th>Date</th>
                 <th>Details</th>
             </tr>
@@ -23,6 +24,7 @@
                 <tr>
                     <td>@order.Id</td>
                     <td>@order.Status.ToString()</td>
+                    <td>@(order.IsPaid ? "Yes" : "No")</td>
                     <td>@order.CreatedAt</td>
                     <td>
                         <a asp-page="/Orders/Details"
