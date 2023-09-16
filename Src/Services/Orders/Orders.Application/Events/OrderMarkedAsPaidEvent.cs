@@ -1,10 +1,10 @@
 ﻿using EventBus.Core;
 
-namespace Payments.Api.Events
+namespace Orders.Application.Events
 {
-    public class OrderPaymentFailedEvent : Event
+    public class OrderMarkedAsPaidEvent : Event
     {
-        public OrderPaymentFailedEvent(int buyerId, string buyerName, int orderId)
+        public OrderMarkedAsPaidEvent(int buyerId, string buyerName, int orderId)
         {
             BuyerId = buyerId;
             BuyerName = buyerName;

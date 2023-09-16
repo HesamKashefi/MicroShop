@@ -55,10 +55,12 @@ await Extensions.RunInLoggerAsync(async () =>
         .Subscribe<OrderPaymentFailedEvent, OrderPaymentFailedEventHandler>()
         .Subscribe<OrderPaymentSucceedEvent, OrderPaymentSucceedEventHandler>());
 
+    // Register event types for the sake of the EventLogService
     using (var scope = app.Services.CreateScope())
     {
         var subscriptionManager = scope.ServiceProvider.GetRequiredService<IEventBusSubscriptionManager>();
         subscriptionManager.RegisterEventType<OrderStatusChangedToSubmittedEvent>();
+        subscriptionManager.RegisterEventType<OrderMarkedAsPaidEvent>();
     }
 
     await app.DbInitAsync();

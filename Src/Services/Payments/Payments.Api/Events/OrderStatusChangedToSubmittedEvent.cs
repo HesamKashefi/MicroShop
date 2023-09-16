@@ -29,19 +29,20 @@ namespace Payments.Api.Events
             _bus = bus;
         }
 
-        public Task Handle(OrderStatusChangedToSubmittedEvent @event)
+        public async Task Handle(OrderStatusChangedToSubmittedEvent @event)
         {
-            // Will immediately set a fake result for any order
+            // A delay to make it more real!
+            await Task.Delay(3000);
+
+            // Will set a fake result for any order
             if (_options.Value.PaymentsMustSucceed)
             {
-                _bus.Publish(new OrderPaymentSucceedEvent(@event.OrderId));
+                _bus.Publish(new OrderPaymentSucceedEvent(@event.BuyerId, @event.BuyerName, @event.OrderId));
             }
             else
             {
-                _bus.Publish(new OrderPaymentFailedEvent(@event.OrderId));
+                _bus.Publish(new OrderPaymentFailedEvent(@event.BuyerId, @event.BuyerName, @event.OrderId));
             }
-
-            return Task.CompletedTask;
         }
     }
 }

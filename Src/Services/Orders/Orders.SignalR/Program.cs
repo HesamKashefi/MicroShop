@@ -17,7 +17,8 @@ await Extensions.RunInLoggerAsync(async () =>
     app.MapHub<OrderingHub>("/Hubs/Orders/Updates");
 
     app.ConfigureEventBus(new Common.Options.UseEventBusOptions()
-        .Subscribe<OrderStatusChangedToSubmittedEvent, OrderStatusChangedToSubmittedEventHandler>());
+        .Subscribe<OrderStatusChangedToSubmittedEvent, OrderStatusChangedToSubmittedEventHandler>()
+        .Subscribe<OrderMarkedAsPaidEvent, OrderMarkedAsPaidEventHandler>());
 
     await app.RunAsync();
 }, "Orders.SignalR");
