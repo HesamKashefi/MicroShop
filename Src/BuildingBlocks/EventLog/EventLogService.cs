@@ -26,6 +26,8 @@ namespace EventLog
             _eventBus = eventBus;
             _eventBusSubscriptionManager = eventBusSubscriptionManager;
             _logger = logger;
+
+            RegisterAllEventTypes();
         }
         #endregion
 
@@ -78,6 +80,25 @@ namespace EventLog
             return await _eventLogContext.Events
                 .Where(x => x.Status == EventLogEntryStatus.NotPublished)
                 .ToArrayAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Registers all types derived from <see cref="Event"/>
+        /// This will be used to deserialize events from <see cref="EventLogContext"/>
+        /// </summary>
+        private void RegisterAllEventTypes()
+        {
+            var events = AppDomain.CurrentDomain.GetAssemblies()
+                           .SelectMany(domainAssembly => domainAssembly.GetExportedTypes())
+                           .Where(type => typeof(Event).IsAssignableFrom(type) && type != typeof(Event) && !type.IsAbstract)
+                           .ToArray();
+            var method = typeof(IEventBusSubscriptionManager)
+                .GetMethod(nameof(IEventBusSubscriptionManager.RegisterEventType));
+            foreach (var eventType in events)
+            {
+                var genericMethod = method!.MakeGenericMethod(eventType);
+                genericMethod.Invoke(_eventBusSubscriptionManager, Array.Empty<object>());
+            }
         }
         #endregion
     }
