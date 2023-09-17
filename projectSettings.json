@@ -5,6 +5,7 @@
       "Microsoft.Hosting": "Information",
       "Microsoft": "Warning",
       "System": "Warning",
+      "HealthChecks": "Warning",
       "OpenIddict": "Warning"
     }
   },
