@@ -39,6 +39,7 @@ Since I've been learning by looking at the Microsoft's sample, [EShopOnContainer
 - \#DDD
 - \#EventDrivenArchitecture
 - \#CQRS
+- \#ClearnArchitecture
 - \#YARP
 - \#Angular
 
@@ -68,8 +69,10 @@ To login use UserName/Password : hesam/hesam
 |  APIGateway  |  https://+:8001 |
 |  Identity.Api  |  https://+:8002 |
 |  Catalog.Api  |  https://+:8003 |
-|  Orders.Api  |  https://+:8004 |
-|  Identity.Api  |  https://+:8005 |
+|  Cart.Api  |  https://+:8004 |
+|  Orders.Api  |  https://+:8005 |
+|  Orders.SignalR  |  https://+:8006 |
+|  Payments.Api  |  https://+:8007 |
 |  HealthChecks  |  https://+:8010/hc-ui |
 |  Seq  |  http://+:5340 |
 
