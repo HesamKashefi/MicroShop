@@ -93,7 +93,7 @@ namespace EventLog
                            .Where(type => typeof(Event).IsAssignableFrom(type) && type != typeof(Event) && !type.IsAbstract)
                            .ToArray();
             var method = typeof(IEventBusSubscriptionManager)
-                .GetMethod(nameof(IEventBusSubscriptionManager.RegisterEventType));
+                .GetMethod(nameof(IEventBusSubscriptionManager.RegisterEvent));
             foreach (var eventType in events)
             {
                 var genericMethod = method!.MakeGenericMethod(eventType);

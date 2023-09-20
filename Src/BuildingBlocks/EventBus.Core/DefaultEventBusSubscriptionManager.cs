@@ -32,7 +32,7 @@ namespace EventBus.Core
 
         public IReadOnlyList<Type> Events => _events.AsReadOnly();
 
-        public void RegisterEventType<TEvent>() where TEvent : Event
+        public void RegisterEvent<TEvent>() where TEvent : Event
         {
             var eventType = typeof(TEvent);
             if (!_events.Contains(eventType))
@@ -41,7 +41,7 @@ namespace EventBus.Core
             }
         }
 
-        public void Subscribe<TEvent, TEventHandler>()
+        public void RegisterEventHandler<TEvent, TEventHandler>()
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {

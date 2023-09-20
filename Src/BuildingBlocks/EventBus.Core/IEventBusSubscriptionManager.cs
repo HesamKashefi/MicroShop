@@ -5,10 +5,10 @@
         IReadOnlyDictionary<string, List<Type>> Handlers { get; }
         IReadOnlyList<Type> Events { get; }
 
-        void Subscribe<TEvent, TEventHandler>()
+        void RegisterEventHandler<TEvent, TEventHandler>()
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>;
-        void RegisterEventType<TEvent>()
+        void RegisterEvent<TEvent>()
             where TEvent : Event;
     }
 }

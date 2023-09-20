@@ -69,7 +69,7 @@ namespace EventBus.RabbitMq
             where TEvent : Event
             where TEventHandler : IEventHandler<TEvent>
         {
-            _eventBusSubscriptionManager.Subscribe<TEvent, TEventHandler>();
+            _eventBusSubscriptionManager.RegisterEventHandler<TEvent, TEventHandler>();
         }
 
         #endregion
