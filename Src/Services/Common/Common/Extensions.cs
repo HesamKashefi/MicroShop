@@ -136,6 +136,11 @@ namespace Common
             builder.Services.AddSingleton<IEventBus, RabbitMQBus>();
         }
 
+        /// <summary>
+        /// Registers event handlers with DI
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="assemblies"></param>
         public static void AddEventHandlers(this WebApplicationBuilder builder, params Assembly[] assemblies)
         {
             builder.Services.Scan(s =>

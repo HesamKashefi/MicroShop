@@ -15,7 +15,10 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddMongoDb(builder.Configuration.GetConnectionString("Mongo")!, name: "mongodb", tags: new[] { "mongodb" })
-    .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
+    .AddRabbitMQ((s, c) =>
+    {
+        c.ConnectionFactory = s.GetRequiredService<IConnectionFactory>();
+    }, name: "rabbitmq", tags: new[] { "rabbitmq" });
 
     builder.Services.Configure<PictureFileSettings>(builder.Configuration.GetSection("Urls"));
 

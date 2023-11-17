@@ -2,7 +2,7 @@
 
 #debug in visual studio
 #note: visual studio will mount the directory automattically for debug, so we don't need to copy source files
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS debug
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS debug
 #install nodejs
 RUN apt-get update
 RUN apt-get -y install curl gnupg
@@ -24,7 +24,7 @@ RUN npm install
 COPY Src/View/MicroShop.Admin/ClientApp .
 RUN npm run build
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
 WORKDIR /src
 COPY ["MicroShop.sln", "MicroShop.sln"]
 
@@ -63,7 +63,7 @@ RUN dotnet build "MicroShop.Admin.csproj" -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish "MicroShop.Admin.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 EXPOSE 80
 EXPOSE 81

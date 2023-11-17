@@ -12,10 +12,13 @@ await Extensions.RunInLoggerAsync(async () =>
     var builder = WebApplication.CreateBuilder(args);
     builder.AddServiceDefaults("CartAPI");
     builder.Services.AddGrpc();
-    builder.Services.AddHealthChecks()
+    _ = builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!, "redis", tags: new[] { "redis" })
-    .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
+    .AddRabbitMQ((s, c) =>
+    {
+        c.ConnectionFactory = s.GetRequiredService<IConnectionFactory>();
+    }, name: "rabbitmq", tags: new[] { "rabbitmq" });
 
     builder.Services.AddScoped<ICartService, CartService>();
     builder.AddEventHandlers(typeof(ProductPriceUpdatedHandler).Assembly);

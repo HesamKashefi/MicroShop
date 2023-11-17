@@ -14,7 +14,10 @@ await Extensions.RunInLoggerAsync(async () =>
     builder.Services.AddHealthChecks()
     .AddCheck("self", () => HealthCheckResult.Healthy())
     .AddSqlServer(builder.Configuration.GetConnectionString("Default")!, name: "sqlserver", tags: new[] { "sqlserver" })
-    .AddRabbitMQ(c => c.GetRequiredService<IConnectionFactory>(), name: "rabbitmq", tags: new[] { "rabbitmq" });
+    .AddRabbitMQ((s, c) =>
+    {
+        c.ConnectionFactory = s.GetRequiredService<IConnectionFactory>();
+    }, name: "rabbitmq", tags: new[] { "rabbitmq" });
 
     builder.Services.Configure<PaymentsSettings>(builder.Configuration.GetSection("PaymentsSettings"));
 
