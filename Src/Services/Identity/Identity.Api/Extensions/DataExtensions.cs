@@ -60,7 +60,7 @@ namespace Identity.Api.Extensions
             }
             else if (client is OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication d)
             {
-                descriptor.Type = d.Type;
+                descriptor.ClientType = d.ClientType;
                 await manager.UpdateAsync(client, descriptor);
             }
 

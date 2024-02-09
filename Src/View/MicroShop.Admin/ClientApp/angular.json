@@ -137,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "MicroShop.Admin"
+  "defaultProject": "MicroShop.Admin",
+  "cli": {
+    "analytics": false
+  }
 }

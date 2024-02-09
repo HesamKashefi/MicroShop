@@ -22,6 +22,10 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8004",
+        "ASPNETCORE_HTTP_PORTS": "7004"
+      },
       "publishAllPorts": true,
       "useSSL": true
     }

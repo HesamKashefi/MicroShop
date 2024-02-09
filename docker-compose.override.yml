@@ -115,6 +115,7 @@ services:
       - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
       - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
       - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - ASPNETCORE_URLS=https://+:82;https://+:81;http://+:80
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
       - Urls__ImageBaseUrl=${MICROSHOP_CATALOG_IMAGE_STORAGE_BASE_URL}
     ports:
@@ -136,6 +137,7 @@ services:
       - Kestrel__Endpoints__HTTPs__Url=https://0.0.0.0:81
       - Kestrel__Endpoints__GRPC__Url=https://0.0.0.0:82
       - Kestrel__Endpoints__GRPC__Protocols=Http2
+      - ASPNETCORE_URLS=https://+:82;https://+:81;http://+:80
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
     ports:
       - 7004:80

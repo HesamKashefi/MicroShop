@@ -5,7 +5,7 @@ services:
     image: datalust/seq:latest
 
   sql-db:
-    image: mcr.microsoft.com/mssql/server:2019-latest 
+    image: mcr.microsoft.com/mssql/server:2022-latest
 
   catalog-db:
     image: mongo
