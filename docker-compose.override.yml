@@ -75,6 +75,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:81;http://+:80
       - Urls__Identity=${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP}:8002/
+      - Urls__AdminLocalSpa=http://${MICROSHOP_EXTERNAL_DNS_NAME_OR_IP_WITHOUT_PROTOCOL}:4200/
     ports:
       - 7001:80
       - 8001:81
