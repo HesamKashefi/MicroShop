@@ -6,7 +6,10 @@ export class UrlsConfig {
         return `${base}products/${id}`;
     }
     static catalog_updateProductPrice(base: string) {
-        return `${base}products`;
+        return `${base}products/price`;
+    }
+    static catalog_updateProductInfo(base: string) {
+        return `${base}products/info`;
     }
 
 

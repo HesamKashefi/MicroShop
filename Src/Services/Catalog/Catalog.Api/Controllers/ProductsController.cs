@@ -10,22 +10,26 @@ namespace Catalog.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController(IMediator mediator) : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator = mediator;
 
-        public ProductsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        [HttpPut]
+        [HttpPut("Price")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update([FromBody] UpdateProductPriceCommand command)
+        public async Task<IActionResult> UpdatePrice([FromBody] UpdateProductPriceCommand command)
         {
             await _mediator.Send(command, HttpContext.RequestAborted);
             return NoContent();
         }
+
+        [HttpPut("Info")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateInfo([FromBody] UpdateProductInfoCommand command)
+        {
+            await _mediator.Send(command, HttpContext.RequestAborted);
+            return NoContent();
+        }
+
 
         [HttpGet]
         public async Task<PagedResult<ProductDto[]>> GetAll([FromQuery] int page = 1)

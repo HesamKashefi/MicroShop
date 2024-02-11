@@ -1,0 +1,18 @@
+<section class="card">
+    <p>Current Name: {{ product.name }}</p>
+    <div class="form-floating mb-3">
+        <input id="newName"
+               type="text"
+               placeholder="New Name"
+               class="form-control"
+               [(ngModel)]="newName">
+        <label for="newPrice">
+            New Name
+        </label>
+    </div>
+    <button class="btn btn-primary"
+            [disabled]="newName === product.name"
+            (click)="onSubmit()">
+        Update
+    </button>
+</section>
